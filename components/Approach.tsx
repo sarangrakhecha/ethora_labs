@@ -22,7 +22,7 @@ export default function Approach() {
           {stages.map((s, i) => (
             <li key={s.id} className="relative pb-12 last:pb-0">
               <Reveal>
-                <span className="absolute -left-[2.95rem] top-0 flex h-10 w-10 items-center justify-center rounded-full border border-gold-deep bg-ivory font-serif text-lg text-gold-deep sm:-left-[4.15rem] sm:h-12 sm:w-12 sm:text-xl" aria-hidden="true">{i + 1}</span>
+                <span className="absolute -left-[3.28rem] top-0 flex h-10 w-10 items-center justify-center rounded-full border border-gold-deep bg-ivory font-serif text-lg text-gold-deep sm:-left-[4.53rem] sm:h-12 sm:w-12 sm:text-xl" aria-hidden="true">{i + 1}</span>
                 <div className="grid gap-2 md:grid-cols-[14rem_1fr] md:gap-10">
                   <div>
                     <h3 className="font-serif text-3xl">{s.title}</h3>
