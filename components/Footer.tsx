@@ -26,6 +26,12 @@ export default function Footer() {
           <div className="space-y-3 text-[15px]">
             <p><span className="inline-flex min-h-11 items-center text-muted-dark" aria-disabled="true">Privacy Policy (coming soon)</span></p>
             <p className="text-ivory/90">{site.domain}</p>
+            <p>
+              <a href="https://github.com/sarangrakhecha" target="_blank" rel="noopener noreferrer"
+                className="inline-flex min-h-11 items-center gap-2 rounded text-ivory/90 hover:text-gold">
+                Open source on GitHub
+              </a>
+            </p>
           </div>
         </div>
         <p className="mt-10 border-t border-ivory/10 pt-6 text-sm text-muted-dark">&copy; {site.year} {site.legal}</p>

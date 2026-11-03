@@ -46,7 +46,32 @@ export default function ProductsIndex() {
               </article>
             </Reveal>
           ))}
-          <p className="pt-4 text-muted-dark">
+          {/* Open-source work, kept visibly separate from the products above —
+              Culprit is proprietary and its source is not published. */}
+          <Reveal delay={180}>
+            <a
+              href="https://github.com/sarangrakhecha"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group mt-1 flex flex-col gap-5 rounded-xl border border-ivory/15 bg-navy-deep p-7 transition-colors hover:border-gold/70 md:flex-row md:items-start md:gap-10"
+            >
+              <span className="flex items-center gap-4 md:w-56 md:shrink-0">
+                <Icon name="code" className="h-8 w-8 shrink-0 text-gold transition-transform group-hover:-translate-y-0.5" />
+                <span className="font-serif text-2xl">Open source</span>
+              </span>
+              <span className="flex-1">
+                <span className="block leading-relaxed text-muted-dark">
+                  Separate from the products above, we publish open-source CLI tools on GitHub for anyone to read, use
+                  and learn from.
+                </span>
+                <span className="mt-4 inline-flex items-center gap-2 text-[15px] font-medium text-gold">
+                  View on GitHub <Icon name="arrow" className="transition-transform group-hover:translate-x-0.5" />
+                </span>
+              </span>
+            </a>
+          </Reveal>
+
+          <p className="pt-2 text-muted-dark">
             Looking for our consulting work instead?{" "}
             <Link href="/services" className="text-gold underline underline-offset-4 hover:text-ivory">See our capabilities</Link>.
           </p>
