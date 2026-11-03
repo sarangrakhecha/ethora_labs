@@ -2,6 +2,7 @@ import Hero from "@/components/Hero";
 import Approach from "@/components/Approach";
 import Capabilities from "@/components/Capabilities";
 import ProblemFirst from "@/components/ProblemFirst";
+import ProductsShowcase from "@/components/ProductsShowcase";
 import About from "@/components/About";
 import Contact from "@/components/Contact";
 
@@ -12,6 +13,7 @@ export default function Home() {
       <Approach />
       <Capabilities />
       <ProblemFirst />
+      <ProductsShowcase />
       <About />
       <Contact />
     </>
