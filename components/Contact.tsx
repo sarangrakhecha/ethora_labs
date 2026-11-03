@@ -1,0 +1,102 @@
+"use client";
+import { useState, type FormEvent } from "react";
+import Reveal from "./Reveal";
+
+type Values = { name: string; email: string; company: string; message: string };
+type Errors = Partial<Record<keyof Values, string>>;
+
+const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function validate(v: Values): Errors {
+  const e: Errors = {};
+  if (!v.name.trim()) e.name = "Please enter your name.";
+  if (!v.email.trim()) e.email = "Please enter your email address.";
+  else if (!emailRe.test(v.email.trim())) e.email = "Please enter a valid email address.";
+  if (!v.message.trim()) e.message = "Please tell us a little about your project.";
+  return e;
+}
+
+/**
+ * TODO(form-handler): There is NO backend yet, so submission is intentionally disabled and
+ * the form never shows a "sent" state. To enable it later:
+ *  1. Pick a handler (Resend via a Cloudflare Worker, Formspree, etc.).
+ *  2. In `onSubmit`, if validation passes and the honeypot is empty, POST the values to it.
+ *  3. Show success ONLY after a confirmed 2xx response; show an error state otherwise.
+ *  4. Remove `SUBMIT_ENABLED = false` and the notice below.
+ */
+const SUBMIT_ENABLED = false;
+
+export default function Contact() {
+  const [values, setValues] = useState<Values>({ name: "", email: "", company: "", message: "" });
+  const [honeypot, setHoneypot] = useState("");
+  const [touched, setTouched] = useState<Partial<Record<keyof Values, boolean>>>({});
+  const errors = validate(values);
+  const show = (k: keyof Values) => (touched[k] ? errors[k] : undefined);
+
+  const set = (k: keyof Values) => (e: { target: { value: string } }) => setValues((v) => ({ ...v, [k]: e.target.value }));
+  const blur = (k: keyof Values) => () => setTouched((t) => ({ ...t, [k]: true }));
+
+  const onSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    setTouched({ name: true, email: true, message: true });
+    if (honeypot) return; // bots fill the hidden field
+    if (!SUBMIT_ENABLED) return; // TODO(form-handler): send here once a backend exists
+  };
+
+  const field = "mt-2 w-full rounded-md border bg-navy px-4 py-3 text-[16px] text-ivory placeholder:text-slate focus:border-gold";
+  const border = (k: keyof Values) => (show(k) ? "border-[#e0a0a0]" : "border-ivory/25");
+  const Err = ({ id, k }: { id: string; k: keyof Values }) => show(k) ? <p id={id} className="mt-1.5 text-sm text-[#f0b4b4]">{errors[k]}</p> : null;
+
+  return (
+    <section id="contact" className="bg-navy-deep">
+      <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 md:py-24 lg:grid-cols-[1fr_1.2fr] lg:gap-16 lg:px-8">
+        <Reveal>
+          <h2 className="font-serif text-4xl sm:text-5xl">Let&rsquo;s start a conversation.</h2>
+          <span className="gold-rule mt-5" />
+          <p className="mt-6 max-w-md text-lg leading-relaxed text-muted-dark">
+            Have a product idea, an engineering challenge, or a quality goal in mind? We&rsquo;d love to hear about it.
+          </p>
+        </Reveal>
+
+        <Reveal delay={100}>
+          <form noValidate onSubmit={onSubmit} aria-describedby="form-note" className="space-y-5">
+            {/* Honeypot: hidden from people and assistive tech; bots tend to fill it. */}
+            <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+              <label>Website<input type="text" name="website" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} /></label>
+            </div>
+
+            <div>
+              <label htmlFor="c-name" className="text-[15px] font-medium">Name <span className="text-gold">*</span></label>
+              <input id="c-name" name="name" autoComplete="name" required aria-invalid={!!show("name")} aria-describedby="e-name" value={values.name} onChange={set("name")} onBlur={blur("name")} className={`${field} ${border("name")}`} />
+              <Err id="e-name" k="name" />
+            </div>
+            <div>
+              <label htmlFor="c-email" className="text-[15px] font-medium">Email <span className="text-gold">*</span></label>
+              <input id="c-email" name="email" type="email" autoComplete="email" required aria-invalid={!!show("email")} aria-describedby="e-email" value={values.email} onChange={set("email")} onBlur={blur("email")} className={`${field} ${border("email")}`} />
+              <Err id="e-email" k="email" />
+            </div>
+            <div>
+              <label htmlFor="c-company" className="text-[15px] font-medium">Company <span className="text-muted-dark">(optional)</span></label>
+              <input id="c-company" name="company" autoComplete="organization" value={values.company} onChange={set("company")} className={`${field} border-ivory/25`} />
+            </div>
+            <div>
+              <label htmlFor="c-message" className="text-[15px] font-medium">Project description <span className="text-gold">*</span></label>
+              <textarea id="c-message" name="message" rows={5} required aria-invalid={!!show("message")} aria-describedby="e-message" value={values.message} onChange={set("message")} onBlur={blur("message")} className={`${field} ${border("message")}`} />
+              <Err id="e-message" k="message" />
+            </div>
+
+            <div>
+              <button type="submit" disabled={!SUBMIT_ENABLED} className="inline-flex min-h-11 w-full cursor-not-allowed items-center justify-center rounded-md border border-ivory/25 bg-ivory/10 px-6 py-2.5 text-[15px] font-medium text-muted-dark sm:w-auto">
+                Send message (not available yet)
+              </button>
+              <p id="form-note" className="mt-3 max-w-md text-sm leading-relaxed text-muted-dark">
+                Our contact form isn&rsquo;t connected yet, so messages can&rsquo;t be sent from this page. Please check back soon.
+                {/* TODO: add a real contact email or enable the form once a handler exists. */}
+              </p>
+            </div>
+          </form>
+        </Reveal>
+      </div>
+    </section>
+  );
+}

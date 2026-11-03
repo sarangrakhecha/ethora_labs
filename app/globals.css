@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+:root {
+  --navy: #101c2a;
+  --navy-deep: #0b1420;
+  --ivory: #f6f3ec;
+  --gold: #c4a77a;
+  --slate: #83929b;
+  --ink: #17212c;
+  /* AA-safe secondary text tones */
+  --muted-on-dark: #b4bfc6; /* ~9:1 on navy */
+  --muted-on-light: #4a5a66; /* ~6.5:1 on ivory */
+  --gold-deep: #7a5f33; /* gold accent text on ivory, ~5.4:1 */
+}
+
+@theme inline {
+  --color-navy: var(--navy);
+  --color-navy-deep: var(--navy-deep);
+  --color-ivory: var(--ivory);
+  --color-gold: var(--gold);
+  --color-slate: var(--slate);
+  --color-ink: var(--ink);
+  --color-muted-dark: var(--muted-on-dark);
+  --color-muted-light: var(--muted-on-light);
+  --color-gold-deep: var(--gold-deep);
+  --font-serif: var(--font-instrument-serif), Georgia, serif;
+  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+body { background: var(--navy); color: var(--ivory); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+
+/* Visible focus everywhere */
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
+.on-light :focus-visible { outline-color: var(--navy); }
+
+.gold-rule { display: block; height: 1px; width: 3rem; background: var(--gold); }
+
+/* Scroll reveal (see components/Reveal.tsx). Content is visible without JS. */
+.js .reveal { opacity: 0; transform: translateY(16px); transition: opacity .7s ease, transform .7s ease; }
+.js .reveal.is-visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js .reveal { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
