@@ -11,6 +11,36 @@ export const metadata: Metadata = {
   description: "Culprit, a Chrome extension for software debugging, and RenewGuard, renewal and recurring-commitment management. Products built by Ethora Labs.",
 };
 
+type Row = {
+  kind: string; name: string; tagline: string; summary: string;
+  art: "culprit" | "renewguard" | "terminal";
+  facts: string[]; chip: string; highlight: boolean;
+  href: string; cta: string; external: boolean;
+};
+
+const rows: Row[] = [
+  ...products.map((p) => ({
+    kind: p.kind, name: p.name, tagline: p.tagline, summary: p.summary, art: p.art,
+    facts: [] as string[], chip: p.status.label, highlight: p.status.available,
+    href: `/products/${p.slug}`, cta: `About ${p.name}`, external: false,
+  })),
+  {
+    kind: "Open source",
+    name: "TerminalQuest",
+    tagline: "Learn the terminal by saving a ship \u2014 not by reading slides.",
+    summary:
+      "A small arcade game that teaches the command line by making you use it. Each station drops you into a real bash prompt: what you type actually runs, and a real file has to move before anything unlocks. Open source, free to play and fork.",
+    art: "terminal",
+    // Figures taken from TerminalQuest's own README.
+    facts: ["8 commands, 3 levels", "502 automated tests", "98% coverage", "Zero dependencies", "MIT"],
+    chip: "",
+    highlight: false,
+    href: "https://github.com/sarangrakhecha/TerminalQuest",
+    cta: "View on GitHub",
+    external: true,
+  },
+];
+
 export default function ProductsIndex() {
   return (
     <>
@@ -22,54 +52,51 @@ export default function ProductsIndex() {
 
       <section className="bg-navy">
         <div className="mx-auto max-w-7xl space-y-6 px-4 py-16 sm:px-6 md:py-20 lg:px-8">
-          {products.map((p, i) => (
-            <Reveal key={p.slug} delay={i * 90}>
-              <article className="overflow-hidden rounded-xl border border-ivory/15 bg-navy-deep md:grid md:grid-cols-2">
-                <div className={`aspect-[400/150] ${i % 2 ? "md:order-2" : ""}`}>
-                  <ProductArt name={p.art} />
+          {rows.map((r, i) => (
+            <Reveal key={r.name} delay={i * 90}>
+              <article className="group overflow-hidden rounded-xl border border-ivory/15 bg-navy-deep transition-colors hover:border-gold/60 md:grid md:grid-cols-2">
+                <div className={`overflow-hidden ${i % 2 ? "md:order-2" : ""}`}>
+                  <div className="aspect-[400/150] transition-transform duration-700 ease-out group-hover:scale-[1.04]">
+                    <ProductArt name={r.art} />
+                  </div>
                 </div>
                 <div className="flex flex-col justify-center p-7 md:p-10">
-                  <p className="text-xs font-medium uppercase tracking-[0.25em] text-gold">{p.kind}</p>
-                  <h2 className="mt-3 font-serif text-3xl sm:text-4xl">{p.name}</h2>
-                  <p className="mt-2 font-serif text-xl italic text-muted-dark">{p.tagline}</p>
-                  <p className="mt-5 leading-relaxed text-muted-dark">{p.summary}</p>
+                  <p className="text-xs font-medium uppercase tracking-[0.25em] text-gold">{r.kind}</p>
+                  <h2 className="mt-3 font-serif text-3xl sm:text-4xl">{r.name}</h2>
+                  <p className="mt-2 font-serif text-xl italic text-muted-dark">{r.tagline}</p>
+                  <p className="mt-5 leading-relaxed text-muted-dark">{r.summary}</p>
+
+                  {r.facts.length > 0 && (
+                    <ul className="mt-5 flex flex-wrap gap-2">
+                      {r.facts.map((f) => (
+                        <li key={f} className="rounded-full border border-ivory/20 px-3 py-1 text-sm text-muted-dark">{f}</li>
+                      ))}
+                    </ul>
+                  )}
+
+                  {r.chip && (
                   <p className="mt-5">
-                    <span className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm ${p.status.available ? "border-gold/50 bg-gold/10 text-ivory" : "border-ivory/25 text-muted-dark"}`}>
-                      <span className={`h-1.5 w-1.5 rounded-full ${p.status.available ? "bg-gold" : "bg-slate"}`} aria-hidden="true" />
-                      {p.status.label}
+                    <span className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm ${r.highlight ? "border-gold/50 bg-gold/10 text-ivory" : "border-ivory/25 text-muted-dark"}`}>
+                      <span className={`h-1.5 w-1.5 rounded-full ${r.highlight ? "bg-gold" : "bg-slate"}`} aria-hidden="true" />
+                      {r.chip}
                     </span>
                   </p>
-                  <Link href={`/products/${p.slug}`} className="mt-7 inline-flex min-h-11 items-center gap-2 self-start rounded text-[15px] font-medium text-gold hover:text-ivory">
-                    About {p.name} <Icon name="arrow" />
-                  </Link>
+                  )}
+
+                  {r.external ? (
+                    <a href={r.href} target="_blank" rel="noopener noreferrer"
+                      className="mt-7 inline-flex min-h-11 items-center gap-2 self-start rounded text-[15px] font-medium text-gold hover:text-ivory">
+                      {r.cta} <Icon name="arrow" className="transition-transform group-hover:translate-x-0.5" />
+                    </a>
+                  ) : (
+                    <Link href={r.href} className="mt-7 inline-flex min-h-11 items-center gap-2 self-start rounded text-[15px] font-medium text-gold hover:text-ivory">
+                      {r.cta} <Icon name="arrow" className="transition-transform group-hover:translate-x-0.5" />
+                    </Link>
+                  )}
                 </div>
               </article>
             </Reveal>
           ))}
-          {/* Open-source work, kept visibly separate from the products above —
-              Culprit is proprietary and its source is not published. */}
-          <Reveal delay={180}>
-            <a
-              href="https://github.com/sarangrakhecha"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group mt-1 flex flex-col gap-5 rounded-xl border border-ivory/15 bg-navy-deep p-7 transition-colors hover:border-gold/70 md:flex-row md:items-start md:gap-10"
-            >
-              <span className="flex items-center gap-4 md:w-56 md:shrink-0">
-                <Icon name="code" className="h-8 w-8 shrink-0 text-gold transition-transform group-hover:-translate-y-0.5" />
-                <span className="font-serif text-2xl">Open source</span>
-              </span>
-              <span className="flex-1">
-                <span className="block leading-relaxed text-muted-dark">
-                  Separate from the products above, we publish open-source CLI tools on GitHub for anyone to read, use
-                  and learn from.
-                </span>
-                <span className="mt-4 inline-flex items-center gap-2 text-[15px] font-medium text-gold">
-                  View on GitHub <Icon name="arrow" className="transition-transform group-hover:translate-x-0.5" />
-                </span>
-              </span>
-            </a>
-          </Reveal>
 
           <p className="pt-2 text-muted-dark">
             Looking for our consulting work instead?{" "}

@@ -3,7 +3,7 @@
  * These are abstract illustrations in Ethora's palette, never presented as product UI.
  * Culprit's real screenshots live in public/products/culprit/.
  */
-export default function ProductArt({ name, className = "" }: { name: "culprit" | "renewguard"; className?: string }) {
+export default function ProductArt({ name, className = "" }: { name: "culprit" | "renewguard" | "terminal"; className?: string }) {
   const common = { className: `h-full w-full ${className}`, viewBox: "0 0 400 150", fill: "none", "aria-hidden": true as const };
 
   if (name === "culprit") {
@@ -43,6 +43,30 @@ export default function ProductArt({ name, className = "" }: { name: "culprit" |
         <path d="M205 33v10M205 107v10M163 75h10M237 75h10" stroke="#C4A77A" strokeWidth="1.3" strokeLinecap="round" />
         <path d="M300 75h44" stroke="#C4A77A" strokeWidth="1.2" opacity=".5" />
         <path d="M338 70l6 5-6 5" stroke="#C4A77A" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+      </svg>
+    );
+  }
+
+  if (name === "terminal") {
+    // Open source — a command line, and the next prompt waiting.
+    return (
+      <svg {...common}>
+        <rect width="400" height="150" fill="#0B1420" />
+        <rect x="40" y="26" width="320" height="98" rx="8" stroke="#F6F3EC" strokeWidth="1" opacity=".16" />
+        <path d="M40 46h320" stroke="#F6F3EC" strokeWidth="1" opacity=".12" />
+        {[0, 1, 2].map((i) => (
+          <circle key={i} cx={56 + i * 12} cy={36} r="3" fill="#F6F3EC" opacity=".22" />
+        ))}
+        {/* two run commands, then a live prompt */}
+        {[{ y: 68, w: 96 }, { y: 88, w: 64 }].map((r) => (
+          <g key={r.y}>
+            <path d={`M58 ${r.y}l6 5-6 5`} stroke="#C4A77A" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" opacity=".55" />
+            <rect x="74" y={r.y} width={r.w} height="5" rx="2.5" fill="#F6F3EC" opacity=".3" />
+            <rect x={78 + r.w} y={r.y} width="40" height="5" rx="2.5" fill="#F6F3EC" opacity=".16" />
+          </g>
+        ))}
+        <path d="M58 108l6 5-6 5" stroke="#C4A77A" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        <rect x="74" y="108" width="9" height="10" rx="1.5" fill="#C4A77A" />
       </svg>
     );
   }
