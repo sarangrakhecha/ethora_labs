@@ -1,6 +1,7 @@
 node_modules
 .next
-out
+# `out` is committed on purpose: Cloudflare's build step is not producing it,
+# so the deploy uploads the checked-in build. Regenerate with `npm run build`.
 next-env.d.ts
 *.tsbuildinfo
 .DS_Store
