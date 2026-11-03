@@ -69,7 +69,6 @@ export default function EngineeringCanvas() {
         <span className="font-serif text-lg text-gold">{cur.title}.</span>{" "}
         <span className="text-[15px] text-ivory">{cur.long}</span>
       </div>
-      <p className="mt-3 hidden text-center text-xs text-muted-dark xl:block">Improve loops back to Design. Hover or focus a stage to read more.</p>
     </div>
   );
 }
