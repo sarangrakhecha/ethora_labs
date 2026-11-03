@@ -215,14 +215,19 @@ const run = async () => {
         const rows = await pp.$$eval(sel + " > li a", (as) =>
           as.map((a) => {
             const box = a.getBoundingClientRect();
-            const cta = a.querySelector("span:last-of-type").getBoundingClientRect();
-            const band = a.querySelector("span").getBoundingClientRect();
-            return { inside: cta.bottom <= box.bottom + 1, band: Math.round(band.height) };
+            const cta = a.querySelector("[data-cta]").getBoundingClientRect();
+            const art = a.querySelector("[data-art] svg");
+            return {
+              inside: cta.bottom <= box.bottom + 1 && cta.right <= box.right + 1,
+              artWidth: art ? Math.round(art.getBoundingClientRect().width) : 0,
+            };
           })
         );
         rows.forEach((r, j) => {
           if (!r.inside) bad.push(`active ${i}: panel ${j} CTA clipped`);
-          if (r.band !== 96) bad.push(`active ${i}: panel ${j} band ${r.band}px`);
+          // The active panel shows its diagram beside the copy; the others must not.
+          if (j === i && r.artWidth > 0 && r.artWidth < 120) bad.push(`active ${i}: diagram only ${r.artWidth}px`);
+          if (j !== i && r.artWidth > 0) bad.push(`active ${i}: panel ${j} still shows a diagram`);
         });
       }
       check(`${label} ${width}px: artwork and CTA hold their place`, bad.length === 0, bad.slice(0, 3).join("; "));

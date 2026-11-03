@@ -26,7 +26,7 @@ export type Panel = {
  * its width with no dead space. Hover or keyboard focus sets the active panel; clicking
  * follows the link. Stacks to a plain list below lg, where width animation makes no sense.
  */
-export default function ExpandingPanels({ panels, heightClass = "lg:h-[30rem]" }: { panels: Panel[]; heightClass?: string }) {
+export default function ExpandingPanels({ panels, heightClass = "lg:h-[30rem] xl:h-[26rem]" }: { panels: Panel[]; heightClass?: string }) {
   const [active, setActive] = useState(0);
 
   return (
@@ -35,14 +35,18 @@ export default function ExpandingPanels({ panels, heightClass = "lg:h-[30rem]" }
         const isActive = i === active;
         const inner: ReactNode = (
           <>
-            {p.art ? (
-              <span className="-mx-6 -mt-6 mb-5 block h-24 shrink-0 overflow-hidden border-b border-ivory/10">
+            {/* Mobile: the diagram sits above the text, where the panel is full width. */}
+            {p.art && (
+              <span className="-mx-6 -mt-6 mb-5 block h-24 shrink-0 overflow-hidden border-b border-ivory/10 lg:hidden">
                 <ProductArt name={p.art} />
               </span>
-            ) : (
-              <Icon name={p.icon} className="h-9 w-9 shrink-0 text-gold" />
             )}
-            <span className={`block font-serif text-2xl leading-tight ${p.art ? "" : "mt-5"}`}>{p.title}</span>
+            {(!p.art || !isActive) && (
+              <Icon name={p.icon} className={`h-9 w-9 shrink-0 text-gold ${p.art ? "hidden lg:block" : ""}`} />
+            )}
+            <span className={`block font-serif text-2xl leading-tight ${!p.art ? "mt-5" : isActive ? "lg:mt-0" : "lg:mt-5"}`}>
+              {p.title}
+            </span>
             <span className={`mt-2 block font-serif text-lg italic leading-snug text-muted-dark ${isActive ? "" : "lg:line-clamp-2"}`}>
               {p.subtitle}
             </span>
@@ -59,15 +63,30 @@ export default function ExpandingPanels({ panels, heightClass = "lg:h-[30rem]" }
                 {p.chip.label}
               </span>
             )}
-            <span className="mt-auto inline-flex shrink-0 items-center gap-2 self-start whitespace-nowrap pt-5 text-[15px] font-medium text-gold">
+            <span data-cta className="mt-auto inline-flex shrink-0 items-center gap-2 self-start whitespace-nowrap pt-5 text-[15px] font-medium text-gold">
               {p.cta} <Icon name="arrow" className="transition-transform group-hover:translate-x-0.5" />
             </span>
           </>
         );
 
-        const cls = `group flex h-full min-w-0 flex-col overflow-hidden rounded-xl border p-6 transition-colors duration-500 ${
+        const cls = `group flex h-full min-w-0 flex-col overflow-hidden rounded-xl border p-6 transition-colors duration-500 lg:flex-row lg:items-stretch lg:gap-8 ${
           isActive ? "border-gold/70 bg-navy-deep" : "border-ivory/15 bg-navy-deep/50 hover:border-gold/50"
         }`;
+
+        // On wide screens the diagram moves beside the copy of the active panel, where the
+        // panel is wide enough to show it without cropping and the space is otherwise dead.
+        const body: ReactNode = (
+          <>
+            <span className="flex min-w-0 flex-1 flex-col">{inner}</span>
+            {p.art && isActive && (
+              <span data-art className="hidden shrink-0 self-start lg:block lg:w-[38%]">
+                <span className="block aspect-[400/150] overflow-hidden rounded-lg border border-ivory/10">
+                  <ProductArt name={p.art} />
+                </span>
+              </span>
+            )}
+          </>
+        );
 
         return (
           <li
@@ -78,11 +97,11 @@ export default function ExpandingPanels({ panels, heightClass = "lg:h-[30rem]" }
             {p.external ? (
               <a href={p.href} target="_blank" rel="noopener noreferrer"
                 onMouseEnter={() => setActive(i)} onFocus={() => setActive(i)} className={cls}>
-                {inner}
+                {body}
               </a>
             ) : (
               <Link href={p.href} onMouseEnter={() => setActive(i)} onFocus={() => setActive(i)} className={cls}>
-                {inner}
+                {body}
               </Link>
             )}
           </li>
