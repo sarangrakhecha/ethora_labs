@@ -17,6 +17,8 @@ export function Icon({ name, ...p }: { name: string } & SVGProps<SVGSVGElement>)
     case "check": return <svg {...props}><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z" /><path d="M9 12l2 2 4-4" /></svg>;
     case "chart": return <svg {...props}><path d="M5 20v-5M10 20v-9M15 20v-13M20 20V4" /></svg>;
     case "layers": return <svg {...props}><path d="M12 3l9 5-9 5-9-5z" /><path d="M3 13l9 5 9-5" /></svg>;
+    case "target": return <svg {...props}><circle cx="12" cy="12" r="6.5" /><circle cx="12" cy="12" r="1.8" fill="currentColor" stroke="none" /><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3" /></svg>;
+    case "terminal": return <svg {...props}><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M7 10l2.5 2L7 14M12.5 15H17" /></svg>;
     case "gear": return <svg {...props}><circle cx="12" cy="12" r="3" /><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" /></svg>;
     case "arrow": return <svg {...props} width={18} height={18} strokeWidth={1.8}><path d="M5 12h14M13 6l6 6-6 6" /></svg>;
     case "chevron": return <svg {...props} width={14} height={14} strokeWidth={2}><path d="M6 9l6 6 6-6" /></svg>;

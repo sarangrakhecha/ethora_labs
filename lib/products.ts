@@ -101,3 +101,13 @@ for (const p of products) {
   for (const f of p.features) f.body = noWidow(f.body);
   for (const s of p.screenshots) s.caption = noWidow(s.caption);
 }
+
+/** The open-source project, kept deliberately outside `products`: it is not one of ours to sell. */
+export const openSource = {
+  key: "terminalquest",
+  name: "TerminalQuest",
+  tagline: "Learn the terminal by saving a ship, not by reading slides.",
+  summary:
+    "A small arcade game that teaches the command line by making you use it. Each station drops you into a real bash prompt: what you type actually runs, and a real file has to move before anything unlocks. 502 automated tests, 98% coverage, zero dependencies, MIT.",
+  href: "https://github.com/sarangrakhecha/TerminalQuest",
+};
