@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Icon, Wordmark } from "./Icons";
 import { ButtonLink } from "./Button";
@@ -32,7 +33,7 @@ export default function Header() {
     <header className={`sticky top-0 z-50 border-b transition-colors ${scrolled || open ? "border-ivory/10 bg-navy-deep/95 backdrop-blur" : "border-transparent bg-navy"}`}>
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-2 focus:rounded focus:bg-gold focus:px-3 focus:py-2 focus:text-navy-deep">Skip to content</a>
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <a href="#top" aria-label="Ethora Labs, home" className="rounded"><Wordmark /></a>
+        <Link href="/" aria-label="Ethora Labs, home" className="rounded"><Wordmark /></Link>
 
         {/* Desktop nav */}
         <nav aria-label="Primary" className="hidden items-center gap-3 lg:flex">
@@ -44,14 +45,17 @@ export default function Header() {
               <ul id="cap-menu" className="absolute left-0 top-full mt-2 w-64 rounded-lg border border-ivory/15 bg-navy-deep p-2 shadow-xl">
                 {capabilities.map((c) => (
                   <li key={c.id}>
-                    <a href={`#cap-${c.id}`} onClick={close} className="block rounded px-3 py-2.5 text-[15px] text-ivory/90 hover:bg-ivory/10 hover:text-gold">{c.title}</a>
+                    <Link href={`/capabilities/${c.slug}`} onClick={close} className="block rounded px-3 py-2.5 text-[15px] text-ivory/90 hover:bg-ivory/10 hover:text-gold">{c.title}</Link>
                   </li>
                 ))}
+                <li className="mt-1 border-t border-ivory/10 pt-1">
+                  <Link href="/capabilities" onClick={close} className="block rounded px-3 py-2.5 text-[15px] font-medium text-gold hover:bg-ivory/10">All capabilities</Link>
+                </li>
               </ul>
             )}
           </div>
-          {nav.map((n) => <a key={n.href} href={n.href} className={linkCls}>{n.label}</a>)}
-          <ButtonLink href="#contact" size="sm" className="ml-2">Start a Conversation</ButtonLink>
+          {nav.map((n) => <Link key={n.href} href={n.href} className={linkCls}>{n.label}</Link>)}
+          <ButtonLink href="/#contact" size="sm" className="ml-2">Start a Conversation</ButtonLink>
         </nav>
 
         {/* Mobile toggle */}
@@ -65,14 +69,15 @@ export default function Header() {
           <ul className="flex flex-col">
             <li className="px-2 pb-1 pt-2 text-xs uppercase tracking-wider text-muted-dark">Capabilities</li>
             {capabilities.map((c) => (
-              <li key={c.id}><a href={`#cap-${c.id}`} onClick={close} className="flex min-h-12 items-center rounded px-2 text-[16px] text-ivory hover:text-gold">{c.title}</a></li>
+              <li key={c.id}><Link href={`/capabilities/${c.slug}`} onClick={close} className="flex min-h-12 items-center rounded px-2 text-[16px] text-ivory hover:text-gold">{c.title}</Link></li>
             ))}
+            <li><Link href="/capabilities" onClick={close} className="flex min-h-12 items-center rounded px-2 text-[16px] font-medium text-gold">All capabilities</Link></li>
             <li className="my-2 h-px bg-ivory/10" aria-hidden="true" />
             {nav.map((n) => (
-              <li key={n.href}><a href={n.href} onClick={close} className="flex min-h-12 items-center rounded px-2 text-[16px] text-ivory hover:text-gold">{n.label}</a></li>
+              <li key={n.href}><Link href={n.href} onClick={close} className="flex min-h-12 items-center rounded px-2 text-[16px] text-ivory hover:text-gold">{n.label}</Link></li>
             ))}
           </ul>
-          <ButtonLink href="#contact" onClick={close} className="mt-4 w-full">Start a Conversation</ButtonLink>
+          <ButtonLink href="/#contact" onClick={close} className="mt-4 w-full">Start a Conversation</ButtonLink>
         </nav>
       )}
     </header>

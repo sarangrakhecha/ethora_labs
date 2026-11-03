@@ -2,10 +2,10 @@ import { Wordmark } from "./Icons";
 import { site } from "@/lib/content";
 
 const links = [
-  { label: "Capabilities", href: "#capabilities" },
-  { label: "Approach", href: "#approach" },
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
+  { label: "Capabilities", href: "/capabilities" },
+  { label: "Approach", href: "/#approach" },
+  { label: "About", href: "/#about" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export default function Footer() {
