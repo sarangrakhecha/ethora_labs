@@ -1,0 +1,10 @@
+{
+  // Serves the static export (`npm run build` -> ./out) on Cloudflare.
+  // "name" must match the project name set in the Cloudflare dashboard.
+  "name": "ethora-labs",
+  "compatibility_date": "2026-11-03",
+  "assets": {
+    "directory": "./out",
+    "not_found_handling": "404-page"
+  }
+}
