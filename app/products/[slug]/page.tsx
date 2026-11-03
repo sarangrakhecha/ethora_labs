@@ -66,9 +66,10 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
           <Reveal>
             {shots.length > 0 ? (
               <ul className="grid gap-5 md:grid-cols-2">
-                {shots.map((s) => (
-                  <li key={s.src} className="overflow-hidden rounded-xl border border-ivory/15 bg-navy">
-                    <Image src={s.src} alt={s.alt} width={s.w} height={s.h} className="h-auto w-full" />
+                {shots.map((s, i) => (
+                  <li key={s.src} className={`overflow-hidden rounded-xl border border-ivory/15 bg-navy ${i === 0 ? "md:col-span-2" : ""}`}>
+                    <Image src={s.src} alt={s.alt} width={s.w} height={s.h} priority={i === 0}
+                      className={i === 0 ? "h-auto w-full" : "mx-auto h-auto w-full max-w-[26rem]"} />
                     <p className="border-t border-ivory/10 px-5 py-4 text-sm text-muted-dark">{s.caption}</p>
                   </li>
                 ))}
@@ -76,7 +77,7 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
             ) : (
               <>
                 <div className="overflow-hidden rounded-xl border border-ivory/15">
-                  <div className="aspect-[400/260] max-h-[26rem]"><ProductArt name={p.art} /></div>
+                  <div className="aspect-[400/150] max-h-[26rem]"><ProductArt name={p.art} /></div>
                 </div>
                 {/* Honest about what this image is. */}
                 <p className="mt-3 text-sm text-slate">Brand illustration. Product screenshots are being prepared.</p>

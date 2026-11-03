@@ -188,6 +188,57 @@ const run = async () => {
   check("valid email accepted", (await page.locator("#e-email").count()) === 0);
 
   /* ------------------------------------------------------------------ SEO + a11y */
+  /* ------------------------------------------- no single word stranded on a last line */
+  console.log("\nTypography: no orphaned last-line words");
+  // Measures real line boxes. A word is attributed to the line it ENDS on, so a word
+  // broken across lines at a hyphen is not mistaken for sitting on the earlier line.
+  const findWidows = () => {
+    const out = [];
+    const sel = "p, li, h1, h2, h3, h4, blockquote, figcaption, dd, dt";
+    for (const el of document.querySelectorAll(sel)) {
+      if (el.querySelector(sel)) continue;
+      const style = getComputedStyle(el);
+      if (style.display === "none" || style.visibility === "hidden" || el.offsetParent === null) continue;
+      const text = el.textContent.replace(/\s+/g, " ").trim();
+      if (!text || text.split(" ").length < 4) continue;
+      const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+      const words = [];
+      let node;
+      while ((node = walker.nextNode())) {
+        const re = /\S+/g;
+        let m;
+        while ((m = re.exec(node.textContent))) {
+          const r = document.createRange();
+          r.setStart(node, m.index); r.setEnd(node, m.index + m[0].length);
+          const rects = r.getClientRects();
+          if (!rects.length) continue;
+          const lastRect = rects[rects.length - 1];
+          if (lastRect.width > 0 || lastRect.height > 0) words.push({ w: m[0], top: Math.round(lastRect.top) });
+        }
+      }
+      if (words.length < 4) continue;
+      const tops = [...new Set(words.map((w) => w.top))].sort((a, b) => a - b);
+      if (tops.length < 2) continue;
+      const lastTop = tops[tops.length - 1];
+      const lastLine = words.filter((w) => w.top === lastTop);
+      if (lastLine.length === 1) out.push(`${el.tagName} "${lastLine[0].w}" in: ${text.slice(0, 60)}`);
+    }
+    return out;
+  };
+
+  for (const width of [1440, 1024, 768, 390]) {
+    const wp = await browser.newPage({ viewport: { width, height: 900 } });
+    const offenders = [];
+    for (const route of ROUTES) {
+      await wp.goto(BASE + route);
+      await wp.evaluate(() => document.querySelectorAll(".reveal").forEach((e) => e.classList.add("is-visible")));
+      await sleep(80);
+      for (const o of await wp.evaluate(findWidows)) offenders.push(`${route} ${o}`);
+    }
+    check(`${width}px: no stranded last words`, offenders.length === 0, offenders.slice(0, 4).join("\n      "));
+    await wp.close();
+  }
+
   console.log("\nSEO metadata");
   for (const route of ["/", "/services/software-engineering/", "/services/quality-engineering/", "/services/test-automation/", "/services/innovation/", "/about/", "/contact/"]) {
     await page.goto(BASE + route);

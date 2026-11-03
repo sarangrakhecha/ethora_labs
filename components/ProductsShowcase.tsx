@@ -27,7 +27,7 @@ export default function ProductsShowcase() {
             <li key={p.slug}>
               <Reveal delay={i * 90} className="h-full">
                 <Link href={`/products/${p.slug}`} className="group flex h-full flex-col overflow-hidden rounded-xl border border-ivory/15 bg-navy transition-colors hover:border-gold/70">
-                  <div className="aspect-[400/260]"><ProductArt name={p.art} /></div>
+                  <div className="aspect-[400/150]"><ProductArt name={p.art} /></div>
                   <div className="flex flex-1 flex-col p-6">
                     <div className="flex flex-wrap items-center gap-3">
                       <h3 className="font-serif text-2xl">{p.name}</h3>

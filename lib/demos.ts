@@ -1,3 +1,5 @@
+import { noWidow } from "./typography.ts";
+
 /**
  * Pure logic behind the interactive demonstrations on the service pages.
  * Kept free of React so it can be unit-tested directly (see tests/unit.test.mjs).
@@ -211,3 +213,12 @@ export const ARCH_EDGES: [string, string][] = [
   ["client", "gateway"], ["gateway", "services"], ["services", "db"],
   ["services", "external"], ["gateway", "observability"], ["services", "tests"],
 ];
+
+// Trailing single words tied up for the demo copy as well.
+for (const s of SCENARIOS) {
+  s.verdict.body = noWidow(s.verdict.body);
+  s.lesson = noWidow(s.lesson);
+  s.summary = noWidow(s.summary);
+}
+for (const s of PROTOTYPE_STEPS) s.body = noWidow(s.body);
+for (const n of ARCH_NODES) n.role = noWidow(n.role);

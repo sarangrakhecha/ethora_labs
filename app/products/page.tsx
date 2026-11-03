@@ -25,7 +25,7 @@ export default function ProductsIndex() {
           {products.map((p, i) => (
             <Reveal key={p.slug} delay={i * 90}>
               <article className="overflow-hidden rounded-xl border border-ivory/15 bg-navy-deep md:grid md:grid-cols-2">
-                <div className={`aspect-[400/260] ${i % 2 ? "md:order-2" : ""}`}>
+                <div className={`aspect-[400/150] ${i % 2 ? "md:order-2" : ""}`}>
                   <ProductArt name={p.art} />
                 </div>
                 <div className="flex flex-col justify-center p-7 md:p-10">

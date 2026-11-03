@@ -34,6 +34,11 @@ body { background: var(--navy); color: var(--ivory); font-family: var(--font-san
 :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
 .on-light :focus-visible { outline-color: var(--navy); }
 
+/* Typography: never leave a single word stranded on the last line.
+   `balance` evens out short headings; `pretty` pulls a word down to avoid orphans. */
+h1, h2, h3, h4, h5, h6, .text-balance { text-wrap: balance; }
+p, li, dd, dt, figcaption, blockquote, label, summary { text-wrap: pretty; }
+
 .gold-rule { display: block; height: 1px; width: 3rem; background: var(--gold); }
 
 /* Scroll reveal (see components/Reveal.tsx). Content is visible without JS. */

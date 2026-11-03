@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { stages } from "@/lib/content";
+import { noWidow } from "@/lib/typography";
 import { Icon } from "./Icons";
 
 const icons = ["pen", "code", "check", "chart"];
@@ -40,9 +41,9 @@ export default function EngineeringCanvas() {
                 <Icon name={icons[i]} className="mt-0.5 h-6 w-6 shrink-0 text-gold xl:mt-0" />
                 <span className="block">
                   <span className="block font-serif text-2xl leading-tight xl:text-xl">{s.title}</span>
-                  <span className="mt-1 block text-sm leading-snug text-muted-dark xl:text-[12px]">{s.short}</span>
+                  <span className="mt-1 block text-sm leading-snug text-muted-dark xl:text-[12px]">{noWidow(s.short)}</span>
                   {/* Mobile: expanded text inline */}
-                  <span id={`stage-desc-${s.id}`} className={`mt-3 block text-sm leading-relaxed text-ivory xl:hidden ${isActive ? "" : "hidden"}`}>{s.long}</span>
+                  <span id={`stage-desc-${s.id}`} className={`mt-3 block text-sm leading-relaxed text-ivory xl:hidden ${isActive ? "" : "hidden"}`}>{noWidow(s.long)}</span>
                 </span>
               </button>
               {i < stages.length - 1 && (
@@ -67,7 +68,7 @@ export default function EngineeringCanvas() {
 
       <div role="status" aria-live="polite" className="mt-4 hidden min-h-[4.5rem] rounded-lg border border-ivory/10 bg-navy-deep/60 px-5 py-4 text-center xl:block">
         <span className="font-serif text-lg text-gold">{cur.title}.</span>{" "}
-        <span className="text-[15px] text-ivory">{cur.long}</span>
+        <span className="text-[15px] text-ivory">{noWidow(cur.long)}</span>
       </div>
     </div>
   );

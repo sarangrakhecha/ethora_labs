@@ -35,6 +35,18 @@ npm test            # all three in order
 `test:e2e` resolves Playwright from the environment rather than as a project dependency,
 so the project still depends only on Next, React and Tailwind.
 
+## Typography rule
+
+No line of running text ends with a single stranded word. Two mechanisms enforce it:
+
+1. `app/globals.css` sets `text-wrap: balance` on headings and `text-wrap: pretty` on body copy.
+2. `lib/typography.ts` `noWidow()` ties the last two words with a non-breaking space, applied
+   centrally in `lib/services.ts`, `lib/products.ts` and `lib/demos.ts` for the cases CSS cannot
+   fix (where the final word is long enough to fill a line on its own).
+
+`npm run test:e2e` checks every route at 1440/1024/768/390px and fails if any text block ends
+with a one-word line, so this cannot silently regress.
+
 ## Editing content
 - Service page copy: `lib/services.ts` (one entry per service drives the whole page).
 - Demo logic and copy: `lib/demos.ts` (pure functions, unit-tested).

@@ -1,4 +1,5 @@
 import { stages } from "@/lib/content";
+import { noWidow } from "@/lib/typography";
 import Reveal from "./Reveal";
 
 export default function Approach() {
@@ -35,9 +36,9 @@ export default function Approach() {
                   <div className="grid gap-2 md:grid-cols-[14rem_1fr] md:gap-10">
                     <div>
                       <h3 className="font-serif text-3xl leading-tight">{s.title}</h3>
-                      <p className="mt-1 text-sm font-medium text-gold-deep">{s.short}</p>
+                      <p className="mt-1 text-sm font-medium text-gold-deep">{noWidow(s.short)}</p>
                     </div>
-                    <p className="max-w-2xl leading-relaxed text-muted-light">{s.long} {s.detail}</p>
+                    <p className="max-w-2xl leading-relaxed text-muted-light">{noWidow(`${s.long} ${s.detail}`)}</p>
                   </div>
                 </Reveal>
               </li>

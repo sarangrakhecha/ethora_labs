@@ -1,3 +1,5 @@
+import { noWidow } from "./typography.ts";
+
 // Product data. Everything here is either stated by the Ethora team or deliberately
 // left empty — no invented features, metrics, availability or screenshots.
 
@@ -50,22 +52,27 @@ export const products: Product[] = [
       {
         src: "/products/culprit/side-panel.webp", w: 1200, h: 860,
         alt: "Culprit open as a Chrome side panel beside a checkout page, listing three failed requests with the clicks that triggered them.",
-        caption: "Culprit runs as a Chrome side panel beside the page you are testing. Each failed request is listed with the interaction that caused it.",
+        caption: "Culprit runs beside the page you are testing, as a Chrome side panel or from the toolbar.",
       },
       {
-        src: "/products/culprit/failure-to-selector.webp", w: 1200, h: 860,
-        alt: "Three Culprit panels: the activity list, a failure opened to show what happened and steps to reproduce, and the selector view with rated alternatives.",
-        caption: "From a captured failure through to steps to reproduce and a recommended selector, with alternatives rated unique, stable or fragile.",
+        src: "/products/culprit/panel.webp", w: 800, h: 1152,
+        alt: "The Culprit panel: recording indicator, Inspect and Screenshot buttons, the last click's selector, and a list of three failed requests.",
+        caption: "Recording state, inspect and screenshot actions, the last click's selector, and every failure captured so far.",
       },
       {
-        src: "/products/culprit/toolbar.webp", w: 1280, h: 800,
-        alt: "Culprit's toolbar popup showing the latest failure, a Copy bug report button and the last click's selector.",
-        caption: "A compact view from the toolbar. Recording stays off until you turn it on for a given site, in light or dark theme.",
+        src: "/products/culprit/diagnosis.webp", w: 800, h: 1472,
+        alt: "A failure opened in Culprit showing what happened, a possible cause, the button that triggered it, and four numbered steps to reproduce.",
+        caption: "Each failure opens with what happened and numbered steps to reproduce. A possible cause is offered as a hypothesis, labelled as not a confirmed diagnosis.",
       },
       {
-        src: "/products/culprit/masking.webp", w: 1280, h: 800,
-        alt: "A request payload in Culprit with card number and CVV replaced by [REDACTED].",
-        caption: "Request and response detail, with passwords, tokens, cards and keys replaced by [REDACTED] where recognised.",
+        src: "/products/culprit/selectors.webp", w: 800, h: 1472,
+        alt: "Culprit's selector view showing a recommended test-attribute selector and four alternatives rated unique, stable, fair or fragile.",
+        caption: "Selector options for the clicked element, each rated for uniqueness and stability, shown in your framework's syntax.",
+      },
+      {
+        src: "/products/culprit/request.webp", w: 800, h: 1120,
+        alt: "A request payload in Culprit showing URL, method, status and timing, with card number and CVV replaced by [REDACTED].",
+        caption: "Full request and response detail, with headers, payload and cURL \u2014 and sensitive values replaced by [REDACTED] where recognised.",
       },
     ],
     art: "culprit",
@@ -88,3 +95,10 @@ export const products: Product[] = [
     art: "renewguard",
   },
 ];
+
+for (const p of products) {
+  p.summary = noWidow(p.summary);
+  p.status.detail = noWidow(p.status.detail);
+  for (const f of p.features) f.body = noWidow(f.body);
+  for (const s of p.screenshots) s.caption = noWidow(s.caption);
+}

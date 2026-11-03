@@ -1,3 +1,5 @@
+import { noWidow, noWidows } from "./typography.ts";
+
 // Service page content. Ethora Labs is a new company: nothing here claims clients,
 // case studies, metrics or team size. Examples are labelled as illustrative.
 
@@ -244,6 +246,20 @@ export const services: Service[] = [
     related: ["software-engineering", "test-automation"],
   },
 ];
+
+// Tie up trailing single words once, centrally, rather than per component.
+for (const s of services) {
+  s.intro = noWidow(s.intro);
+  s.headline = noWidow(s.headline);
+  s.addresses = noWidow(s.addresses);
+  s.nav.description = noWidow(s.nav.description);
+  s.demoIntro.body = noWidow(s.demoIntro.body);
+  s.deliverables = noWidows(s.deliverables);
+  for (const c of s.challenges) c.body = noWidow(c.body);
+  for (const w of s.whatWeDo) w.body = noWidow(w.body);
+  for (const a of s.approach) a.body = noWidow(a.body);
+  for (const e of s.engagements) e.body = noWidow(e.body);
+}
 
 export function getService(slug: string): Service | undefined {
   return services.find((s) => s.slug === slug);
