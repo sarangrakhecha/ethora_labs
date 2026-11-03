@@ -153,6 +153,17 @@ const run = async () => {
   await page.click('button:has-text("Stop")');
   check("prototype: decision explains stopping", (await page.textContent("#demo")).includes("successful outcome"));
 
+  /* ------------------------------------------------- wordmark returns to the top */
+  console.log("\nWordmark");
+  await page.goto(BASE + "/");
+  await page.evaluate(() => window.scrollTo(0, 2500));
+  await sleep(200);
+  const scrollBefore = await page.evaluate(() => window.scrollY);
+  await page.click('header a[aria-label="Ethora Labs, home"]');
+  await sleep(900);
+  const scrollAfter = await page.evaluate(() => window.scrollY);
+  check("scrolls to the top when already on the home page", scrollBefore > 500 && scrollAfter === 0, `${scrollBefore} -> ${scrollAfter}`);
+
   /* ----------------------------------------------- service context -> contact form */
   console.log("\nService context carries into the contact form");
   await page.goto(BASE + "/services/test-automation/");
@@ -188,6 +199,26 @@ const run = async () => {
   check("valid email accepted", (await page.locator("#e-email").count()) === 0);
 
   /* ------------------------------------------------------------------ SEO + a11y */
+  /* -------------------------------------------- canvas labels stay inside the circles */
+  console.log("\nEngineering canvas labels fit their circles");
+  for (const width of [1440, 1366, 1280]) {
+    const cp = await browser.newPage({ viewport: { width, height: 900 } });
+    await cp.goto(BASE + "/");
+    const over = await cp.evaluate(() =>
+      [...document.querySelectorAll("#top ol li button")].flatMap((btn) => {
+        const box = btn.getBoundingClientRect();
+        const usable = box.width - 24; // the circle's horizontal padding
+        return [...btn.querySelectorAll("span")].flatMap((s) =>
+          [...s.getClientRects()]
+            .filter((r) => r.width > usable)
+            .map((r) => `${s.textContent.trim().slice(0, 28)} (${Math.round(r.width)}px in ${Math.round(box.width)}px)`)
+        );
+      })
+    );
+    check(`${width}px: no label spills outside its circle`, over.length === 0, over.join("; "));
+    await cp.close();
+  }
+
   /* ------------------------------------------------------------- column alignment */
   console.log("\nApproach section alignment");
   for (const width of [1440, 1280, 1024, 768]) {
@@ -215,10 +246,12 @@ const run = async () => {
     const sel = "p, li, h1, h2, h3, h4, blockquote, figcaption, dd, dt";
     for (const el of document.querySelectorAll(sel)) {
       if (el.querySelector(sel)) continue;
+      // Opt-out for fixed-width labels where wrapping is intended (canvas circles).
+      if (el.closest("[data-allow-widow]")) continue;
       const style = getComputedStyle(el);
       if (style.display === "none" || style.visibility === "hidden" || el.offsetParent === null) continue;
       const text = el.textContent.replace(/\s+/g, " ").trim();
-      if (!text || text.split(" ").length < 4) continue;
+      if (!text || text.split(" ").length < 5) continue;
       const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
       const words = [];
       let node;

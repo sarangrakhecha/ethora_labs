@@ -28,7 +28,13 @@ export default function EngineeringCanvas() {
         {stages.map((s, i) => {
           const isActive = i === active;
           return (
-            <li key={s.id} className="relative xl:flex xl:justify-center">
+            <li
+              key={s.id}
+              // Fixed-width circular labels: wrapping is required here, so the
+              // no-orphan rule is deliberately not applied (see tests/e2e.mjs).
+              data-allow-widow
+              className="relative xl:flex xl:justify-center"
+            >
               <button
                 type="button"
                 aria-expanded={isActive}
@@ -41,7 +47,7 @@ export default function EngineeringCanvas() {
                 <Icon name={icons[i]} className="mt-0.5 h-6 w-6 shrink-0 text-gold xl:mt-0" />
                 <span className="block">
                   <span className="block font-serif text-2xl leading-tight xl:text-xl">{s.title}</span>
-                  <span className="mt-1 block text-sm leading-snug text-muted-dark xl:text-[12px]">{noWidow(s.short)}</span>
+                  <span className="mt-1 block text-sm leading-snug text-muted-dark xl:text-[12px]">{s.short}</span>
                   {/* Mobile: expanded text inline */}
                   <span id={`stage-desc-${s.id}`} className={`mt-3 block text-sm leading-relaxed text-ivory xl:hidden ${isActive ? "" : "hidden"}`}>{noWidow(s.long)}</span>
                 </span>

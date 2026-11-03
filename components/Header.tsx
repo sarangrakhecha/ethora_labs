@@ -44,7 +44,15 @@ export default function Header() {
     <header className={`sticky top-0 z-50 border-b transition-colors ${scrolled || open ? "border-ivory/10 bg-navy-deep/95 backdrop-blur" : "border-transparent bg-navy"}`}>
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-2 focus:rounded focus:bg-gold focus:px-3 focus:py-2 focus:text-navy-deep">Skip to content</a>
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" aria-label="Ethora Labs, home" className="rounded"><Wordmark /></Link>
+        <Link
+          href="/"
+          aria-label="Ethora Labs, home"
+          className="rounded"
+          // Already on the home page: Next does not re-navigate, so scroll up explicitly.
+          onClick={() => { if (pathname === "/") window.scrollTo({ top: 0, behavior: "smooth" }); }}
+        >
+          <Wordmark />
+        </Link>
 
         {/* Desktop */}
         <nav aria-label="Primary" className="hidden items-center gap-2 lg:flex">
