@@ -73,7 +73,11 @@ export default function ProblemFirst() {
             </ul>
             <h3 className="mt-8 font-serif text-2xl">How an engagement typically starts</h3>
             <p className="mt-3 leading-relaxed text-muted-light">{p.start}</p>
-            <ButtonLink href="#contact" variant="outline-dark" className="mt-6">Talk to us about this</ButtonLink>
+            <ButtonLink
+              href="#contact" variant="outline-dark" className="mt-6"
+              // Carries the chosen challenge down to the contact form (see Contact.tsx).
+              onClick={() => window.dispatchEvent(new CustomEvent("ethora:challenge", { detail: { label: p.label, seed: p.seed } }))}
+            >Talk to us about this</ButtonLink>
           </div>
         </div>
       </div>

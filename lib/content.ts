@@ -126,18 +126,21 @@ export const problems = [
     problems: ["You have an idea but no clear scope, architecture or plan", "You need a prototype to test an assumption before investing further", "Your team lacks capacity or specific engineering expertise", "You want a foundation that will not need rewriting in a year"],
     capabilities: ["Software Engineering", "Engineering & Innovation", "Quality Engineering"],
     start: "We begin with a conversation about the problem, users and constraints, then propose a small, well-defined first step such as a design sprint or prototype, so you can judge the approach before committing further.",
+    seed: "We're looking to build a product. Here's the idea and where we are so far:\n\n",
   },
   {
     id: "quality", label: "Improve Software Quality", summary: "Increase reliability, reduce risk, and ship with greater confidence.",
     problems: ["Bugs keep reaching users after release", "Testing is mostly manual, slow or inconsistent", "Nobody is sure what is covered and what is not", "Releases feel risky and are delayed by late-stage fixes"],
     capabilities: ["Quality Engineering", "Test Automation & CI/CD", "Software Engineering"],
     start: "We start with a lightweight review of your product, tests and release process to identify the highest-risk gaps, then agree a short, prioritised plan to address them.",
+    seed: "We'd like to improve our software quality. Our current testing and release process looks like this:\n\n",
   },
   {
     id: "workflow", label: "Streamline Engineering Workflows", summary: "Bring more speed, automation and consistency to your delivery.",
     problems: ["Builds and deployments are slow or manual", "Test pipelines are flaky and developers stop trusting them", "Environments and processes differ from team to team", "Too much engineering time goes to repetitive work"],
     capabilities: ["Test Automation & CI/CD", "Software Engineering", "Quality Engineering"],
     start: "We map how work currently flows from commit to release, find the main bottlenecks with your team, and begin with the one change that removes the most friction.",
+    seed: "We want to streamline our engineering workflow. Today our build, test and release process works like this:\n\n",
   },
 ] as const;
 
@@ -145,6 +148,5 @@ export const problems = [
 export const nav = [
   { label: "Approach", href: "/#approach" },
   { label: "About", href: "/#about" },
-  { label: "Insights", href: "/#insights" },
   { label: "Contact", href: "/#contact" },
 ];

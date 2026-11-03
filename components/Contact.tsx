@@ -1,5 +1,5 @@
 "use client";
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import Reveal from "./Reveal";
 
 type Values = { name: string; email: string; company: string; message: string };
@@ -30,6 +30,20 @@ export default function Contact() {
   const [values, setValues] = useState<Values>({ name: "", email: "", company: "", message: "" });
   const [honeypot, setHoneypot] = useState("");
   const [touched, setTouched] = useState<Partial<Record<keyof Values, boolean>>>({});
+  const [challenge, setChallenge] = useState<string | null>(null);
+
+  // The problem-first section dispatches this when someone picks a challenge, so the
+  // form opens already knowing what they came to talk about.
+  useEffect(() => {
+    const onChallenge = (e: Event) => {
+      const d = (e as CustomEvent<{ label: string; seed: string }>).detail;
+      if (!d) return;
+      setChallenge(d.label);
+      setValues((v) => (v.message.trim() ? v : { ...v, message: d.seed }));
+    };
+    window.addEventListener("ethora:challenge", onChallenge);
+    return () => window.removeEventListener("ethora:challenge", onChallenge);
+  }, []);
   const errors = validate(values);
   const show = (k: keyof Values) => (touched[k] ? errors[k] : undefined);
 
@@ -59,6 +73,14 @@ export default function Contact() {
         </Reveal>
 
         <Reveal delay={100}>
+          <div aria-live="polite" className="mb-5 empty:mb-0">
+            {challenge && (
+              <p className="inline-flex flex-wrap items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-2 text-sm">
+                <span className="text-muted-dark">Your challenge:</span>
+                <span className="font-medium text-ivory">{challenge}</span>
+              </p>
+            )}
+          </div>
           <form noValidate onSubmit={onSubmit} aria-describedby="form-note" className="space-y-5">
             {/* Honeypot: hidden from people and assistive tech; bots tend to fill it. */}
             <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">

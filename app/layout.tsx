@@ -9,10 +9,21 @@ const sans = DM_Sans({ subsets: ["latin"], variable: "--font-dm-sans", display: 
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ethoralabs.co"),
-  title: "Ethora Labs | Engineering-led technology consultancy",
-  description: "Ethora Labs is an engineering-led technology consultancy that designs, builds, tests, and improves software, with a focus on quality, reliability, and lasting value.",
+  title: "Ethora Labs | Software Engineering, Quality & IT Consulting",
+  description: "Engineering-led IT consulting: custom software development, quality engineering, test automation and CI/CD. Ethora Labs helps teams build software that works, scales and lasts.",
   icons: { icon: "/favicon.svg" },
-  openGraph: { title: "Ethora Labs", description: "Built on Principles. Driven by Possibility.", url: "https://ethoralabs.co", siteName: "Ethora Labs", type: "website" },
+  openGraph: {
+    title: "Ethora Labs | Software Engineering, Quality & IT Consulting",
+    description: "Engineering-led IT consulting: custom software development, quality engineering, test automation and CI/CD.",
+    url: "https://ethoralabs.co", siteName: "Ethora Labs", type: "website", locale: "en_IN",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Ethora Labs — Built on Principles. Driven by Possibility." }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ethora Labs | Software Engineering, Quality & IT Consulting",
+    description: "Engineering-led IT consulting: custom software development, quality engineering, test automation and CI/CD.",
+    images: ["/og.png"],
+  },
 };
 export const viewport: Viewport = { themeColor: "#101C2A" };
 

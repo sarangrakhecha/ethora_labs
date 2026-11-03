@@ -3,7 +3,6 @@ import Approach from "@/components/Approach";
 import Capabilities from "@/components/Capabilities";
 import ProblemFirst from "@/components/ProblemFirst";
 import About from "@/components/About";
-import Insights from "@/components/Insights";
 import Contact from "@/components/Contact";
 
 export default function Home() {
@@ -14,7 +13,6 @@ export default function Home() {
       <Capabilities />
       <ProblemFirst />
       <About />
-      <Insights />
       <Contact />
     </>
   );

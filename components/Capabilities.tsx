@@ -1,13 +1,19 @@
+"use client";
 import Link from "next/link";
+import { useState } from "react";
 import { capabilities } from "@/lib/content";
 import { Icon } from "./Icons";
 import Reveal from "./Reveal";
 
-// Bento layout so cards are not all identical: wide / narrow alternate.
-const layout = ["lg:col-span-4", "lg:col-span-2", "lg:col-span-2", "lg:col-span-4"];
-const tone = ["bg-navy-deep", "bg-navy-deep/50", "bg-navy-deep/50", "bg-navy-deep"];
-
+/**
+ * Desktop: four panels in a row. The active one grows and reveals its detail while the
+ * others shrink, so the row stays the same width with no dead space. Hover or keyboard
+ * focus sets the active panel; clicking opens the full capability page.
+ * Mobile: a plain stacked list — no width animation to fight with.
+ */
 export default function Capabilities() {
+  const [active, setActive] = useState(0);
+
   return (
     <section id="capabilities" className="bg-navy">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24 lg:px-8">
@@ -20,22 +26,48 @@ export default function Capabilities() {
             View all capabilities <Icon name="arrow" />
           </Link>
         </Reveal>
-        <ul className="mt-12 grid gap-4 lg:grid-cols-6">
-          {capabilities.map((c, i) => (
-            <li key={c.id} className={layout[i]}>
-              <Reveal delay={i * 80} className="h-full">
-                <Link href={`/capabilities/${c.slug}`} className={`group flex h-full flex-col rounded-xl border border-ivory/15 p-6 transition-colors hover:border-gold/70 ${tone[i]}`}>
-                  <Icon name={c.icon} className="h-9 w-9 text-gold transition-transform group-hover:-translate-y-0.5" />
-                  <h3 className="mt-5 font-serif text-2xl">{c.title}</h3>
-                  <p className="mt-3 leading-relaxed text-muted-dark">{c.description}</p>
-                  <span className="mt-auto inline-flex items-center gap-2 self-start pt-5 text-[15px] font-medium text-gold">
-                    Explore <Icon name="arrow" className="transition-transform group-hover:translate-x-0.5" />
-                  </span>
-                </Link>
-              </Reveal>
-            </li>
-          ))}
-        </ul>
+
+        <Reveal delay={80}>
+          <ul className="mt-12 flex flex-col gap-4 lg:h-[24rem] xl:h-[22.5rem] lg:flex-row lg:gap-3">
+            {capabilities.map((c, i) => {
+              const isActive = i === active;
+              return (
+                <li
+                  key={c.id}
+                  style={{ flexGrow: isActive ? 2.6 : 1 }}
+                  className="min-w-0 transition-[flex-grow] duration-500 ease-out lg:basis-0"
+                >
+                  <Link
+                    href={`/capabilities/${c.slug}`}
+                    onMouseEnter={() => setActive(i)}
+                    onFocus={() => setActive(i)}
+                    className={`group flex h-full min-w-0 flex-col overflow-hidden rounded-xl border p-6 transition-colors duration-500 ${
+                      isActive ? "border-gold/70 bg-navy-deep" : "border-ivory/15 bg-navy-deep/50 hover:border-gold/50"
+                    }`}
+                  >
+                    <Icon name={c.icon} className="h-9 w-9 shrink-0 text-gold" />
+                    <h3 className="mt-5 font-serif text-2xl leading-tight">{c.title}</h3>
+                    {/* Narrow panels clamp the description so "Explore" always stays in view. */}
+                    <p className={`mt-3 leading-relaxed text-muted-dark ${isActive ? "" : "lg:line-clamp-3"}`}>{c.description}</p>
+
+                    {/* Detail: always visible on mobile, revealed with the active panel on desktop */}
+                    <p
+                      className={`mt-4 leading-relaxed text-ivory transition-opacity duration-500 lg:border-t lg:border-gold/30 lg:pt-4 ${
+                        isActive ? "lg:opacity-100" : "lg:mt-0 lg:h-0 lg:overflow-hidden lg:border-0 lg:pt-0 lg:opacity-0"
+                      }`}
+                    >
+                      {c.more}
+                    </p>
+
+                    <span className="mt-auto inline-flex shrink-0 items-center gap-2 self-start whitespace-nowrap pt-5 text-[15px] font-medium text-gold">
+                      Explore <Icon name="arrow" className="transition-transform group-hover:translate-x-0.5" />
+                    </span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </Reveal>
       </div>
     </section>
   );
