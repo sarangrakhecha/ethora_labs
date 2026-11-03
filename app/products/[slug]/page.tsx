@@ -156,7 +156,11 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
               <div className="h-24 w-40 shrink-0 overflow-hidden rounded-lg"><ProductArt name={other.art} /></div>
               <span>
                 <span className="block font-serif text-xl">{other.name}</span>
-                <span className="mt-1 block text-sm text-muted-dark">{other.tagline} — {other.status.label}</span>
+                <span className="mt-1 block text-sm text-muted-dark">{other.tagline}</span>
+                <span className={`mt-2 inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs ${other.status.available ? "border-gold/50 bg-gold/10 text-ivory" : "border-ivory/25 text-muted-dark"}`}>
+                  <span className={`h-1.5 w-1.5 rounded-full ${other.status.available ? "bg-gold" : "bg-slate"}`} aria-hidden="true" />
+                  {other.status.label}
+                </span>
               </span>
               <Icon name="arrow" className="text-gold sm:ml-auto" />
             </Link>

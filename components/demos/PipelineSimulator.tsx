@@ -65,7 +65,13 @@ export default function PipelineSimulator() {
       <div id="pipeline-detail" aria-live="polite" className="mt-5">
         {selected && selectedState ? (
           <div className="rounded-lg border border-gold/40 bg-navy p-5">
-            <h4 className="font-medium">{selected.name} — {tone[selectedState.status].label}</h4>
+            <h4 className="flex flex-wrap items-center gap-x-3 gap-y-1 font-medium">
+              {selected.name}
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-ivory/25 px-2.5 py-0.5 text-xs font-normal text-muted-dark">
+                <span className={`h-1.5 w-1.5 rounded-full ${tone[selectedState.status].dot}`} aria-hidden="true" />
+                {tone[selectedState.status].label}
+              </span>
+            </h4>
             <p className="mt-2 text-muted-dark">{selectedState.note}</p>
             <p className="mt-3 border-t border-ivory/10 pt-3 text-sm text-slate">What this stage is for: {selected.what}</p>
           </div>
