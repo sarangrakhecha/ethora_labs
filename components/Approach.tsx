@@ -6,7 +6,9 @@ export default function Approach() {
   return (
     <section id="approach" className="on-light bg-ivory text-ink">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24 lg:px-8">
-        <div className="grid gap-8 lg:grid-cols-[1fr_2fr] lg:gap-16">
+        {/* The intro column starts at the same offset as the timeline body text:
+            rail (3rem) + gap (2rem) + title column (14rem) + gap (2.5rem) = 21.5rem. */}
+        <div className="grid gap-8 md:grid-cols-[21.5rem_1fr] md:gap-x-0">
           <Reveal>
             <h2 className="font-serif text-4xl sm:text-5xl">Our Approach</h2>
             <span className="gold-rule mt-5" />

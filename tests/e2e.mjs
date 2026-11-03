@@ -188,6 +188,24 @@ const run = async () => {
   check("valid email accepted", (await page.locator("#e-email").count()) === 0);
 
   /* ------------------------------------------------------------------ SEO + a11y */
+  /* ------------------------------------------------------------- column alignment */
+  console.log("\nApproach section alignment");
+  for (const width of [1440, 1280, 1024, 768]) {
+    const ap = await browser.newPage({ viewport: { width, height: 900 } });
+    await ap.goto(BASE + "/");
+    await ap.evaluate(() => document.querySelectorAll(".reveal").forEach((e) => e.classList.add("is-visible")));
+    const pos = await ap.evaluate(() => {
+      const sec = document.querySelector("#approach");
+      const left = (el) => (el ? Math.round(el.getBoundingClientRect().left) : null);
+      return {
+        intro: left(sec.querySelector("div.grid > div:nth-child(2) p")),
+        body: left(sec.querySelector("ol li p.max-w-2xl")),
+      };
+    });
+    check(`${width}px: intro aligns with timeline body`, pos.intro === pos.body, `intro ${pos.intro} vs body ${pos.body}`);
+    await ap.close();
+  }
+
   /* ------------------------------------------- no single word stranded on a last line */
   console.log("\nTypography: no orphaned last-line words");
   // Measures real line boxes. A word is attributed to the line it ENDS on, so a word
