@@ -30,7 +30,7 @@ const panels: Panel[] = [
     title: openSource.name,
     subtitle: openSource.tagline,
     detail: openSource.summary,
-    chip: { label: "Open source, not a product", highlight: false },
+    chip: { label: "Open source", highlight: false },
     href: openSource.href,
     cta: "View on GitHub",
     external: true,
