@@ -9,10 +9,10 @@ export const site = {
 };
 
 export const stages = [
-  { id: "design", title: "Design", short: "Define the right solution", long: "Define the problem, plan the architecture, and identify risks before writing a line of code.", detail: "We start by understanding what you are actually trying to achieve. Requirements, constraints and architecture are made explicit, and the riskiest assumptions are surfaced early, when they are cheapest to address." },
-  { id: "build", title: "Build", short: "Create with engineering rigour", long: "Implement reliable, maintainable technology using disciplined engineering practices.", detail: "Work proceeds in small, reviewable increments with clear interfaces, readable code and version-controlled history. The aim is software your own team can understand, extend and own." },
-  { id: "verify", title: "Verify", short: "Assure quality and reliability", long: "Validate functionality, automate testing, and assess quality before anything ships.", detail: "Quality is built in from the start, not inspected at the end. Risk-based test strategy, automated checks and review gates give an honest picture of readiness before release." },
-  { id: "improve", title: "Improve", short: "Evolve for greater impact", long: "Optimize, iterate, and continuously refine based on what verification reveals.", detail: "What verification and real use reveal feeds straight back into design. Each cycle tightens the product, the process and the confidence behind both." },
+  { id: "design", title: "Design", short: "Define the right solution", long: "Define the problem, plan the architecture, and identify risks before writing a line of code.", detail: "Requirements, constraints and architecture are made explicit, and the riskiest assumptions surface early, when they are cheapest to address." },
+  { id: "build", title: "Build", short: "Create with engineering rigour", long: "Implement reliable, maintainable technology using disciplined engineering practices.", detail: "Work proceeds in small, reviewable increments with clear interfaces and readable code, so your own team can understand, extend and own it." },
+  { id: "verify", title: "Verify", short: "Assure quality and reliability", long: "Validate functionality, automate testing, and assess quality before anything ships.", detail: "Quality is built in from the start, not inspected at the end, with risk-based strategy and automated checks giving an honest picture of readiness." },
+  { id: "improve", title: "Improve", short: "Evolve for greater impact", long: "Optimize, iterate, and continuously refine based on what verification reveals.", detail: "What verification and real use reveal feeds back into design, so each cycle tightens the product, the process and the confidence behind both." },
 ] as const;
 
 export const capabilities = [

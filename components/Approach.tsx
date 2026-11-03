@@ -17,22 +17,32 @@ export default function Approach() {
           </Reveal>
         </div>
 
-        {/* Numbered timeline: deliberately different from the hero's circular canvas */}
-        <ol className="relative mt-14 border-l border-gold-deep/40 pl-8 sm:pl-12">
-          {stages.map((s, i) => (
-            <li key={s.id} className="relative pb-12 last:pb-0">
-              <Reveal>
-                <span className="absolute -left-[3.28rem] top-0 flex h-10 w-10 items-center justify-center rounded-full border border-gold-deep bg-ivory font-serif text-lg text-gold-deep sm:-left-[4.53rem] sm:h-12 sm:w-12 sm:text-xl" aria-hidden="true">{i + 1}</span>
-                <div className="grid gap-2 md:grid-cols-[14rem_1fr] md:gap-10">
-                  <div>
-                    <h3 className="font-serif text-3xl">{s.title}</h3>
-                    <p className="mt-1 text-sm font-medium text-gold-deep">{s.short}</p>
-                  </div>
-                  <p className="max-w-2xl leading-relaxed text-muted-light">{s.long} {s.detail}</p>
+        {/* Numbered timeline: deliberately different from the hero's circular canvas.
+            The rail is its own grid column, so the connector line always lines up with the
+            circles and stops at the last one instead of trailing past it. */}
+        {/* Equal-height rows for every step but the last, so the circles stay evenly
+            spaced even when one description wraps to an extra line. */}
+        <ol className="mt-14 grid" style={{ gridTemplateRows: `repeat(${stages.length - 1}, 1fr) auto` }}>
+          {stages.map((s, i) => {
+            const last = i === stages.length - 1;
+            return (
+              <li key={s.id} className="grid grid-cols-[2.5rem_1fr] gap-x-5 sm:grid-cols-[3rem_1fr] sm:gap-x-8">
+                <div className="flex flex-col items-center" aria-hidden="true">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gold-deep bg-ivory font-serif text-lg text-gold-deep sm:h-12 sm:w-12 sm:text-xl">{i + 1}</span>
+                  {!last && <span className="w-px flex-1 bg-gold-deep/40" />}
                 </div>
-              </Reveal>
-            </li>
-          ))}
+                <Reveal className={last ? "" : "pb-12"}>
+                  <div className="grid gap-2 md:grid-cols-[14rem_1fr] md:gap-10">
+                    <div>
+                      <h3 className="font-serif text-3xl leading-tight">{s.title}</h3>
+                      <p className="mt-1 text-sm font-medium text-gold-deep">{s.short}</p>
+                    </div>
+                    <p className="max-w-2xl leading-relaxed text-muted-light">{s.long} {s.detail}</p>
+                  </div>
+                </Reveal>
+              </li>
+            );
+          })}
         </ol>
         <p className="mt-10 border-t border-gold-deep/30 pt-6 text-muted-light">Then the cycle repeats: what we learn in Improve shapes the next Design.</p>
       </div>
