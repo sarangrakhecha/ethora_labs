@@ -68,7 +68,7 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
               <ul className="grid gap-5 md:grid-cols-2">
                 {shots.map((s) => (
                   <li key={s.src} className="overflow-hidden rounded-xl border border-ivory/15 bg-navy">
-                    <Image src={s.src} alt={s.alt} width={1280} height={800} className="h-auto w-full" />
+                    <Image src={s.src} alt={s.alt} width={s.w} height={s.h} className="h-auto w-full" />
                     <p className="border-t border-ivory/10 px-5 py-4 text-sm text-muted-dark">{s.caption}</p>
                   </li>
                 ))}

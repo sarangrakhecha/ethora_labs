@@ -16,11 +16,10 @@ export type Product = {
   /** Features described from the product's own published screenshots. */
   features: { title: string; body: string }[];
   /**
-   * Real product screenshots. While this is empty the page falls back to the abstract
-   * brand illustration, clearly labelled as an illustration rather than a screenshot.
-   * TODO(culprit-shots): add the Chrome Web Store screenshots to public/products/culprit/.
+   * Real product screenshots, as published on the Chrome Web Store listing. While this is
+   * empty the page falls back to the abstract brand illustration, clearly labelled as one.
    */
-  screenshots: { src: string; alt: string; caption: string }[];
+  screenshots: { src: string; alt: string; caption: string; w: number; h: number }[];
   art: "culprit" | "renewguard";
 };
 
@@ -47,7 +46,28 @@ export const products: Product[] = [
       { title: "Sensitive values masked", body: "Passwords, tokens, cards and keys are replaced with [REDACTED] where recognised, so a pasted bug report does not carry secrets with it." },
       { title: "Off by default, site by site", body: "Recording stays off until you turn it on for a given site, and runs locally. It works as a Chrome side panel or from the toolbar, in light and dark themes." },
     ],
-    screenshots: [],
+    screenshots: [
+      {
+        src: "/products/culprit/side-panel.webp", w: 1200, h: 860,
+        alt: "Culprit open as a Chrome side panel beside a checkout page, listing three failed requests with the clicks that triggered them.",
+        caption: "Culprit runs as a Chrome side panel beside the page you are testing. Each failed request is listed with the interaction that caused it.",
+      },
+      {
+        src: "/products/culprit/failure-to-selector.webp", w: 1200, h: 860,
+        alt: "Three Culprit panels: the activity list, a failure opened to show what happened and steps to reproduce, and the selector view with rated alternatives.",
+        caption: "From a captured failure through to steps to reproduce and a recommended selector, with alternatives rated unique, stable or fragile.",
+      },
+      {
+        src: "/products/culprit/toolbar.webp", w: 1280, h: 800,
+        alt: "Culprit's toolbar popup showing the latest failure, a Copy bug report button and the last click's selector.",
+        caption: "A compact view from the toolbar. Recording stays off until you turn it on for a given site, in light or dark theme.",
+      },
+      {
+        src: "/products/culprit/masking.webp", w: 1280, h: 800,
+        alt: "A request payload in Culprit with card number and CVV replaced by [REDACTED].",
+        caption: "Request and response detail, with passwords, tokens, cards and keys replaced by [REDACTED] where recognised.",
+      },
+    ],
     art: "culprit",
   },
   {
