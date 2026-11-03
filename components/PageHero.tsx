@@ -39,7 +39,7 @@ export function CtaBand({ children }: { children?: ReactNode }) {
           <h2 className="font-serif text-3xl sm:text-4xl">Let&rsquo;s start a conversation.</h2>
           <p className="mt-3 max-w-xl text-muted-dark">{children ?? "Have a product idea, an engineering challenge, or a quality goal in mind? We'd love to hear about it."}</p>
         </div>
-        <Link href="/#contact" className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-md bg-gold px-5 py-2.5 text-[15px] font-medium text-navy-deep transition-colors hover:bg-[#d4b98f]">
+        <Link href="/contact" className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-md bg-gold px-5 py-2.5 text-[15px] font-medium text-navy-deep transition-colors hover:bg-[#d4b98f]">
           Get in touch
         </Link>
       </div>

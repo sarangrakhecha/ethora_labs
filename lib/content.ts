@@ -148,6 +148,6 @@ export const problems = [
 export const nav = [
   { label: "Products", href: "/products" },
   { label: "Approach", href: "/#approach" },
-  { label: "About", href: "/#about" },
-  { label: "Contact", href: "/#contact" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
 ];

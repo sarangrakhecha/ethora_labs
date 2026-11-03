@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   title: "Ethora Labs | Software Engineering, Quality & IT Consulting",
   description: "Engineering-led IT consulting: custom software development, quality engineering, test automation and CI/CD. Ethora Labs helps teams build software that works, scales and lasts.",
   icons: { icon: "/favicon.svg" },
+  alternates: { canonical: "https://ethoralabs.co/" },
   openGraph: {
     title: "Ethora Labs | Software Engineering, Quality & IT Consulting",
     description: "Engineering-led IT consulting: custom software development, quality engineering, test automation and CI/CD.",
@@ -33,6 +34,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         {/* Enables scroll-reveal only when JS runs, so content is never hidden without it. */}
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Ethora Labs",
+              legalName: "Ethora Labs Private Limited",
+              url: "https://ethoralabs.co",
+              logo: "https://ethoralabs.co/og.png",
+              slogan: "Built on Principles. Driven by Possibility.",
+              description:
+                "Engineering-led IT consulting: custom software development, quality engineering, test automation and CI/CD.",
+            }),
+          }}
+        />
       </head>
       <body>
         <Header />

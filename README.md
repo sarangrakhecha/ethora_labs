@@ -10,8 +10,36 @@ npm run build    # static export to ./out
 
 **Cloudflare Pages:** build command `npm run build`, output directory `out`.
 
+## Routes
+
+| Route | What it is |
+|---|---|
+| `/` | Introduction: hero, Engineering Canvas, capability panels, problem-first, products, about summary, contact CTA |
+| `/services` | Capability index |
+| `/services/{software-engineering,quality-engineering,test-automation,innovation}` | Full service pages, each with its own interactive demonstration |
+| `/products`, `/products/{culprit,renewguard}` | Product division |
+| `/about`, `/contact` | About and contact |
+
+Old `/capabilities/*` URLs redirect via `public/_redirects`.
+
+## Testing
+
+```bash
+npm run test:unit   # node:test — demo logic + content integrity (no deps)
+npm run build
+npm run test:e2e    # Playwright — routes, nav, demos, forms, SEO, a11y
+npm test            # all three in order
+```
+
+`test:unit` imports the TypeScript sources directly using Node's native type stripping.
+`test:e2e` resolves Playwright from the environment rather than as a project dependency,
+so the project still depends only on Next, React and Tailwind.
+
 ## Editing content
-- All copy: `lib/content.ts` (stages, capabilities, problem-first entries, nav, footer details).
+- Service page copy: `lib/services.ts` (one entry per service drives the whole page).
+- Demo logic and copy: `lib/demos.ts` (pure functions, unit-tested).
+- Home page copy: `lib/content.ts` (canvas stages, problem-first entries, nav).
+- Product copy: `lib/products.ts`.
 - One component per section in `components/` (Hero, Approach, Capabilities, ProblemFirst, About, Insights, Contact, Footer).
 - Colors/fonts: `app/globals.css`, `app/layout.tsx`.
 

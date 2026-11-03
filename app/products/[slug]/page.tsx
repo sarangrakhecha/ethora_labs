@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import { products, CULPRIT_STORE_URL } from "@/lib/products";
 import ProductArt from "@/components/ProductArt";
 import PageHero, { CtaBand } from "@/components/PageHero";
@@ -26,6 +27,7 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
   if (!p) notFound();
   const other = products.find((x) => x.slug !== slug);
   const storeLive = p.slug === "culprit" && CULPRIT_STORE_URL.length > 0;
+  const shots = p.screenshots;
 
   return (
     <>
@@ -51,7 +53,7 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
               Add to Chrome <Icon name="arrow" />
             </a>
           ) : (
-            <Link href="/#contact" className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-md border border-ivory/40 px-5 py-2.5 text-[15px] font-medium transition-colors hover:border-gold hover:text-gold">
+            <Link href="/contact" className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-md border border-ivory/40 px-5 py-2.5 text-[15px] font-medium transition-colors hover:border-gold hover:text-gold">
               Ask about {p.name} <Icon name="arrow" />
             </Link>
           )}
@@ -62,34 +64,57 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
       <section className="bg-navy-deep">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
           <Reveal>
-            <div className="overflow-hidden rounded-xl border border-ivory/15">
-              <div className="aspect-[400/260] max-h-[26rem]">
-                <ProductArt name={p.art} />
-              </div>
-            </div>
-            {/* Honest about what this image is. */}
-            <p className="mt-3 text-sm text-slate">Brand illustration. Product screenshots are being prepared.</p>
+            {shots.length > 0 ? (
+              <ul className="grid gap-5 md:grid-cols-2">
+                {shots.map((s) => (
+                  <li key={s.src} className="overflow-hidden rounded-xl border border-ivory/15 bg-navy">
+                    <Image src={s.src} alt={s.alt} width={1280} height={800} className="h-auto w-full" />
+                    <p className="border-t border-ivory/10 px-5 py-4 text-sm text-muted-dark">{s.caption}</p>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <>
+                <div className="overflow-hidden rounded-xl border border-ivory/15">
+                  <div className="aspect-[400/260] max-h-[26rem]"><ProductArt name={p.art} /></div>
+                </div>
+                {/* Honest about what this image is. */}
+                <p className="mt-3 text-sm text-slate">Brand illustration. Product screenshots are being prepared.</p>
+              </>
+            )}
           </Reveal>
         </div>
       </section>
 
       {/* What it covers — only the areas the team has confirmed */}
-      {p.areas.length > 0 && (
+      {(p.features.length > 0 || p.areas.length > 0) && (
         <section className="on-light bg-ivory text-ink">
           <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 md:py-20 lg:grid-cols-[1fr_2fr] lg:gap-16 lg:px-8">
             <Reveal>
-              <h2 className="font-serif text-3xl sm:text-4xl">What it covers</h2>
+              <h2 className="font-serif text-3xl sm:text-4xl">What it does</h2>
               <span className="gold-rule mt-5 bg-gold-deep" />
             </Reveal>
             <Reveal delay={80}>
-              <ul className="grid gap-3 sm:grid-cols-2">
-                {p.areas.map((a) => (
-                  <li key={a} className="flex items-center gap-3 rounded-lg border border-gold-deep/25 bg-white/50 px-4 py-4 font-medium">
-                    <Icon name="check" className="h-5 w-5 shrink-0 text-gold-deep" />{a}
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-6 text-muted-light">Detailed feature documentation is being written and will be published here.</p>
+              {p.features.length > 0 ? (
+                <ul className="grid gap-4 sm:grid-cols-2">
+                  {p.features.map((f) => (
+                    <li key={f.title} className="rounded-lg border border-gold-deep/25 bg-white/50 p-5">
+                      <h3 className="flex items-start gap-3 font-medium">
+                        <Icon name="check" className="mt-0.5 h-5 w-5 shrink-0 text-gold-deep" />{f.title}
+                      </h3>
+                      <p className="mt-2 pl-8 leading-relaxed text-muted-light">{f.body}</p>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <ul className="grid gap-3 sm:grid-cols-2">
+                  {p.areas.map((a) => (
+                    <li key={a} className="flex items-center gap-3 rounded-lg border border-gold-deep/25 bg-white/50 px-4 py-4 font-medium">
+                      <Icon name="check" className="h-5 w-5 shrink-0 text-gold-deep" />{a}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </Reveal>
           </div>
         </section>
@@ -115,7 +140,7 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
             <p>
               <Link href="/#approach" className="text-gold underline underline-offset-4 hover:text-ivory">How we work</Link>
               {" · "}
-              <Link href="/capabilities" className="text-gold underline underline-offset-4 hover:text-ivory">Consulting capabilities</Link>
+              <Link href="/services" className="text-gold underline underline-offset-4 hover:text-ivory">Consulting capabilities</Link>
             </p>
           </Reveal>
         </div>

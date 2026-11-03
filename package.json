@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "npx serve out",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "test:unit": "node --experimental-strip-types --test tests/unit.test.mjs",
+    "test:e2e": "node tests/e2e.mjs",
+    "test": "npm run test:unit && npm run build && npm run test:e2e"
   },
   "dependencies": {
     "next": "^16.4.4",

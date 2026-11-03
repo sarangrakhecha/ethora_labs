@@ -1,15 +1,19 @@
 "use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Icon, Wordmark } from "./Icons";
 import { ButtonLink } from "./Button";
-import { capabilities, nav } from "@/lib/content";
+import { services } from "@/lib/services";
+import { nav } from "@/lib/content";
 
 export default function Header() {
-  const [open, setOpen] = useState(false); // mobile menu
+  const [open, setOpen] = useState(false);      // mobile menu
   const [capOpen, setCapOpen] = useState(false); // desktop dropdown
+  const [capExpanded, setCapExpanded] = useState(false); // mobile accordion
   const capRef = useRef<HTMLDivElement>(null);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -26,8 +30,15 @@ export default function Header() {
     return () => { document.removeEventListener("keydown", onKey); document.removeEventListener("click", onClick); };
   }, []);
 
+  // Close everything on navigation.
+  useEffect(() => { setOpen(false); setCapOpen(false); }, [pathname]);
+
   const close = () => { setOpen(false); setCapOpen(false); };
-  const linkCls = "inline-flex min-h-11 items-center rounded px-2 text-[15px] text-ivory/90 transition-colors hover:text-gold";
+  const onServices = pathname?.startsWith("/services") ?? false;
+  const isCurrent = (href: string) => href.startsWith("/#") ? false : pathname === href || pathname === `${href}/`;
+
+  const linkCls = (active: boolean) =>
+    `inline-flex min-h-11 items-center rounded px-2 text-[15px] transition-colors ${active ? "text-gold" : "text-ivory/90 hover:text-gold"}`;
 
   return (
     <header className={`sticky top-0 z-50 border-b transition-colors ${scrolled || open ? "border-ivory/10 bg-navy-deep/95 backdrop-blur" : "border-transparent bg-navy"}`}>
@@ -35,49 +46,77 @@ export default function Header() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" aria-label="Ethora Labs, home" className="rounded"><Wordmark /></Link>
 
-        {/* Desktop nav */}
-        <nav aria-label="Primary" className="hidden items-center gap-3 lg:flex">
+        {/* Desktop */}
+        <nav aria-label="Primary" className="hidden items-center gap-2 lg:flex">
           <div ref={capRef} className="relative">
-            <button type="button" aria-expanded={capOpen} aria-controls="cap-menu" onClick={() => setCapOpen((v) => !v)} className={`${linkCls} gap-1.5`}>
+            <button type="button" aria-expanded={capOpen} aria-controls="cap-menu" aria-haspopup="true"
+              onClick={() => setCapOpen((v) => !v)} className={`${linkCls(onServices)} gap-1.5`}>
               Capabilities <Icon name="chevron" className={`transition-transform ${capOpen ? "rotate-180" : ""}`} />
             </button>
             {capOpen && (
-              <ul id="cap-menu" className="absolute left-0 top-full mt-2 w-64 rounded-lg border border-ivory/15 bg-navy-deep p-2 shadow-xl">
-                {capabilities.map((c) => (
-                  <li key={c.id}>
-                    <Link href={`/capabilities/${c.slug}`} onClick={close} className="block rounded px-3 py-2.5 text-[15px] text-ivory/90 hover:bg-ivory/10 hover:text-gold">{c.title}</Link>
+              <ul id="cap-menu" className="absolute left-0 top-full mt-2 w-[22rem] rounded-lg border border-ivory/15 bg-navy-deep p-2 shadow-xl">
+                {services.map((s) => (
+                  <li key={s.slug}>
+                    <Link href={`/services/${s.slug}`} onClick={close} aria-current={isCurrent(`/services/${s.slug}`) ? "page" : undefined}
+                      className="block rounded px-3 py-3 hover:bg-ivory/10">
+                      <span className="block text-[15px] font-medium text-ivory">{s.nav.label}</span>
+                      <span className="mt-0.5 block text-sm leading-snug text-muted-dark">{s.nav.description}</span>
+                    </Link>
                   </li>
                 ))}
                 <li className="mt-1 border-t border-ivory/10 pt-1">
-                  <Link href="/capabilities" onClick={close} className="block rounded px-3 py-2.5 text-[15px] font-medium text-gold hover:bg-ivory/10">All capabilities</Link>
+                  <Link href="/services" onClick={close} className="block rounded px-3 py-2.5 text-[15px] font-medium text-gold hover:bg-ivory/10">All capabilities</Link>
                 </li>
               </ul>
             )}
           </div>
-          {nav.map((n) => <Link key={n.href} href={n.href} className={linkCls}>{n.label}</Link>)}
-          <ButtonLink href="/#contact" size="sm" className="ml-2">Start a Conversation</ButtonLink>
+          {nav.map((n) => (
+            <Link key={n.href} href={n.href} aria-current={isCurrent(n.href) ? "page" : undefined} className={linkCls(isCurrent(n.href))}>{n.label}</Link>
+          ))}
+          <ButtonLink href="/contact" size="sm" className="ml-2">Start a Conversation</ButtonLink>
         </nav>
 
-        {/* Mobile toggle */}
-        <button type="button" className="inline-flex h-11 w-11 items-center justify-center rounded text-ivory lg:hidden" aria-expanded={open} aria-controls="mobile-menu" aria-label={open ? "Close menu" : "Open menu"} onClick={() => setOpen((v) => !v)}>
+        <button type="button" className="inline-flex h-11 w-11 items-center justify-center rounded text-ivory lg:hidden"
+          aria-expanded={open} aria-controls="mobile-menu" aria-label={open ? "Close menu" : "Open menu"}
+          onClick={() => setOpen((v) => !v)}>
           <Icon name={open ? "close" : "menu"} />
         </button>
       </div>
 
+      {/* Mobile: expandable, tap-driven, no hover-only behaviour */}
       {open && (
-        <nav id="mobile-menu" aria-label="Mobile" className="border-t border-ivory/10 bg-navy-deep px-4 pb-6 pt-3 lg:hidden">
+        <nav id="mobile-menu" aria-label="Mobile" className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-ivory/10 bg-navy-deep px-4 pb-6 pt-3 lg:hidden">
           <ul className="flex flex-col">
-            <li className="px-2 pb-1 pt-2 text-xs uppercase tracking-wider text-muted-dark">Capabilities</li>
-            {capabilities.map((c) => (
-              <li key={c.id}><Link href={`/capabilities/${c.slug}`} onClick={close} className="flex min-h-12 items-center rounded px-2 text-[16px] text-ivory hover:text-gold">{c.title}</Link></li>
-            ))}
-            <li><Link href="/capabilities" onClick={close} className="flex min-h-12 items-center rounded px-2 text-[16px] font-medium text-gold">All capabilities</Link></li>
+            <li>
+              <button type="button" aria-expanded={capExpanded} aria-controls="m-cap"
+                onClick={() => setCapExpanded((v) => !v)}
+                className={`flex min-h-12 w-full items-center justify-between rounded px-2 text-[16px] ${onServices ? "text-gold" : "text-ivory"}`}>
+                Capabilities <Icon name="chevron" className={`transition-transform ${capExpanded ? "rotate-180" : ""}`} />
+              </button>
+              <ul id="m-cap" hidden={!capExpanded} className="border-l border-ivory/15 pl-3">
+                {services.map((s) => (
+                  <li key={s.slug}>
+                    <Link href={`/services/${s.slug}`} onClick={close} aria-current={isCurrent(`/services/${s.slug}`) ? "page" : undefined}
+                      className={`block rounded px-2 py-3 ${isCurrent(`/services/${s.slug}`) ? "text-gold" : "text-ivory"}`}>
+                      <span className="block text-[16px]">{s.nav.label}</span>
+                      <span className="mt-0.5 block text-sm leading-snug text-muted-dark">{s.nav.description}</span>
+                    </Link>
+                  </li>
+                ))}
+                <li>
+                  <Link href="/services" onClick={close} className="flex min-h-12 items-center rounded px-2 text-[16px] font-medium text-gold">All capabilities</Link>
+                </li>
+              </ul>
+            </li>
             <li className="my-2 h-px bg-ivory/10" aria-hidden="true" />
             {nav.map((n) => (
-              <li key={n.href}><Link href={n.href} onClick={close} className="flex min-h-12 items-center rounded px-2 text-[16px] text-ivory hover:text-gold">{n.label}</Link></li>
+              <li key={n.href}>
+                <Link href={n.href} onClick={close} aria-current={isCurrent(n.href) ? "page" : undefined}
+                  className={`flex min-h-12 items-center rounded px-2 text-[16px] ${isCurrent(n.href) ? "text-gold" : "text-ivory"}`}>{n.label}</Link>
+              </li>
             ))}
           </ul>
-          <ButtonLink href="/#contact" onClick={close} className="mt-4 w-full">Start a Conversation</ButtonLink>
+          <ButtonLink href="/contact" onClick={close} className="mt-4 w-full">Start a Conversation</ButtonLink>
         </nav>
       )}
     </header>

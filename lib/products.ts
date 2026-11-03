@@ -1,9 +1,8 @@
 // Product data. Everything here is either stated by the Ethora team or deliberately
 // left empty — no invented features, metrics, availability or screenshots.
 
-// TODO(culprit-store): paste the Chrome Web Store listing URL here. While it is empty
-// the page shows an enquiry CTA instead of an install button, rather than linking nowhere.
-export const CULPRIT_STORE_URL = "";
+export const CULPRIT_STORE_URL =
+  "https://chromewebstore.google.com/detail/culprit/mjojkcpnakbdgicdopdibpehoihkjhcb";
 
 export type Product = {
   slug: string;
@@ -14,7 +13,14 @@ export type Product = {
   status: { label: string; detail: string; available: boolean };
   /** Capability areas as described by the team. No expanded claims until copy is supplied. */
   areas: string[];
-  /** TODO: replace with real screenshots once supplied (see README). */
+  /** Features described from the product's own published screenshots. */
+  features: { title: string; body: string }[];
+  /**
+   * Real product screenshots. While this is empty the page falls back to the abstract
+   * brand illustration, clearly labelled as an illustration rather than a screenshot.
+   * TODO(culprit-shots): add the Chrome Web Store screenshots to public/products/culprit/.
+   */
+  screenshots: { src: string; alt: string; caption: string }[];
   art: "culprit" | "renewguard";
 };
 
@@ -23,15 +29,25 @@ export const products: Product[] = [
     slug: "culprit",
     name: "Culprit",
     kind: "Chrome extension",
-    tagline: "Find what actually went wrong.",
+    tagline: "Every failure leaves a clue.",
     summary:
-      "Culprit is our proprietary Chrome extension for software debugging. It covers failure capture, selectors, network diagnostics and screenshots, in one place in the browser.",
+      "Culprit is our proprietary Chrome extension for software debugging. It records what happened in the browser, ties each failed request back to the click that caused it, and turns that into a selector, a reproduction and a bug report you can paste straight into a ticket.",
     status: {
       label: "Available on the Chrome Web Store",
       detail: "Culprit is published and installable today.",
       available: true,
     },
     areas: ["Software debugging", "Failure capture", "Selectors", "Network diagnostics", "Screenshots"],
+    features: [
+      { title: "Failure capture, tied to a cause", body: "Failed requests are captured as they happen and linked to the interaction that triggered them \u2014 \u201cPOST /api/v1/orders \u2192 500, after clicking Button: Place order\u201d \u2014 with a match confidence shown rather than assumed." },
+      { title: "Selectors you can trust", body: "For any element Culprit suggests a selector and rates it: unique, stable, or fragile. Test attribute, role and name, visible text, CSS and XPath are offered side by side, and can be copied in your framework's syntax." },
+      { title: "Network diagnostics", body: "Each captured request opens into overview, request, response and console views, with headers, payload and a ready-made cURL command." },
+      { title: "Steps to reproduce", body: "Culprit keeps the sequence of actions leading up to a failure and turns it into numbered reproduction steps inside a copyable bug report." },
+      { title: "Screenshots", body: "Capture the page as it looked at the moment of the failure, alongside the rest of the evidence." },
+      { title: "Sensitive values masked", body: "Passwords, tokens, cards and keys are replaced with [REDACTED] where recognised, so a pasted bug report does not carry secrets with it." },
+      { title: "Off by default, site by site", body: "Recording stays off until you turn it on for a given site, and runs locally. It works as a Chrome side panel or from the toolbar, in light and dark themes." },
+    ],
+    screenshots: [],
     art: "culprit",
   },
   {
@@ -47,6 +63,8 @@ export const products: Product[] = [
       available: false,
     },
     areas: [],
+    features: [],
+    screenshots: [],
     art: "renewguard",
   },
 ];
