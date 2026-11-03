@@ -31,7 +31,7 @@ export const services: Service[] = [
   /* ------------------------------------------------------ software engineering */
   {
     slug: "software-engineering",
-    nav: { label: "Software Engineering", description: "Custom applications, APIs, integrations and modernisation." },
+    nav: { label: "Software Engineering", description: "Applications, APIs and integrations." },
     metaTitle: "Ethora Labs | Custom Software Engineering",
     metaDescription:
       "Custom web applications, backend services, APIs, system integration and application modernisation, built to stay maintainable. Engineering-led software development from Ethora Labs.",
@@ -85,7 +85,7 @@ export const services: Service[] = [
   /* ------------------------------------------------------- quality engineering */
   {
     slug: "quality-engineering",
-    nav: { label: "Quality Engineering", description: "Test strategy, risk-based testing and release readiness." },
+    nav: { label: "Quality Engineering", description: "Test strategy and release readiness." },
     metaTitle: "Ethora Labs | Quality Engineering & Software Testing",
     metaDescription:
       "Test strategy, risk-based testing, exploratory and regression testing, defect investigation and release-readiness assessment. Quality engineering from Ethora Labs.",
@@ -140,7 +140,7 @@ export const services: Service[] = [
   /* -------------------------------------------------------- test automation */
   {
     slug: "test-automation",
-    nav: { label: "Test Automation & CI/CD", description: "Automation frameworks, pipelines and trustworthy release feedback." },
+    nav: { label: "Test Automation & CI/CD", description: "Frameworks, pipelines and fast feedback." },
     metaTitle: "Ethora Labs | Test Automation & CI/CD",
     metaDescription:
       "Test automation framework architecture, UI and API automation, CI/CD integration, flaky test investigation and failure triage. Automation that teams can trust, from Ethora Labs.",
@@ -195,7 +195,7 @@ export const services: Service[] = [
   /* ----------------------------------------------------------- innovation */
   {
     slug: "innovation",
-    nav: { label: "Engineering & Innovation", description: "Feasibility studies, prototypes and evidence before you commit." },
+    nav: { label: "Engineering & Innovation", description: "Feasibility studies and prototypes." },
     metaTitle: "Ethora Labs | Engineering & Innovation",
     metaDescription:
       "Technical feasibility studies, rapid prototypes, proofs of concept and product discovery. Evidence before investment, including where AI genuinely fits. From Ethora Labs.",

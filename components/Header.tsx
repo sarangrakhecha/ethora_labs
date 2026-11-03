@@ -54,11 +54,11 @@ export default function Header() {
               Capabilities <Icon name="chevron" className={`transition-transform ${capOpen ? "rotate-180" : ""}`} />
             </button>
             {capOpen && (
-              <ul id="cap-menu" className="absolute left-0 top-full mt-2 w-[22rem] rounded-lg border border-ivory/15 bg-navy-deep p-2 shadow-xl">
+              <ul id="cap-menu" className="absolute left-0 top-full mt-2 w-[20rem] rounded-lg border border-ivory/15 bg-navy-deep p-2 shadow-xl">
                 {services.map((s) => (
                   <li key={s.slug}>
                     <Link href={`/services/${s.slug}`} onClick={close} aria-current={isCurrent(`/services/${s.slug}`) ? "page" : undefined}
-                      className="block rounded px-3 py-3 hover:bg-ivory/10">
+                      className="block rounded px-3 py-2 hover:bg-ivory/10">
                       <span className="block text-[15px] font-medium text-ivory">{s.nav.label}</span>
                       <span className="mt-0.5 block text-sm leading-snug text-muted-dark">{s.nav.description}</span>
                     </Link>

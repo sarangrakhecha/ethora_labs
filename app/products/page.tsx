@@ -17,7 +17,7 @@ export default function ProductsIndex() {
       <PageHero
         eyebrow="Products"
         title="Products we build"
-        intro="Alongside our consulting work, we build our own products. Two of them are live or in progress today, and both come from problems we kept running into ourselves."
+        intro="Alongside our consulting work, we build our own products: one available today, one in development. We also publish open-source CLI tools on GitHub."
       />
 
       <section className="bg-navy">
