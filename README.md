@@ -16,9 +16,12 @@ npm run build    # static export to ./out
 - Colors/fonts: `app/globals.css`, `app/layout.tsx`.
 
 ## Open TODOs
-- **Contact form** (`components/Contact.tsx`): no backend yet; submit is disabled by design. Wire up Resend / Formspree / a Cloudflare Worker, and only show success after a confirmed 2xx.
-- **Founder profile**: commented-out slot in `components/About.tsx`.
-- **Insights**: placeholder section until real posts exist.
+- **Contact form** (`components/Contact.tsx`): wired to Formspree but switched off until configured.
+  Set `NEXT_PUBLIC_FORM_ENDPOINT` to your Formspree URL (`https://formspree.io/f/xxxxxxxx`) in the
+  Cloudflare project's environment variables and redeploy. Without it the button stays disabled and
+  the form never claims a message was sent.
+- **Founder profile** (`components/About.tsx`): verify the stated experience before launch; add a photo and profile link.
+- **Insights**: removed from nav and home until there is a post to publish (`components/Insights.tsx` is kept, unused).
 - **Privacy Policy**: footer shows "coming soon"; no page yet.
 - **Logo**: temporary wordmark and mark in `components/Icons.tsx`.
 - No stats, clients, testimonials or press are included, and none should be added unless real.

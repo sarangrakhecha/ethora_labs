@@ -17,20 +17,24 @@ function validate(v: Values): Errors {
 }
 
 /**
- * TODO(form-handler): There is NO backend yet, so submission is intentionally disabled and
- * the form never shows a "sent" state. To enable it later:
- *  1. Pick a handler (Resend via a Cloudflare Worker, Formspree, etc.).
- *  2. In `onSubmit`, if validation passes and the honeypot is empty, POST the values to it.
- *  3. Show success ONLY after a confirmed 2xx response; show an error state otherwise.
- *  4. Remove `SUBMIT_ENABLED = false` and the notice below.
+ * Submission goes to a Formspree endpoint supplied at build time.
+ *
+ * TO TURN THE FORM ON: set NEXT_PUBLIC_FORM_ENDPOINT in the Cloudflare project's
+ * environment variables to your Formspree URL (https://formspree.io/f/xxxxxxxx) and
+ * redeploy. Until that variable exists the submit button stays disabled and the form
+ * never claims a message was sent.
  */
-const SUBMIT_ENABLED = false;
+const ENDPOINT = process.env.NEXT_PUBLIC_FORM_ENDPOINT ?? "";
+const SUBMIT_ENABLED = ENDPOINT.length > 0;
+
+type Status = "idle" | "sending" | "sent" | "error";
 
 export default function Contact() {
   const [values, setValues] = useState<Values>({ name: "", email: "", company: "", message: "" });
   const [honeypot, setHoneypot] = useState("");
   const [touched, setTouched] = useState<Partial<Record<keyof Values, boolean>>>({});
   const [challenge, setChallenge] = useState<string | null>(null);
+  const [status, setStatus] = useState<Status>("idle");
 
   // The problem-first section dispatches this when someone picks a challenge, so the
   // form opens already knowing what they came to talk about.
@@ -50,11 +54,34 @@ export default function Contact() {
   const set = (k: keyof Values) => (e: { target: { value: string } }) => setValues((v) => ({ ...v, [k]: e.target.value }));
   const blur = (k: keyof Values) => () => setTouched((t) => ({ ...t, [k]: true }));
 
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setTouched({ name: true, email: true, message: true });
     if (honeypot) return; // bots fill the hidden field
-    if (!SUBMIT_ENABLED) return; // TODO(form-handler): send here once a backend exists
+    if (!SUBMIT_ENABLED || Object.keys(errors).length > 0 || status === "sending") return;
+
+    setStatus("sending");
+    try {
+      const res = await fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: values.name.trim(),
+          email: values.email.trim(),
+          company: values.company.trim(),
+          message: values.message.trim(),
+          challenge: challenge ?? "",
+          _subject: `Ethora Labs enquiry from ${values.name.trim()}`,
+        }),
+      });
+      // Success is only ever claimed on a confirmed 2xx.
+      if (!res.ok) throw new Error(String(res.status));
+      setStatus("sent");
+      setValues({ name: "", email: "", company: "", message: "" });
+      setTouched({});
+    } catch {
+      setStatus("error");
+    }
   };
 
   const field = "mt-2 w-full rounded-md border bg-navy px-4 py-3 text-[16px] text-ivory placeholder:text-slate focus:border-gold";
@@ -108,13 +135,36 @@ export default function Contact() {
             </div>
 
             <div>
-              <button type="submit" disabled={!SUBMIT_ENABLED} className="inline-flex min-h-11 w-full cursor-not-allowed items-center justify-center rounded-md border border-ivory/25 bg-ivory/10 px-6 py-2.5 text-[15px] font-medium text-muted-dark sm:w-auto">
-                Send message (not available yet)
+              <button
+                type="submit"
+                disabled={!SUBMIT_ENABLED || status === "sending"}
+                className={`inline-flex min-h-11 w-full items-center justify-center rounded-md px-6 py-2.5 text-[15px] font-medium transition-colors sm:w-auto ${
+                  SUBMIT_ENABLED
+                    ? "bg-gold text-navy-deep hover:bg-[#d4b98f] disabled:opacity-70"
+                    : "cursor-not-allowed border border-ivory/25 bg-ivory/10 text-muted-dark"
+                }`}
+              >
+                {!SUBMIT_ENABLED ? "Send message (not available yet)" : status === "sending" ? "Sending…" : "Send message"}
               </button>
-              <p id="form-note" className="mt-3 max-w-md text-sm leading-relaxed text-muted-dark">
-                Our contact form isn&rsquo;t connected yet, so messages can&rsquo;t be sent from this page. Please check back soon.
-                {/* TODO: add a real contact email or enable the form once a handler exists. */}
-              </p>
+
+              <div aria-live="polite">
+                {status === "sent" && (
+                  <p className="mt-4 rounded-md border border-gold/40 bg-gold/10 px-4 py-3 text-[15px] text-ivory">
+                    Thanks — your message is on its way. We&rsquo;ll get back to you shortly.
+                  </p>
+                )}
+                {status === "error" && (
+                  <p className="mt-4 rounded-md border border-[#e0a0a0] bg-[#e0a0a0]/10 px-4 py-3 text-[15px] text-ivory">
+                    Something went wrong sending your message. Please try again in a moment.
+                  </p>
+                )}
+              </div>
+
+              {!SUBMIT_ENABLED && (
+                <p id="form-note" className="mt-3 max-w-md text-sm leading-relaxed text-muted-dark">
+                  Our contact form isn&rsquo;t connected yet, so messages can&rsquo;t be sent from this page. Please check back soon.
+                </p>
+              )}
             </div>
           </form>
         </Reveal>

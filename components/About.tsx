@@ -16,15 +16,27 @@ export default function About() {
             <p className="text-muted-dark">
               The name comes from two Greek-rooted ideas: <em className="not-italic text-ivory">ethics</em> and <em className="not-italic text-ivory">ethos</em>. Ethics is how we choose to work; ethos is the character and conviction behind it. Together they describe a company that wants to be trusted for how it builds, not only for what it builds.
             </p>
+            {/* Founder profile. The experience below is Sarang's own professional background —
+                it is deliberately not presented as work delivered by Ethora Labs.
+                TODO: add a photo and a LinkedIn or GitHub link when available. */}
+            <div className="rounded-xl border border-ivory/15 bg-navy-deep p-6 sm:p-8">
+              <h3 className="font-serif text-2xl">Who is behind the engineering</h3>
+              <p className="mt-4 text-[17px] leading-relaxed text-muted-dark">
+                Ethora Labs was founded by <span className="text-ivory">Sarang Rakhecha</span>, whose background is in
+                software quality, testing and automation — built working with engineering teams at
+                <span className="text-ivory"> Apple</span>, <span className="text-ivory">Qualtrics</span> and
+                <span className="text-ivory"> NetApp</span>.
+              </p>
+              <p className="mt-4 text-[17px] leading-relaxed text-muted-dark">
+                That is personal professional experience, not a delivery record for Ethora Labs. The company itself is
+                new, and we would rather say so than imply otherwise.
+              </p>
+            </div>
             <p className="text-muted-dark">
-              Ethora Labs is a new company. We are not claiming a long delivery history. What we offer is a clear way of working, the engineering discipline behind it, and a commitment to the values we start with: integrity, intelligence, quality, curiosity, innovation, and long-term value creation.
+              What we offer from the start is a clear way of working, the engineering discipline behind it, and a
+              commitment to the values we begin with: integrity, intelligence, quality, curiosity, innovation, and
+              long-term value creation.
             </p>
-            {/*
-              TODO: Founder profile. Add name, photo, role and a short honest bio here
-              once the founder has approved the copy. Do not add credentials or history that cannot be verified.
-
-              <FounderProfile name="" role="" photo="" bio="" />
-            */}
           </Reveal>
         </div>
       </div>
