@@ -60,7 +60,9 @@ with a one-word line, so this cannot silently regress.
   Set `NEXT_PUBLIC_FORM_ENDPOINT` to your Formspree URL (`https://formspree.io/f/xxxxxxxx`) in the
   Cloudflare project's environment variables and redeploy. Without it the button stays disabled and
   the form never claims a message was sent.
-- **Founder profile** (`components/About.tsx`): verify the stated experience before launch; add a photo and profile link.
+- **Founder profile**: removed from `/about` for now. The restore notes are in `app/about/page.tsx`.
+  Publish only details the founder has confirmed, and keep personal experience separate from
+  Ethora Labs' own delivery record.
 - **Insights**: removed from nav and home until there is a post to publish (`components/Insights.tsx` is kept, unused).
 - **Privacy Policy**: footer shows "coming soon"; no page yet.
 - **Logo**: temporary wordmark and mark in `components/Icons.tsx`.

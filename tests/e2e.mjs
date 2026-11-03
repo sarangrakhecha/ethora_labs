@@ -144,7 +144,7 @@ const run = async () => {
 
   await page.goto(BASE + "/services/software-engineering/");
   await page.click('button:has-text("Data store")');
-  check("architecture: node selection updates detail", (await page.textContent("#demo")).includes("record of what is true"));
+  check("architecture: node selection updates detail", (await page.textContent("#demo")).includes("The record of"));
 
   await page.goto(BASE + "/services/innovation/");
   await page.click('button:has-text("Next step")');

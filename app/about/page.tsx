@@ -115,44 +115,10 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Founder — personal background, kept separate from company history */}
-      <section className="bg-navy">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
-          <Reveal>
-            <h2 className="font-serif text-3xl sm:text-4xl">Who is behind the engineering</h2>
-            <span className="gold-rule mt-5" />
-          </Reveal>
-          <Reveal delay={80}>
-            <div className="mt-8 grid gap-8 rounded-xl border border-ivory/15 bg-navy-deep p-7 sm:p-10 lg:grid-cols-[1fr_2fr] lg:gap-14">
-              <div>
-                {/* TODO(founder-photo): add a portrait at public/founder.jpg and render it here. */}
-                <div className="flex h-32 w-32 items-center justify-center rounded-full border border-gold/40 bg-navy font-serif text-4xl text-gold" aria-hidden="true">SR</div>
-                <h3 className="mt-6 font-serif text-2xl">Sarang Rakhecha</h3>
-                <p className="mt-1 text-sm uppercase tracking-wider text-gold">Founder</p>
-                {/* TODO(founder-links): add LinkedIn / GitHub when ready. */}
-              </div>
-              <div className="space-y-5 text-lg leading-relaxed text-muted-dark">
-                <p>
-                  Ethora Labs was founded by Sarang Rakhecha, whose background is in software quality, testing and
-                  automation — built working with engineering teams at{" "}
-                  <span className="text-ivory">Apple</span>, <span className="text-ivory">Qualtrics</span> and{" "}
-                  <span className="text-ivory">NetApp</span>.
-                </p>
-                <p className="rounded-lg border border-ivory/15 bg-navy p-5 text-base">
-                  <span className="font-medium text-ivory">A deliberate distinction:</span> that is personal
-                  professional experience. It is not a delivery record for Ethora Labs, and nothing on this site should
-                  be read as client work done by the company.
-                </p>
-                <p>
-                  Ethora Labs itself is new. We would rather say that plainly than imply a history we do not have. What
-                  we offer from the start is a clear way of working, the engineering discipline behind it, and the
-                  judgement that comes from having seen how software fails in large organisations.
-                </p>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      {/* Founder section removed at the client's request for now.
+          To restore: a heading, optional portrait (public/founder.jpg), name and role, and a
+          short bio. Keep the founder's own professional experience clearly separate from
+          Ethora Labs' delivery record, and publish only details the founder has confirmed. */}
 
       {/* Honest status */}
       <section className="on-light bg-ivory text-ink">
