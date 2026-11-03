@@ -35,7 +35,7 @@ export default function EngineeringCanvas() {
                 onClick={() => setActive(i)}
                 onMouseEnter={() => setActive(i)}
                 onFocus={() => setActive(i)}
-                className={`group flex w-full items-start gap-4 rounded-xl border p-4 text-left transition-colors xl:aspect-square xl:w-[84%] xl:max-w-[150px] xl:flex-col xl:items-center xl:justify-center xl:gap-1 xl:rounded-full xl:p-3 xl:text-center ${isActive ? "border-gold bg-navy-deep" : "border-ivory/20 bg-navy-deep/60 hover:border-gold/70"}`}
+                className={`group flex w-full items-start gap-4 rounded-xl border p-4 text-left transition-colors xl:aspect-square xl:w-[76%] xl:max-w-[150px] xl:flex-col xl:items-center xl:justify-center xl:gap-1 xl:rounded-full xl:p-3 xl:text-center ${isActive ? "border-gold bg-navy-deep" : "border-ivory/20 bg-navy-deep/60 hover:border-gold/70"}`}
               >
                 <Icon name={icons[i]} className="mt-0.5 h-6 w-6 shrink-0 text-gold xl:mt-0" />
                 <span className="block">
