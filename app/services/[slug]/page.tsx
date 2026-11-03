@@ -49,7 +49,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <PageHero
-        breadcrumb={[{ label: "Home", href: "/" }, { label: "Capabilities", href: "/services" }]}
+        breadcrumb={[{ label: "Home", href: "/" }, { label: "Capabilities", href: "/#capabilities" }]}
         eyebrow={s.nav.label}
         title={s.headline}
         intro={s.intro}

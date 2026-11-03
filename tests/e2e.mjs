@@ -15,7 +15,7 @@ const { chromium } = require("playwright");
 const PORT = 4188;
 const BASE = `http://localhost:${PORT}`;
 const ROUTES = [
-  "/", "/services/", "/services/software-engineering/", "/services/quality-engineering/",
+  "/", "/services/software-engineering/", "/services/quality-engineering/",
   "/services/test-automation/", "/services/innovation/", "/products/", "/products/culprit/",
   "/products/renewguard/", "/about/", "/contact/",
 ];

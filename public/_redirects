@@ -1,5 +1,5 @@
 # Old single-page and /capabilities URLs -> new routes
-/capabilities                        /services                        301
+/capabilities                        /#capabilities                   301
 /capabilities/software-engineering   /services/software-engineering   301
 /capabilities/quality-engineering    /services/quality-engineering    301
 /capabilities/test-automation-cicd   /services/test-automation        301

@@ -2,7 +2,7 @@ import { Wordmark } from "./Icons";
 import { site } from "@/lib/content";
 
 const links = [
-  { label: "Capabilities", href: "/services" },
+  { label: "Capabilities", href: "/#capabilities" },
   { label: "Products", href: "/products" },
   { label: "Approach", href: "/#approach" },
   { label: "About", href: "/about" },

@@ -141,7 +141,7 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
             <p>
               <Link href="/#approach" className="text-gold underline underline-offset-4 hover:text-ivory">How we work</Link>
               {" · "}
-              <Link href="/services" className="text-gold underline underline-offset-4 hover:text-ivory">Consulting capabilities</Link>
+              <Link href="/#capabilities" className="text-gold underline underline-offset-4 hover:text-ivory">Consulting capabilities</Link>
             </p>
           </Reveal>
         </div>

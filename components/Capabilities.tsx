@@ -18,14 +18,13 @@ export default function Capabilities() {
   return (
     <section id="capabilities" className="bg-navy">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24 lg:px-8">
-        <Reveal className="flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <h2 className="font-serif text-4xl sm:text-5xl">Our Capabilities</h2>
-            <span className="gold-rule mt-5" />
-          </div>
-          <Link href="/services" className="inline-flex min-h-11 items-center gap-2 rounded text-[15px] font-medium text-gold hover:text-ivory">
-            View all capabilities <Icon name="arrow" />
-          </Link>
+        <Reveal>
+          <h2 className="font-serif text-4xl sm:text-5xl">Our Capabilities</h2>
+          <span className="gold-rule mt-5" />
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-dark">
+            Four connected areas of engineering work. Most engagements draw on more than one.
+          </p>
+
         </Reveal>
 
         <Reveal delay={80}>

@@ -65,7 +65,7 @@ export default function Header() {
                   </li>
                 ))}
                 <li className="mt-1 border-t border-ivory/10 pt-1">
-                  <Link href="/services" onClick={close} className="block rounded px-3 py-2.5 text-[15px] font-medium text-gold hover:bg-ivory/10">All capabilities</Link>
+                  <Link href="/#capabilities" onClick={close} className="block rounded px-3 py-2.5 text-[15px] font-medium text-gold hover:bg-ivory/10">All capabilities</Link>
                 </li>
               </ul>
             )}
@@ -104,7 +104,7 @@ export default function Header() {
                   </li>
                 ))}
                 <li>
-                  <Link href="/services" onClick={close} className="flex min-h-12 items-center rounded px-2 text-[16px] font-medium text-gold">All capabilities</Link>
+                  <Link href="/#capabilities" onClick={close} className="flex min-h-12 items-center rounded px-2 text-[16px] font-medium text-gold">All capabilities</Link>
                 </li>
               </ul>
             </li>
