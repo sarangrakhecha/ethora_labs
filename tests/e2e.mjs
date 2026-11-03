@@ -199,6 +199,37 @@ const run = async () => {
   check("valid email accepted", (await page.locator("#e-email").count()) === 0);
 
   /* ------------------------------------------------------------------ SEO + a11y */
+  /* --------------------------------- product panels: artwork band + CTA stay in place */
+  console.log("\nProduct panels");
+  for (const [url, sel, label] of [["/products/", "section ul", "products"], ["/", "#products ul", "home"]]) {
+    for (const width of [1024, 1440, 1920]) {
+      const pp = await browser.newPage({ viewport: { width, height: 1000 } });
+      await pp.goto(BASE + url);
+      await pp.evaluate(() => document.querySelectorAll(".reveal").forEach((e) => e.classList.add("is-visible")));
+      await sleep(400);
+      const count = (await pp.$$(sel + " > li")).length;
+      const bad = [];
+      for (let i = 0; i < count; i++) {
+        await pp.locator(sel + " > li").nth(i).locator("a").hover();
+        await sleep(600);
+        const rows = await pp.$$eval(sel + " > li a", (as) =>
+          as.map((a) => {
+            const box = a.getBoundingClientRect();
+            const cta = a.querySelector("span:last-of-type").getBoundingClientRect();
+            const band = a.querySelector("span").getBoundingClientRect();
+            return { inside: cta.bottom <= box.bottom + 1, band: Math.round(band.height) };
+          })
+        );
+        rows.forEach((r, j) => {
+          if (!r.inside) bad.push(`active ${i}: panel ${j} CTA clipped`);
+          if (r.band !== 96) bad.push(`active ${i}: panel ${j} band ${r.band}px`);
+        });
+      }
+      check(`${label} ${width}px: artwork and CTA hold their place`, bad.length === 0, bad.slice(0, 3).join("; "));
+      await pp.close();
+    }
+  }
+
   /* -------------------------------------------- canvas labels stay inside the circles */
   console.log("\nEngineering canvas labels fit their circles");
   for (const width of [1440, 1366, 1280]) {

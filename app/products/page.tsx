@@ -15,6 +15,7 @@ const panels: Panel[] = [
   ...products.map((p) => ({
     key: p.slug,
     icon: p.slug === "culprit" ? "target" : "loop",
+    art: p.art,
     title: p.name,
     subtitle: p.tagline,
     detail: p.summary,
@@ -25,6 +26,7 @@ const panels: Panel[] = [
   {
     key: openSource.key,
     icon: "terminal",
+    art: "terminal" as const,
     title: openSource.name,
     subtitle: openSource.tagline,
     detail: openSource.summary,

@@ -4,7 +4,13 @@
  * Culprit's real screenshots live in public/products/culprit/.
  */
 export default function ProductArt({ name, className = "" }: { name: "culprit" | "renewguard" | "terminal"; className?: string }) {
-  const common = { className: `h-full w-full ${className}`, viewBox: "0 0 400 150", fill: "none", "aria-hidden": true as const };
+  const common = {
+    className: `h-full w-full ${className}`,
+    viewBox: "0 0 400 150",
+    preserveAspectRatio: "xMidYMid slice",
+    fill: "none",
+    "aria-hidden": true as const,
+  };
 
   if (name === "culprit") {
     // Cause and effect: a click, the requests it set off, and the one that failed, isolated.

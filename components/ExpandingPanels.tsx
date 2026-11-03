@@ -2,11 +2,14 @@
 import Link from "next/link";
 import { useState, type ReactNode } from "react";
 import { Icon } from "./Icons";
+import ProductArt from "./ProductArt";
 import Reveal from "./Reveal";
 
 export type Panel = {
   key: string;
   icon: string;
+  /** Optional diagram shown as a band across the top of the panel, in place of the icon. */
+  art?: "culprit" | "renewguard" | "terminal";
   title: string;
   /** One short line, always visible. */
   subtitle: string;
@@ -23,7 +26,7 @@ export type Panel = {
  * its width with no dead space. Hover or keyboard focus sets the active panel; clicking
  * follows the link. Stacks to a plain list below lg, where width animation makes no sense.
  */
-export default function ExpandingPanels({ panels, heightClass = "lg:h-[26rem]" }: { panels: Panel[]; heightClass?: string }) {
+export default function ExpandingPanels({ panels, heightClass = "lg:h-[30rem]" }: { panels: Panel[]; heightClass?: string }) {
   const [active, setActive] = useState(0);
 
   return (
@@ -32,8 +35,14 @@ export default function ExpandingPanels({ panels, heightClass = "lg:h-[26rem]" }
         const isActive = i === active;
         const inner: ReactNode = (
           <>
-            <Icon name={p.icon} className="h-9 w-9 shrink-0 text-gold" />
-            <span className="mt-5 block font-serif text-2xl leading-tight">{p.title}</span>
+            {p.art ? (
+              <span className="-mx-6 -mt-6 mb-5 block h-24 shrink-0 overflow-hidden border-b border-ivory/10">
+                <ProductArt name={p.art} />
+              </span>
+            ) : (
+              <Icon name={p.icon} className="h-9 w-9 shrink-0 text-gold" />
+            )}
+            <span className={`block font-serif text-2xl leading-tight ${p.art ? "" : "mt-5"}`}>{p.title}</span>
             <span className={`mt-2 block font-serif text-lg italic leading-snug text-muted-dark ${isActive ? "" : "lg:line-clamp-2"}`}>
               {p.subtitle}
             </span>
