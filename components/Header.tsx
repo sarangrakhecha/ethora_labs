@@ -51,7 +51,7 @@ export default function Header() {
             )}
           </div>
           {nav.map((n) => <a key={n.href} href={n.href} className={linkCls}>{n.label}</a>)}
-          <ButtonLink href="#contact" className="ml-2">Start a Conversation</ButtonLink>
+          <ButtonLink href="#contact" size="sm" className="ml-2">Start a Conversation</ButtonLink>
         </nav>
 
         {/* Mobile toggle */}
