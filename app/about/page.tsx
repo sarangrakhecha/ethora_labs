@@ -100,7 +100,9 @@ export default function AboutPage() {
               Values are only worth stating if they describe a behaviour someone could hold you to.
             </p>
           </Reveal>
-          <ul className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {/* Single row at lg+ (5 equal columns, never an uneven trailing row) and a
+              single stacked column below that, rather than a grid that wraps unevenly. */}
+          <ul className="mt-10 grid gap-5 lg:grid-cols-5">
             {values.map((v, i) => (
               <li key={v.name}>
                 <Reveal delay={i * 60} className="h-full">

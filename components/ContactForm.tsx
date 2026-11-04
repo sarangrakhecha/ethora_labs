@@ -127,6 +127,7 @@ export default function ContactForm() {
               <option value="">Not sure yet</option>
               {services.map((s) => <option key={s.slug} value={s.slug}>{s.nav.label}</option>)}
               <option value="products">A product (Culprit or RenewGuard)</option>
+              <option value="other">Something else</option>
             </select>
           </div>
         </div>
@@ -159,7 +160,7 @@ export default function ContactForm() {
           {!SUBMIT_ENABLED && (
             <p id="form-note" className="mt-3 max-w-md text-sm leading-relaxed text-muted-dark">
               {FALLBACK_NOTE} In the meantime, email us directly at{" "}
-              <a href={`mailto:${site.email}`} className="text-gold underline underline-offset-4 hover:text-ivory">{site.email}</a>.
+              <a href={`mailto:${site.email}`} className="text-gold underline underline-offset-4 hover:text-ivory">{site.email}</a>
             </p>
           )}
         </div>
