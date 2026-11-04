@@ -56,17 +56,6 @@ export default function PrototypeExplorer() {
           </div>
         )}
       </div>
-
-      <div className="mt-5 flex flex-wrap gap-3">
-        <button type="button" onClick={() => setIndex((i) => Math.max(0, i - 1))} disabled={index === 0}
-          className="min-h-11 rounded-md border border-navy/40 px-5 text-[15px] font-medium transition-colors hover:bg-navy hover:text-ivory disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-ink">
-          Previous
-        </button>
-        <button type="button" onClick={() => setIndex((i) => Math.min(PROTOTYPE_STEPS.length - 1, i + 1))} disabled={isLast}
-          className="inline-flex min-h-11 items-center gap-2 rounded-md bg-navy px-5 text-[15px] font-medium text-ivory transition-colors hover:bg-navy-deep disabled:opacity-40">
-          Next step <Icon name="arrow" />
-        </button>
-      </div>
     </div>
   );
 }

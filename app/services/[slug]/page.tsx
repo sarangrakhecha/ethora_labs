@@ -162,18 +162,21 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
           <Reveal delay={80} className="mt-14 border-t border-ivory/10 pt-12">
             <h2 className="font-serif text-3xl sm:text-4xl">Our approach</h2>
             <span className="gold-rule mt-5" />
-            <ol className="mt-6 max-w-3xl space-y-5">
+            {/* 5 phases don't split evenly into 2 columns -- the last (always "Hand
+                over", a fitting closing note) spans full width instead of leaving a
+                narrow single-column list with a wide empty margin beside it. */}
+            <ol className="mt-6 grid gap-x-10 gap-y-6 sm:grid-cols-2">
               {s.approach.map((a, i) => (
-                <li key={a.phase} className="grid grid-cols-[2rem_1fr] gap-4">
+                <li key={a.phase} className={`grid grid-cols-[2rem_1fr] gap-4 ${i === s.approach.length - 1 ? "sm:col-span-2" : ""}`}>
                   <span className="font-serif text-xl text-gold tabular-nums" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
                   <span>
                     <span className="block font-medium">{a.phase}</span>
-                    <span className="mt-1 block leading-relaxed text-muted-dark">{a.body}</span>
+                    <span className="mt-1 block max-w-2xl leading-relaxed text-muted-dark">{a.body}</span>
                   </span>
                 </li>
               ))}
             </ol>
-            <p className="mt-6 max-w-3xl text-muted-dark">
+            <p className="mt-6 text-muted-dark">
               This sits inside our wider{" "}
               <Link href="/approach" className="text-gold underline underline-offset-4 hover:text-ivory">Design, Build, Verify, Improve</Link> cycle.
             </p>

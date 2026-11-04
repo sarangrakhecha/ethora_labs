@@ -12,31 +12,26 @@ export default function ArchitectureExplorer() {
   return (
     <div className="rounded-xl border border-ivory/15 bg-navy-deep p-6 sm:p-8">
       <div className="grid gap-8 lg:grid-cols-[1.3fr_1fr]">
-        {/* Diagram: a CSS grid, so it reflows on small screens instead of scaling to nothing. */}
+        {/* Diagram: a flat, evenly-divisible grid (8 nodes), so it reflows on small
+            screens instead of scaling to nothing, and every tile is the same size. */}
         <div>
           <p className="mb-4 text-sm text-slate">Illustrative architecture — not a client system.</p>
           <ul className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {[0, 1, 2, 3].map((col) => (
-              <li key={col}>
-                <ul className="space-y-3">
-                  {ARCH_NODES.filter((n) => n.col === col).sort((a, b) => a.row - b.row).map((n) => {
-                    const on = n.id === id;
-                    const near = connected.has(n.id);
-                    return (
-                      <li key={n.id}>
-                        <button type="button" onClick={() => setId(n.id)} aria-pressed={on}
-                          className={`w-full rounded-lg border p-3 text-left text-sm transition-colors ${
-                            on ? "border-gold bg-gold/15 text-ivory"
-                              : near ? "border-gold/40 bg-navy text-ivory hover:border-gold"
-                              : "border-ivory/20 bg-navy/60 text-muted-dark hover:border-gold/60 hover:text-ivory"}`}>
-                          {n.name}
-                        </button>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </li>
-            ))}
+            {ARCH_NODES.map((n) => {
+              const on = n.id === id;
+              const near = connected.has(n.id);
+              return (
+                <li key={n.id}>
+                  <button type="button" onClick={() => setId(n.id)} aria-pressed={on}
+                    className={`h-full w-full rounded-lg border p-3 text-left text-sm transition-colors ${
+                      on ? "border-gold bg-gold/15 text-ivory"
+                        : near ? "border-gold/40 bg-navy text-ivory hover:border-gold"
+                        : "border-ivory/20 bg-navy/60 text-muted-dark hover:border-gold/60 hover:text-ivory"}`}>
+                    {n.name}
+                  </button>
+                </li>
+              );
+            })}
           </ul>
           <p className="mt-4 text-sm text-slate">
             Selected component highlighted; everything it talks to is outlined.

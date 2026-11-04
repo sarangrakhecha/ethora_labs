@@ -97,20 +97,22 @@ export default function AboutPage() {
             ))}
           </Reveal>
 
-          <Reveal delay={120} className="mt-10 max-w-2xl space-y-5 text-lg leading-relaxed text-muted-dark">
+          <Reveal delay={120} className="mt-10 grid gap-10 text-lg leading-relaxed text-muted-dark sm:grid-cols-2">
             <p>
               So we lead with engineering judgement rather than with tools. We would rather spend a day understanding
               why a system behaves the way it does than a week working around it. We would rather tell you that a
               rewrite is not justified than sell you one.
             </p>
-            <p>
-              The long-term ambition is to build technology that matters — our own products alongside our consulting
-              work — and to be the kind of company engineers want to work with twice.
-            </p>
-            <p className="text-ivory">
-              <Link href="/approach" className="text-gold underline underline-offset-4 hover:text-ivory">See how that works in practice</Link>{" "}
-              in our Design, Build, Verify, Improve cycle.
-            </p>
+            <div className="space-y-5">
+              <p>
+                The long-term ambition is to build technology that matters — our own products alongside our
+                consulting work — and to be the kind of company engineers want to work with twice.
+              </p>
+              <p className="text-ivory">
+                <Link href="/approach" className="text-gold underline underline-offset-4 hover:text-ivory">See how that works in practice</Link>{" "}
+                in our Design, Build, Verify, Improve cycle.
+              </p>
+            </div>
           </Reveal>
         </div>
       </section>

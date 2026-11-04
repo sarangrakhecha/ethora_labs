@@ -195,23 +195,26 @@ export const DECISIONS: Record<Decision, { label: string; body: string }> = {
 export type ArchNode = {
   id: string; name: string; role: string;
   considerations: string[];
-  /** Column and row in the illustrative diagram. */
-  col: number; row: number;
 };
 
+// A flat list, rendered in a plain evenly-divisible grid (4 columns x 2 rows) rather
+// than positioned as a literal flow diagram -- that layout left some columns with
+// fewer nodes than others, stretching unevenly and leaving visible gaps beneath the
+// shorter ones. 8 nodes divide cleanly; order here is the order they render in.
 export const ARCH_NODES: ArchNode[] = [
-  { id: "client", name: "Client application", role: "What the user actually touches — a web app, an internal tool, or both.", considerations: ["Keeping state predictable as screens multiply", "Accessibility and keyboard support as first-class, not retrofitted", "Behaving sensibly when the network is slow or absent"], col: 0, row: 1 },
-  { id: "gateway", name: "API gateway", role: "One front door for the services behind it.", considerations: ["Authentication and rate limiting in one place rather than scattered", "Versioning, so clients do not break when a service changes", "Clear error shapes that clients can actually handle"], col: 1, row: 1 },
-  { id: "services", name: "Backend services", role: "Where the business rules live.", considerations: ["Boundaries drawn around business capabilities, not database tables", "Explicit contracts between services", "Idempotency, so a retried request does not cause damage twice"], col: 2, row: 0 },
-  { id: "db", name: "Data store", role: "The record of what is true.", considerations: ["Schema changes that can be deployed without downtime", "Backup and restore that has actually been tested", "Indexes driven by real query patterns, not guesses"], col: 3, row: 0 },
-  { id: "external", name: "External integrations", role: "Systems you depend on but do not control.", considerations: ["Timeouts and fallbacks for when the third party is down", "A stand-in so your tests do not depend on someone else's uptime", "Watching for contract changes you will not be warned about"], col: 3, row: 2 },
-  { id: "tests", name: "Test harness", role: "The checks that tell you whether any of this still works.", considerations: ["Fast checks close to the code, slower ones reserved for real journeys", "Test data that can be created and torn down reliably", "Results a developer can read without guessing"], col: 2, row: 2 },
-  { id: "observability", name: "Monitoring", role: "How you find out there is a problem before your users tell you.", considerations: ["Logs with enough context to trace one request end to end", "Alerts on symptoms users feel, not on every metric", "Knowing what 'normal' looks like before an incident"], col: 1, row: 2 },
+  { id: "client", name: "Client application", role: "What the user actually touches — a web app, an internal tool, or both.", considerations: ["Keeping state predictable as screens multiply", "Accessibility and keyboard support as first-class, not retrofitted", "Behaving sensibly when the network is slow or absent"] },
+  { id: "gateway", name: "API gateway", role: "One front door for the services behind it.", considerations: ["Authentication and rate limiting in one place rather than scattered", "Versioning, so clients do not break when a service changes", "Clear error shapes that clients can actually handle"] },
+  { id: "services", name: "Backend services", role: "Where the business rules live.", considerations: ["Boundaries drawn around business capabilities, not database tables", "Explicit contracts between services", "Idempotency, so a retried request does not cause damage twice"] },
+  { id: "cache", name: "Caching", role: "A faster, smaller copy of data kept close to where it is read.", considerations: ["Deciding what is actually safe to cache, and for how long", "Invalidating it reliably the moment the underlying data changes", "Not reaching for a cache before measuring whether one is needed at all"] },
+  { id: "db", name: "Data store", role: "The record of what is true.", considerations: ["Schema changes that can be deployed without downtime", "Backup and restore that has actually been tested", "Indexes driven by real query patterns, not guesses"] },
+  { id: "external", name: "External integrations", role: "Systems you depend on but do not control.", considerations: ["Timeouts and fallbacks for when the third party is down", "A stand-in so your tests do not depend on someone else's uptime", "Watching for contract changes you will not be warned about"] },
+  { id: "tests", name: "Test harness", role: "The checks that tell you whether any of this still works.", considerations: ["Fast checks close to the code, slower ones reserved for real journeys", "Test data that can be created and torn down reliably", "Results a developer can read without guessing"] },
+  { id: "observability", name: "Monitoring", role: "How you find out there is a problem before your users tell you.", considerations: ["Logs with enough context to trace one request end to end", "Alerts on symptoms users feel, not on every metric", "Knowing what 'normal' looks like before an incident"] },
 ];
 
 export const ARCH_EDGES: [string, string][] = [
-  ["client", "gateway"], ["gateway", "services"], ["services", "db"],
-  ["services", "external"], ["gateway", "observability"], ["services", "tests"],
+  ["client", "gateway"], ["gateway", "services"], ["services", "cache"], ["cache", "db"],
+  ["services", "db"], ["services", "external"], ["gateway", "observability"], ["services", "tests"],
 ];
 
 // Trailing single words tied up for the demo copy as well.
@@ -221,4 +224,5 @@ for (const s of SCENARIOS) {
   s.summary = noWidow(s.summary);
 }
 for (const s of PROTOTYPE_STEPS) s.body = noWidow(s.body);
+for (const d of Object.values(DECISIONS)) d.body = noWidow(d.body);
 for (const n of ARCH_NODES) n.role = noWidow(n.role);
