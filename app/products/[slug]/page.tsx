@@ -131,67 +131,64 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
         </section>
       )}
 
-      {/* Where it came from / what's next */}
+      {/* Built by Ethora + the rest of the Products division, side by side -- two short
+          blocks that each left the other half of the row empty when stacked as separate
+          full-width sections. */}
       <section className="bg-navy">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
+        <div className={`mx-auto grid gap-12 px-4 py-16 sm:px-6 md:py-20 lg:gap-16 lg:px-8 ${others.length > 0 ? "max-w-7xl lg:grid-cols-2" : "max-w-2xl"}`}>
           <Reveal>
             <h2 className="font-serif text-3xl sm:text-4xl">Built by Ethora</h2>
             <span className="gold-rule mt-5" />
+            <div className="mt-8 max-w-xl space-y-5 leading-relaxed text-muted-dark">
+              <p>
+                {p.name} is built and maintained by Ethora Labs. It comes from the same engineering approach we bring
+                to client work: design the right thing, build it carefully, verify it properly, and keep improving it.
+              </p>
+              <p>
+                {p.status.available
+                  ? "If you use it and something is wrong, or something is missing, we would rather hear about it than not."
+                  : "If this is a problem you have, we would be glad to hear how you handle it today — it genuinely shapes what we build."}
+              </p>
+              <p>
+                <Link href="/approach" className="text-gold underline underline-offset-4 hover:text-ivory">How we work</Link>
+                {" · "}
+                <Link href="/#capabilities" className="text-gold underline underline-offset-4 hover:text-ivory">Consulting capabilities</Link>
+              </p>
+            </div>
           </Reveal>
-          <Reveal delay={80} className="mt-8 max-w-2xl space-y-5 leading-relaxed text-muted-dark">
-            <p>
-              {p.name} is built and maintained by Ethora Labs. It comes from the same engineering approach we bring to
-              client work: design the right thing, build it carefully, verify it properly, and keep improving it.
-            </p>
-            <p>
-              {p.status.available
-                ? "If you use it and something is wrong, or something is missing, we would rather hear about it than not."
-                : "If this is a problem you have, we would be glad to hear how you handle it today — it genuinely shapes what we build."}
-            </p>
-            <p>
-              <Link href="/approach" className="text-gold underline underline-offset-4 hover:text-ivory">How we work</Link>
-              {" · "}
-              <Link href="/#capabilities" className="text-gold underline underline-offset-4 hover:text-ivory">Consulting capabilities</Link>
-            </p>
-          </Reveal>
+
+          {others.length > 0 && (
+            <Reveal delay={100}>
+              <h2 className="font-serif text-3xl sm:text-4xl">{others.length > 1 ? "Our other products" : "Our other product"}</h2>
+              <span className="gold-rule mt-5" />
+              <ul className="mt-8 grid gap-4">
+                {others.map((o) => {
+                  const cls = "group flex h-full flex-col gap-4 rounded-xl border border-ivory/15 p-6 transition-colors hover:border-gold/70 sm:flex-row sm:items-center";
+                  const inner = (
+                    <>
+                      <div className="h-24 w-40 shrink-0 overflow-hidden rounded-lg"><ProductArt name={o.art} /></div>
+                      <span>
+                        <span className="block font-serif text-xl">{o.name}</span>
+                        <span className="mt-1 block text-sm text-muted-dark">{o.tagline}</span>
+                        <span className={`mt-2 inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs ${o.highlight ? "border-gold/50 bg-gold/10 text-ivory" : "border-ivory/25 text-muted-dark"}`}>
+                          <span className={`h-1.5 w-1.5 rounded-full ${o.highlight ? "bg-gold" : "bg-slate"}`} aria-hidden="true" />
+                          {o.chip}
+                        </span>
+                      </span>
+                      <Icon name="arrow" className="text-gold sm:ml-auto" />
+                    </>
+                  );
+                  return (
+                    <li key={o.key}>
+                      <Link href={o.href} className={cls}>{inner}</Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </Reveal>
+          )}
         </div>
       </section>
-
-      {/* The rest of the Products division */}
-      {others.length > 0 && (
-        <section className="bg-navy-deep">
-          <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-            <h2 className="font-serif text-2xl">{others.length > 1 ? "Our other products" : "Our other product"}</h2>
-            {/* sm:grid-cols-2 only when there's a second item to fill it -- with exactly
-                one "other" product (the common case today), a fixed 2-col grid leaves a
-                permanently empty cell rather than a normal single card. */}
-            <ul className={`mt-5 grid gap-4 ${others.length > 1 ? "sm:grid-cols-2" : "max-w-xl"}`}>
-              {others.map((o) => {
-                const cls = "group flex h-full flex-col gap-4 rounded-xl border border-ivory/15 p-6 transition-colors hover:border-gold/70 sm:flex-row sm:items-center";
-                const inner = (
-                  <>
-                    <div className="h-24 w-40 shrink-0 overflow-hidden rounded-lg"><ProductArt name={o.art} /></div>
-                    <span>
-                      <span className="block font-serif text-xl">{o.name}</span>
-                      <span className="mt-1 block text-sm text-muted-dark">{o.tagline}</span>
-                      <span className={`mt-2 inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs ${o.highlight ? "border-gold/50 bg-gold/10 text-ivory" : "border-ivory/25 text-muted-dark"}`}>
-                        <span className={`h-1.5 w-1.5 rounded-full ${o.highlight ? "bg-gold" : "bg-slate"}`} aria-hidden="true" />
-                        {o.chip}
-                      </span>
-                    </span>
-                    <Icon name="arrow" className="text-gold sm:ml-auto" />
-                  </>
-                );
-                return (
-                  <li key={o.key}>
-                    <Link href={o.href} className={cls}>{inner}</Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        </section>
-      )}
 
       <CtaBand />
     </>

@@ -172,48 +172,48 @@ export default function RenewGuardPage() {
         </div>
       </section>
 
-      {/* Built by Ethora */}
+      {/* Built by Ethora + our other product, side by side -- two short blocks that
+          each left the other half of the row empty when stacked as separate sections. */}
       <section className="on-light bg-ivory text-ink">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 md:py-20 lg:grid-cols-2 lg:gap-16 lg:px-8">
           <Reveal>
             <h2 className="font-serif text-3xl sm:text-4xl">Built by Ethora</h2>
             <span className="gold-rule mt-5 bg-gold-deep" />
+            <div className="mt-8 max-w-xl space-y-5 leading-relaxed text-muted-light">
+              <p>
+                RenewGuard is built and maintained by Ethora Labs. It comes from the same engineering approach we
+                bring to client work: design the right thing, build it carefully, verify it properly, and keep
+                improving it.
+              </p>
+              <p>If this is a problem you have, we would be glad to hear how you handle it today — it genuinely shapes what we build.</p>
+              <p>
+                <Link href="/approach" className="text-gold-deep underline underline-offset-4">How we work</Link>
+                {" · "}
+                <Link href="/#capabilities" className="text-gold-deep underline underline-offset-4">Consulting capabilities</Link>
+              </p>
+            </div>
           </Reveal>
-          <Reveal delay={80} className="mt-8 max-w-2xl space-y-5 leading-relaxed text-muted-light">
-            <p>
-              RenewGuard is built and maintained by Ethora Labs. It comes from the same engineering approach we bring
-              to client work: design the right thing, build it carefully, verify it properly, and keep improving it.
-            </p>
-            <p>If this is a problem you have, we would be glad to hear how you handle it today — it genuinely shapes what we build.</p>
-            <p>
-              <Link href="/approach" className="text-gold-deep underline underline-offset-4">How we work</Link>
-              {" · "}
-              <Link href="/#capabilities" className="text-gold-deep underline underline-offset-4">Consulting capabilities</Link>
-            </p>
-          </Reveal>
-        </div>
-      </section>
 
-      {/* Our other product */}
-      <section className="bg-navy-deep">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-          <h2 className="font-serif text-2xl">Our other product</h2>
-          <ul className="mt-5 grid max-w-xl gap-4">
-            <li>
-              <Link href={`/products/${culprit.slug}`} className="group flex h-full flex-col gap-4 rounded-xl border border-ivory/15 p-6 transition-colors hover:border-gold/70 sm:flex-row sm:items-center">
-                <div className="h-24 w-40 shrink-0 overflow-hidden rounded-lg"><ProductArt name={culprit.art} /></div>
-                <span>
-                  <span className="block font-serif text-xl">{culprit.name}</span>
-                  <span className="mt-1 block text-sm text-muted-dark">{culprit.tagline}</span>
-                  <span className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-gold/50 bg-gold/10 px-2.5 py-1 text-xs text-ivory">
-                    <span className="h-1.5 w-1.5 rounded-full bg-gold" aria-hidden="true" />
-                    {culprit.status.label}
+          <Reveal delay={100}>
+            <h2 className="font-serif text-3xl sm:text-4xl">Our other product</h2>
+            <span className="gold-rule mt-5 bg-gold-deep" />
+            <ul className="mt-8 grid gap-4">
+              <li>
+                <Link href={`/products/${culprit.slug}`} className="group flex h-full flex-col gap-4 rounded-xl border border-gold-deep/25 bg-white/50 p-6 transition-colors hover:border-gold-deep/70 sm:flex-row sm:items-center">
+                  <div className="h-24 w-40 shrink-0 overflow-hidden rounded-lg"><ProductArt name={culprit.art} /></div>
+                  <span>
+                    <span className="block font-serif text-xl">{culprit.name}</span>
+                    <span className="mt-1 block text-sm text-muted-light">{culprit.tagline}</span>
+                    <span className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-gold-deep/40 bg-gold-deep/10 px-2.5 py-1 text-xs text-ink">
+                      <span className="h-1.5 w-1.5 rounded-full bg-gold-deep" aria-hidden="true" />
+                      {culprit.status.label}
+                    </span>
                   </span>
-                </span>
-                <Icon name="arrow" className="text-gold sm:ml-auto" />
-              </Link>
-            </li>
-          </ul>
+                  <Icon name="arrow" className="text-gold-deep sm:ml-auto" />
+                </Link>
+              </li>
+            </ul>
+          </Reveal>
         </div>
       </section>
 
