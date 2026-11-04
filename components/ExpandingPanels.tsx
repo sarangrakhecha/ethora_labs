@@ -57,8 +57,11 @@ export default function ExpandingPanels({ panels, heightClass = "lg:h-[38rem]" }
             >
               {p.detail}
             </span>
+            {/* No whitespace-nowrap on the chip below: the panel can be as narrow as
+                ~210px when collapsed, and a long label (e.g. "Available on the Chrome
+                Web Store") must be allowed to wrap rather than overflow the card. */}
             {p.chip && (
-              <span className={`mt-4 inline-flex w-fit items-center gap-2 whitespace-nowrap rounded-full border px-3 py-1 text-sm ${p.chip.highlight ? "border-gold/50 bg-gold/10 text-ivory" : "border-ivory/25 text-muted-dark"}`}>
+              <span className={`mt-4 inline-flex max-w-full items-center gap-2 rounded-full border px-3 py-1 text-sm ${p.chip.highlight ? "border-gold/50 bg-gold/10 text-ivory" : "border-ivory/25 text-muted-dark"}`}>
                 <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${p.chip.highlight ? "bg-gold" : "bg-slate"}`} aria-hidden="true" />
                 {p.chip.label}
               </span>
