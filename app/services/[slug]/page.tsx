@@ -138,14 +138,18 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
         </div>
       </section>
 
-      {/* E + F. Deliverables and approach */}
+      {/* E. Deliverables -- a short flat list paired beside a much taller 5-item
+          approach list used to leave visible blank space below it (a grid row is
+          always as tall as its tallest column, regardless of alignment). Deliverables
+          is always exactly 6 items, so a 3-column grid always divides evenly; approach
+          moved to its own full-width block below instead of forcing a shared row. */}
       <section className="bg-navy">
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 md:py-20 lg:grid-cols-2 lg:gap-16 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
           <Reveal>
             <h2 className="font-serif text-3xl sm:text-4xl">Typical deliverables</h2>
             <span className="gold-rule mt-5" />
             <p className="mt-5 text-sm text-slate">Illustrative of what an engagement can produce. Not a record of completed client work.</p>
-            <ul className="mt-6 space-y-3">
+            <ul className="mt-6 grid gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
               {s.deliverables.map((d) => (
                 <li key={d} className="flex gap-3 leading-relaxed text-muted-dark">
                   <Icon name="check" className="mt-0.5 h-5 w-5 shrink-0 text-gold" />{d}
@@ -153,10 +157,12 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
               ))}
             </ul>
           </Reveal>
-          <Reveal delay={80}>
+
+          {/* F. Approach */}
+          <Reveal delay={80} className="mt-14 border-t border-ivory/10 pt-12">
             <h2 className="font-serif text-3xl sm:text-4xl">Our approach</h2>
             <span className="gold-rule mt-5" />
-            <ol className="mt-6 space-y-5">
+            <ol className="mt-6 max-w-3xl space-y-5">
               {s.approach.map((a, i) => (
                 <li key={a.phase} className="grid grid-cols-[2rem_1fr] gap-4">
                   <span className="font-serif text-xl text-gold tabular-nums" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
@@ -167,7 +173,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
                 </li>
               ))}
             </ol>
-            <p className="mt-6 text-muted-dark">
+            <p className="mt-6 max-w-3xl text-muted-dark">
               This sits inside our wider{" "}
               <Link href="/approach" className="text-gold underline underline-offset-4 hover:text-ivory">Design, Build, Verify, Improve</Link> cycle.
             </p>
@@ -223,7 +229,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
       <section className="border-t border-gold/30 bg-navy">
         <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-14 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
           <div>
-            <h2 className="font-serif text-3xl sm:text-4xl">Talk to us about {s.nav.label.toLowerCase()}</h2>
+            <h2 className="font-serif text-3xl sm:text-4xl">Talk to us about {s.nav.label.toLowerCase().replace(/ci\/cd/i, "CI/CD")}</h2>
             <p className="mt-3 max-w-xl text-muted-dark">
               Tell us what you are working on. We will tell you honestly whether we are the right people for it.
             </p>
