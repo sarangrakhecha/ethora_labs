@@ -102,14 +102,38 @@ for (const p of products) {
   for (const s of p.screenshots) s.caption = noWidow(s.caption);
 }
 
-/** The open-source project, kept deliberately outside `products`: it is not one of ours to sell. */
+/**
+ * The open-source project, kept deliberately outside `products`: it is not one of ours
+ * to sell. It has its own page (not the shared [slug] product template, since its shape
+ * is genuinely different \u2014 no store listing, no commercial status) that explains it
+ * honestly and links out to the real repository.
+ */
 export const openSource = {
   key: "terminalquest",
+  slug: "terminalquest",
   name: "TerminalQuest",
   tagline: "Learn the terminal by saving a ship, not by reading slides.",
   summary:
     "A small arcade game that teaches the command line by making you use it. Each station drops you into a real bash prompt: what you type actually runs, and a real file has to move before anything unlocks. 502 automated tests, 98% coverage, zero dependencies, MIT.",
   href: "https://github.com/sarangrakhecha/TerminalQuest",
+  facts: ["8 commands, 3 levels", "502 automated tests", "98% coverage", "Zero dependencies", "MIT"],
+  why: "Almost nobody teaches the terminal itself \u2014 ls, cd, cat, mkdir, mv, rm \u2014 the commands used dozens of times a day. Most people pick it up the slow way, one searched error at a time. TerminalQuest is a small attempt at fixing that the fun way: the \u201cpuzzle\u201d at every station is solved by typing one real command, in a real shell, with real consequences \u2014 not a simulated, multiple-choice version of it.",
+  loop: [
+    { title: "Walk the ship", body: "Move around with arrow keys, dodge patrolling enemies, and find your way to an old computer." },
+    { title: "Read the panel", body: "Every terminal shows exactly what is needed: the command, what it does, its syntax, and the concrete task \u2014 and nothing more." },
+    { title: "Run the real command", body: "There is no autofill. Whatever is typed runs through actual /bin/bash, starting in a scratch folder on the machine." },
+    { title: "Something unlocks", body: "Get it right, and the world reacts \u2014 a door opens, a gate unlocks \u2014 because a real file was actually created, moved or deleted." },
+  ],
+  philosophy: [
+    "Real outcomes, not answer matching \u2014 every station checks the actual filesystem after a command runs.",
+    "Guidance without autopilot \u2014 the panel shows the exact command; it still has to be typed.",
+    "Explanation at the right moment \u2014 the ? affordance is available after something has run, not forced beforehand.",
+    "Progress without pressure \u2014 no timers, no speed bonuses, no typing races.",
+    "Accessible by default \u2014 a high-contrast mode uses bold, underline and reverse video, not colour alone.",
+  ],
 };
 
 openSource.summary = noWidow(openSource.summary);
+openSource.why = noWidow(openSource.why);
+for (const step of openSource.loop) step.body = noWidow(step.body);
+for (let i = 0; i < openSource.philosophy.length; i++) openSource.philosophy[i] = noWidow(openSource.philosophy[i]);

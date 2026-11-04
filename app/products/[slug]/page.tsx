@@ -34,7 +34,7 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
       href: `/products/${x.slug}`, external: false,
     })),
     { key: openSource.key, name: openSource.name, tagline: openSource.tagline, art: "terminal" as const,
-      chip: "Open source", highlight: false, href: openSource.href, external: true },
+      chip: "Open source", highlight: false, href: `/products/${openSource.slug}`, external: false },
   ];
   const storeLive = p.slug === "culprit" && CULPRIT_STORE_URL.length > 0;
   const shots = p.screenshots;
