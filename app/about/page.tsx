@@ -6,7 +6,14 @@ import { Icon } from "@/components/Icons";
 import { engagementSteps } from "@/lib/content";
 import HeroMark from "@/components/about-visuals/HeroMark";
 import NameMark from "@/components/about-visuals/NameMark";
-import PhilosophyDiagram from "@/components/about-visuals/PhilosophyDiagram";
+
+// Three concepts the philosophy paragraph below already names (judgement, engineering
+// rigour, honesty) -- made visible as a band rather than left as unbroken prose.
+const principles = [
+  { icon: "bulb", title: "Clear thinking", body: "Understand the real problem before proposing the answer." },
+  { icon: "code", title: "Engineering rigour", body: "Build for maintainability, quality and considered trade-offs." },
+  { icon: "shield", title: "Honest assessment", body: "Make uncertainty and risk visible, even when inconvenient." },
+] as const;
 
 export const metadata: Metadata = {
   title: "Ethora Labs | About",
@@ -27,19 +34,10 @@ const culture = [
 ];
 
 export default function AboutPage() {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "Ethora Labs",
-    legalName: "Ethora Labs Private Limited",
-    url: "https://ethoralabs.co",
-    slogan: "Built on Principles. Driven by Possibility.",
-    description: "An engineering-led technology consultancy specialising in software engineering, quality engineering and test automation.",
-  };
-
+  // Organization JSON-LD already lives once, sitewide, in app/layout.tsx -- this page
+  // doesn't repeat it, to avoid two structured-data blocks describing the same entity.
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <PageHero
         eyebrow="About"
         title="Built on principles. Driven by possibility."
@@ -73,35 +71,46 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Philosophy -- the diagram on the right makes visible the structure already in
-          the prose (judgement, engineering rigour, honesty), rather than decoration. */}
+      {/* Philosophy -- the intro pairs with the heading at the top, then an unboxed band
+          makes visible three concepts the prose already names (judgement, engineering
+          rigour, honesty) before the remaining prose continues below. */}
       <section className="bg-navy">
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 md:py-20 lg:grid-cols-[1.15fr_1fr] lg:items-center lg:gap-16 lg:px-8">
-          <Reveal>
-            <h2 className="font-serif text-3xl sm:text-4xl">Our philosophy</h2>
-            <span className="gold-rule mt-5" />
-            <div className="mt-8 max-w-xl space-y-5 text-lg leading-relaxed text-muted-dark">
-              <p>
-                Most software problems are not really technology problems. They are problems of judgement: what to
-                build, what to verify, what to leave alone, and when to say that an approach is not working.
-              </p>
-              <p>
-                So we lead with engineering judgement rather than with tools. We would rather spend a day understanding
-                why a system behaves the way it does than a week working around it. We would rather tell you that a
-                rewrite is not justified than sell you one.
-              </p>
-              <p>
-                The long-term ambition is to build technology that matters — our own products alongside our consulting
-                work — and to be the kind of company engineers want to work with twice.
-              </p>
-              <p className="text-ivory">
-                <Link href="/approach" className="text-gold underline underline-offset-4 hover:text-ivory">See how that works in practice</Link>{" "}
-                in our Design, Build, Verify, Improve cycle.
-              </p>
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
+          <Reveal className="grid gap-6 lg:grid-cols-2 lg:items-end lg:gap-16">
+            <div>
+              <h2 className="font-serif text-3xl sm:text-4xl">Our philosophy</h2>
+              <span className="gold-rule mt-5" />
             </div>
+            <p className="text-lg leading-relaxed text-muted-dark">
+              Most software problems are not really technology problems. They are problems of judgement: what to
+              build, what to verify, what to leave alone, and when to say that an approach is not working.
+            </p>
           </Reveal>
-          <Reveal delay={100}>
-            <PhilosophyDiagram />
+
+          <Reveal delay={80} className="mt-12 grid gap-8 border-y border-gold/20 py-10 sm:grid-cols-3">
+            {principles.map((p, i) => (
+              <div key={p.title} className={i > 0 ? "sm:border-l sm:border-gold/20 sm:pl-8" : ""}>
+                <Icon name={p.icon} className="h-7 w-7 text-gold" />
+                <h3 className="mt-4 font-serif text-2xl">{p.title}</h3>
+                <p className="mt-2 leading-relaxed text-muted-dark">{p.body}</p>
+              </div>
+            ))}
+          </Reveal>
+
+          <Reveal delay={120} className="mt-10 max-w-2xl space-y-5 text-lg leading-relaxed text-muted-dark">
+            <p>
+              So we lead with engineering judgement rather than with tools. We would rather spend a day understanding
+              why a system behaves the way it does than a week working around it. We would rather tell you that a
+              rewrite is not justified than sell you one.
+            </p>
+            <p>
+              The long-term ambition is to build technology that matters — our own products alongside our consulting
+              work — and to be the kind of company engineers want to work with twice.
+            </p>
+            <p className="text-ivory">
+              <Link href="/approach" className="text-gold underline underline-offset-4 hover:text-ivory">See how that works in practice</Link>{" "}
+              in our Design, Build, Verify, Improve cycle.
+            </p>
           </Reveal>
         </div>
       </section>
@@ -123,14 +132,12 @@ export default function AboutPage() {
             {culture.map((v, i) => (
               <li key={v.letter}>
                 <Reveal delay={i * 60} className="h-full">
-                  <div className="flex h-full gap-4 rounded-xl border border-gold-deep/25 bg-white/50 p-6">
+                  <div className="h-full rounded-xl border border-gold-deep/25 bg-white/50 p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-gold-deep/60 hover:bg-white/80">
                     <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-navy font-serif text-xl text-gold" aria-hidden="true">
                       {v.letter}
                     </span>
-                    <div>
-                      <h3 className="font-serif text-2xl leading-tight">{v.name}</h3>
-                      <p className="mt-2 leading-relaxed text-muted-light">{v.behaviour}</p>
-                    </div>
+                    <h3 className="mt-5 font-serif text-2xl leading-tight">{v.name}</h3>
+                    <p className="mt-2 leading-relaxed text-muted-light">{v.behaviour}</p>
                   </div>
                 </Reveal>
               </li>
@@ -142,32 +149,37 @@ export default function AboutPage() {
       {/* How we work with clients -- paired with the same real engagement sequence
           published on /contact/, not a separately invented "process". */}
       <section className="bg-navy">
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 md:py-20 lg:grid-cols-[1fr_1.2fr] lg:items-center lg:gap-16 lg:px-8">
-          <Reveal>
-            <h2 className="font-serif text-3xl sm:text-4xl">How we work with clients</h2>
-            <span className="gold-rule mt-5" />
-            <div className="mt-8 max-w-xl space-y-5 text-lg leading-relaxed text-muted-dark">
-              <p>
-                We treat a working relationship as a long one, even before it starts. That means answering honestly —
-                including when we are not the right fit, or when you may not need us at all — and proposing a first
-                step small enough for you to judge the approach on before committing to anything larger.
-              </p>
-              <p className="text-ivory">
-                See exactly what happens when you{" "}
-                <Link href="/contact" className="text-gold underline underline-offset-4 hover:text-ivory">get in touch</Link>.
-              </p>
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
+          <Reveal className="grid gap-6 lg:grid-cols-2 lg:items-end lg:gap-16">
+            <div>
+              <h2 className="font-serif text-3xl sm:text-4xl">How we work with clients</h2>
+              <span className="gold-rule mt-5" />
             </div>
+            <p className="text-lg leading-relaxed text-muted-dark">
+              We treat a working relationship as a long one, even before it starts. That means answering honestly —
+              including when we are not the right fit, or when you may not need us at all — and proposing a first
+              step small enough for you to judge the approach on before committing to anything larger.
+            </p>
           </Reveal>
-          <Reveal delay={100}>
-            <ol className="space-y-6 sm:grid sm:grid-cols-3 sm:gap-6 sm:space-y-0">
-              {engagementSteps.map((s, i) => (
-                <li key={s.t} className="rounded-xl border border-ivory/15 bg-navy-deep/60 p-5">
-                  <span className="font-serif text-2xl text-gold tabular-nums" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
-                  <p className="mt-2 font-medium text-ivory">{s.t}</p>
-                  <p className="mt-1.5 text-sm leading-relaxed text-muted-dark">{s.b}</p>
-                </li>
-              ))}
-            </ol>
+
+          <Reveal delay={80} className="mt-12 grid gap-8 border-y border-ivory/15 py-10 sm:grid-cols-3">
+            {engagementSteps.map((s, i) => (
+              <div key={s.t} className={i > 0 ? "sm:border-l sm:border-ivory/15 sm:pl-8" : ""}>
+                <span className="font-serif text-xl text-gold tabular-nums" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+                <h3 className="mt-2 font-serif text-2xl">{s.t}</h3>
+                <p className="mt-1.5 leading-relaxed text-muted-dark">{s.b}</p>
+              </div>
+            ))}
+          </Reveal>
+
+          <Reveal delay={120} className="mt-10 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-gold">Have a challenge in mind?</p>
+              <p className="mt-2 max-w-md font-serif text-2xl text-ivory">See exactly what happens when you get in touch.</p>
+            </div>
+            <Link href="/contact" className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-md bg-gold px-5 py-2.5 text-[15px] font-medium text-navy-deep transition-colors hover:bg-[#d4b98f]">
+              Start a conversation <Icon name="arrow" />
+            </Link>
           </Reveal>
         </div>
       </section>
