@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { products, productVision, whyWeBuild, productsConnect, productsClosing } from "@/lib/products";
+import { products, productVision, whyWeBuild, productsConnect, productsClosing, renewGuardAudiences, renewGuardSavingsNote } from "@/lib/products";
 import ProductArt from "@/components/ProductArt";
 import ProductPhilosophy from "@/components/ProductPhilosophy";
 import PageHero, { CtaBand } from "@/components/PageHero";
@@ -22,10 +22,11 @@ export const metadata: Metadata = {
 const culprit = products.find((p) => p.slug === "culprit")!;
 const renewguard = products.find((p) => p.slug === "renewguard")!;
 const culpritShot = culprit.screenshots[0];
+const renewguardShot = renewguard.screenshots[0];
 
+// A short lifecycle summary for this condensed preview -- the full, detailed
+// forward-an-email vision lives on RenewGuard's own dedicated page.
 const renewGuardWorkflow = ["Add", "Remind", "Decide", "Act", "Confirm", "Protect Savings"];
-const renewGuardBusiness = ["SaaS subscriptions", "Suppliers", "Service agreements", "Insurance", "Leases", "Maintenance contracts"];
-const renewGuardPersonal = ["Subscriptions", "Memberships", "Domains", "Insurance", "Warranties"];
 
 export default function ProductsIndex() {
   return (
@@ -121,10 +122,14 @@ export default function ProductsIndex() {
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
           <div className="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
             <Reveal>
-              <div className="overflow-hidden rounded-xl border border-gold-deep/25">
-                <div className="aspect-[400/150]"><ProductArt name="renewguard" /></div>
-              </div>
-              <p className="mt-3 text-sm text-slate">Conceptual illustration. RenewGuard is in development.</p>
+              {renewguardShot ? (
+                <div className="overflow-hidden rounded-xl border border-gold-deep/25">
+                  <Image src={renewguardShot.src} alt={renewguardShot.alt} width={renewguardShot.w} height={renewguardShot.h} className="h-auto w-full" />
+                </div>
+              ) : (
+                <div className="overflow-hidden rounded-xl border border-gold-deep/25"><div className="aspect-[400/150]"><ProductArt name="renewguard" /></div></div>
+              )}
+              <p className="mt-3 text-sm text-slate">From our internal build. <Link href="/products/renewguard/" className="underline underline-offset-4 hover:text-ink">See more screens</Link>.</p>
             </Reveal>
             <Reveal delay={80}>
               <p className="text-xs font-medium uppercase tracking-[0.3em] text-gold-deep">Renewal &amp; Recurring-Commitment Management</p>
@@ -153,26 +158,27 @@ export default function ProductsIndex() {
 
             <div className="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1.3fr]">
               <div>
-                <h3 className="text-sm font-medium uppercase tracking-wider text-slate">For businesses</h3>
-                <ul className="mt-2 space-y-1 text-muted-light">{renewGuardBusiness.map((x) => <li key={x}>{x}</li>)}</ul>
+                <h3 className="text-sm font-medium uppercase tracking-wider text-slate">{renewGuardAudiences.business.label}</h3>
+                <ul className="mt-2 space-y-1 text-muted-light">{renewGuardAudiences.business.items.map((x) => <li key={x}>{x}</li>)}</ul>
               </div>
               <div>
-                <h3 className="text-sm font-medium uppercase tracking-wider text-slate">For personal use</h3>
-                <ul className="mt-2 space-y-1 text-muted-light">{renewGuardPersonal.map((x) => <li key={x}>{x}</li>)}</ul>
+                <h3 className="text-sm font-medium uppercase tracking-wider text-slate">{renewGuardAudiences.personal.label}</h3>
+                <ul className="mt-2 space-y-1 text-muted-light">{renewGuardAudiences.personal.items.map((x) => <li key={x}>{x}</li>)}</ul>
               </div>
               <div>
                 <h3 className="text-sm font-medium uppercase tracking-wider text-slate">Worth knowing</h3>
-                <p className="mt-2 leading-relaxed text-muted-light">
-                  RenewGuard does not automatically cancel subscriptions, negotiate contracts, or guarantee savings.
-                  Potential savings are not realised savings — they become protected only once the real-world outcome
-                  is confirmed.
-                </p>
+                <p className="mt-2 leading-relaxed text-muted-light">{renewGuardSavingsNote}</p>
               </div>
             </div>
 
-            <Link href="/products/renewguard/" className="mt-10 inline-flex min-h-11 items-center gap-2 rounded-md bg-navy px-5 py-2.5 text-[15px] font-medium text-ivory transition-colors hover:bg-navy-deep">
-              Explore RenewGuard <Icon name="arrow" />
-            </Link>
+            <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
+              <Link href="/products/renewguard/" className="inline-flex min-h-11 items-center gap-2 rounded-md bg-navy px-5 py-2.5 text-[15px] font-medium text-ivory transition-colors hover:bg-navy-deep">
+                Explore RenewGuard <Icon name="arrow" />
+              </Link>
+              <a href={`mailto:${renewguard.waitlistEmail}?subject=RenewGuard%20Waitlist`} className="text-[15px] font-medium text-gold-deep underline underline-offset-4 hover:text-ink">
+                Join the waitlist
+              </a>
+            </div>
           </Reveal>
         </div>
       </section>

@@ -10,8 +10,11 @@ import { Icon } from "@/components/Icons";
 
 type Params = { slug: string };
 
+// RenewGuard has its own dedicated page (app/products/renewguard/page.tsx) now that it
+// has real screenshots and a distinct product-vision story to tell; this shared template
+// still serves Culprit, and any future product whose page doesn't need that treatment.
 export function generateStaticParams(): Params[] {
-  return products.map((p) => ({ slug: p.slug }));
+  return products.filter((p) => p.slug !== "renewguard").map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
@@ -159,7 +162,10 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
         <section className="bg-navy-deep">
           <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
             <h2 className="font-serif text-2xl">{others.length > 1 ? "Our other products" : "Our other product"}</h2>
-            <ul className="mt-5 grid gap-4 sm:grid-cols-2">
+            {/* sm:grid-cols-2 only when there's a second item to fill it -- with exactly
+                one "other" product (the common case today), a fixed 2-col grid leaves a
+                permanently empty cell rather than a normal single card. */}
+            <ul className={`mt-5 grid gap-4 ${others.length > 1 ? "sm:grid-cols-2" : "max-w-xl"}`}>
               {others.map((o) => {
                 const cls = "group flex h-full flex-col gap-4 rounded-xl border border-ivory/15 p-6 transition-colors hover:border-gold/70 sm:flex-row sm:items-center";
                 const inner = (

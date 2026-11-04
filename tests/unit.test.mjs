@@ -8,7 +8,8 @@ import { readFileSync } from "node:fs";
 const { riskScore, SCENARIOS, PIPELINE_STAGES, reachedStages, PROTOTYPE_STEPS, ARCH_NODES, ARCH_EDGES, RISK_PRESETS } =
   await import("../lib/demos.ts");
 const { services } = await import("../lib/services.ts");
-const { products } = await import("../lib/products.ts");
+const { products, renewGuardVision, renewGuardAudiences, renewGuardSavingsNote } = await import("../lib/products.ts");
+const { site } = await import("../lib/content.ts");
 const { technologies, techCategories, getTechnology } = await import("../lib/technologies.ts");
 
 describe("riskScore", () => {
@@ -134,13 +135,15 @@ describe("content integrity", () => {
   const stripComments = (src) => src.replace(/\/\*[\s\S]*?\*\//g, " ").replace(/^\s*\/\/.*$/gm, " ");
   const aboutCopy = stripComments(readFileSync(new URL("../app/about/page.tsx", import.meta.url), "utf8"));
   const servicePage = readFileSync(new URL("../app/services/[slug]/page.tsx", import.meta.url), "utf8");
+  const renewguardPage = stripComments(readFileSync(new URL("../app/products/renewguard/page.tsx", import.meta.url), "utf8"));
 
-  // Every string the visitor can actually read, plus the About page markup.
+  // Every string the visitor can actually read, plus the About and RenewGuard page markup.
   // Negated mentions ("we have no case studies") are honesty, not a claim, so they are
   // removed before the check rather than being allowed to fail it.
   const dropNegated = (text) =>
-    text.replace(/\b(?:no|not|never|without)\b[^.]{0,60}?(?:case stud(?:y|ies)|testimonials?|client logos|success percentages|awards?)/gi, " ");
-  const corpus = dropNegated(JSON.stringify(services) + JSON.stringify(products) + aboutCopy);
+    text.replace(/\b(?:no|not|never|without|does not|doesn't)\b[^.]{0,80}?(?:case stud(?:y|ies)|testimonials?|client logos|success percentages|awards?|cancel subscriptions|negotiate contracts|guarantee savings)/gi, " ");
+  const corpus = dropNegated(JSON.stringify(services) + JSON.stringify(products) + aboutCopy
+    + JSON.stringify(renewGuardVision) + JSON.stringify(renewGuardAudiences) + renewGuardSavingsNote + renewguardPage);
 
   test("no fabricated social proof anywhere in the visible copy", () => {
     const banned = [
@@ -148,6 +151,7 @@ describe("content integrity", () => {
       /testimonial/i, /case stud(?:y|ies)/i, /award[- ]winning/i,
       /\d+% (?:faster|improvement|increase|reduction)/i, /industry[- ]leading/i,
       /world[- ]class/i, /proven track record/i,
+      /fully automated/i, /guaranteed savings/i, /automatically cancels?/i,
     ];
     for (const re of banned) {
       const m = corpus.match(re);
@@ -184,6 +188,29 @@ describe("content integrity", () => {
     assert.match(servicePage, /Not a record of completed client work/);
   });
 
+  test("RenewGuard's waitlist email is distinct from Ethora's general contact address", () => {
+    const renewguard = products.find((p) => p.slug === "renewguard");
+    const culprit = products.find((p) => p.slug === "culprit");
+    assert.ok(renewguard.waitlistEmail, "renewguard: waitlistEmail");
+    assert.notEqual(renewguard.waitlistEmail, site.email, "RenewGuard's waitlist address must not be Ethora's consulting contact");
+    assert.equal(culprit.waitlistEmail, undefined, "an available product should not have a waitlist address");
+  });
+
+  test("every RenewGuard screenshot has real dimensions and descriptive text", () => {
+    const renewguard = products.find((p) => p.slug === "renewguard");
+    assert.ok(renewguard.screenshots.length >= 3, "expected several real screenshots");
+    for (const s of renewguard.screenshots) {
+      assert.ok(s.w > 0 && s.h > 0, `${s.src}: dimensions`);
+      assert.ok(s.alt.length > 15, `${s.src}: alt text`);
+      assert.ok(s.caption.length > 0, `${s.src}: caption`);
+    }
+  });
+
+  test("RenewGuard's product vision is framed as a vision, not a live claim", () => {
+    assert.match(renewGuardVision.intro, /vision|not.*(?:live|claim)/i);
+    assert.ok(renewGuardVision.steps.length >= 5, "expected a multi-step flow");
+  });
+
   test("a product marked available has somewhere to go", () => {
     const { CULPRIT_STORE_URL } = products.find((p) => p.slug === "culprit").status.available
       ? { CULPRIT_STORE_URL: null } : { CULPRIT_STORE_URL: null };
@@ -191,7 +218,11 @@ describe("content integrity", () => {
     for (const p of products) {
       assert.ok(p.status.label.length > 0, `${p.slug}: status label`);
       assert.ok(p.status.detail.length > 0, `${p.slug}: status detail`);
-      if (!p.status.available) assert.equal(p.features.length, 0, `${p.slug}: unavailable product should not list features it cannot demonstrate`);
+      // An unavailable product can only claim features it can actually demonstrate --
+      // i.e. with real screenshots backing them, not invented ahead of a launch.
+      if (!p.status.available && p.screenshots.length === 0) {
+        assert.equal(p.features.length, 0, `${p.slug}: unavailable product with no screenshots should not list features it cannot demonstrate`);
+      }
     }
   });
 });

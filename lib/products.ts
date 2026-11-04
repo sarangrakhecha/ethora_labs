@@ -18,11 +18,15 @@ export type Product = {
   /** Features described from the product's own published screenshots. */
   features: { title: string; body: string }[];
   /**
-   * Real product screenshots, as published on the Chrome Web Store listing. While this is
-   * empty the page falls back to the abstract brand illustration, clearly labelled as one.
+   * Real product screenshots -- Culprit's as published on the Chrome Web Store listing,
+   * RenewGuard's from its own internal build. While this is empty the page falls back to
+   * the abstract brand illustration, clearly labelled as one.
    */
   screenshots: { src: string; alt: string; caption: string; w: number; h: number }[];
   art: "culprit" | "renewguard";
+  /** Pre-launch products only: where to email to ask for early access. Never substitutes
+   * for Ethora's own consulting contact address. */
+  waitlistEmail?: string;
 };
 
 export const products: Product[] = [
@@ -82,18 +86,72 @@ export const products: Product[] = [
     kind: "Renewal management",
     tagline: "Know before it renews.",
     summary:
-      "RenewGuard is our renewal and recurring-commitment management product, for businesses and individuals who want to see what is about to renew before it does.",
+      "RenewGuard helps businesses and individuals stay ahead of recurring commitments — from subscriptions and memberships to vendor contracts and insurance.",
     status: {
       label: "In development",
-      detail: "RenewGuard is being built and is not yet available. We are happy to talk to anyone who wants to follow its progress.",
+      detail: "RenewGuard is being built and is not yet publicly available. The screens below are from our own internal build.",
       available: false,
     },
     areas: [],
-    features: [],
-    screenshots: [],
+    features: [
+      { title: "A clear daily overview", body: "What needs a decision, what's renewing soon, and savings identified versus actually protected — in one view." },
+      { title: "Renewals, ordered by urgency", body: "Sorted by the last date you can still act, with a visible countdown to that deadline rather than just the renewal date itself." },
+      { title: "Every vendor in one place", body: "Software, suppliers, leases and service contracts together, each with its category, owner and annual cost." },
+      { title: "Savings you can trust", body: "A three-stage funnel — Identified, Approved, Protected — so a potential saving is never shown as money already saved." },
+      { title: "A dedicated forwarding address", body: "An address to forward renewal emails to, with approved sender addresses per workspace. See the vision below for how this is designed to work end to end." },
+    ],
+    screenshots: [
+      { src: "/products/renewguard/overview.webp", w: 2000, h: 1250,
+        alt: "RenewGuard overview dashboard greeting the user, showing renewing-soon total, potential savings, protected savings, and a list of renewals that need attention.",
+        caption: "Overview: what needs a decision, surfaced first — not buried in a list." },
+      { src: "/products/renewguard/renewals.webp", w: 2000, h: 1250,
+        alt: "RenewGuard renewals list filtered to Needs attention, showing Adobe Creative Cloud and Shakti Metals with days-left countdowns and a Review and decide action.",
+        caption: "Renewals: ordered by the last day you can still change your mind." },
+      { src: "/products/renewguard/vendors.webp", w: 2000, h: 1250,
+        alt: "RenewGuard vendors table listing software, suppliers, leases and service contracts with status, renewal date and annual cost.",
+        caption: "Vendors: every recurring commitment in one directory, not scattered across inboxes." },
+      { src: "/products/renewguard/savings.webp", w: 2000, h: 1250,
+        alt: "RenewGuard savings page showing Identified, Approved and Protected totals as a funnel, with a per-vendor breakdown underneath.",
+        caption: "Savings: a figure only counts once the real-world action is actually confirmed." },
+      { src: "/products/renewguard/settings-forwarding.webp", w: 2000, h: 1825,
+        alt: "RenewGuard settings page for forwarding renewal emails, showing a dedicated forwarding address, a list of approved sender addresses, and a demo-only test-send tool labelled as a demo build.",
+        caption: "Settings: the forwarding address and approved senders, shown here in our internal demo build." },
+    ],
     art: "renewguard",
+    waitlistEmail: "hello@renewguardhq.com",
   },
 ];
+
+/**
+ * RenewGuard's planned email-forwarding flow. This is the product vision, not a record
+ * of what is live today -- see the "demo build" labelling on the settings screenshot
+ * above. The philosophy line is the design intent behind every step.
+ */
+export const renewGuardVision = {
+  eyebrow: "Product vision",
+  headline: "Forward it. We'll track it.",
+  philosophy: "Automation by default. Intervention by exception.",
+  intro: "How RenewGuard is designed to turn a forwarded email into a tracked renewal — not a claim that every step runs in production today.",
+  steps: [
+    "Forward a renewal, invoice, subscription or contract email to track@renewguardhq.com",
+    "RenewGuard identifies the approved sender and which workspace it belongs to",
+    "It extracts the relevant renewal information from the email",
+    "High-confidence renewals are added automatically",
+    "Ambiguous information is sent back for a targeted, quick review",
+    "Reminders are scheduled around the dates that actually require a decision",
+    "You decide: Keep, Reduce, Cancel, or Review again later",
+    "The real-world action and its outcome are confirmed before any saving is counted",
+  ],
+};
+
+/** Who RenewGuard is for, kept brief -- this is a preview, not a product manual. */
+export const renewGuardAudiences = {
+  business: { label: "Business", items: ["SaaS subscriptions", "Vendors and suppliers", "Leases", "Insurance", "Service contracts", "Maintenance agreements"] },
+  personal: { label: "Personal", items: ["Memberships", "Subscriptions", "Domains", "Warranties", "Insurance"] },
+};
+
+export const renewGuardSavingsNote =
+  "RenewGuard does not automatically cancel subscriptions, negotiate contracts, or guarantee savings. Choosing Cancel records a decision, not a completed cancellation. Potential savings are not realised savings — they become Protected only once the real-world outcome is confirmed.";
 
 for (const p of products) {
   p.summary = noWidow(p.summary);
@@ -220,3 +278,6 @@ openSource.why = noWidow(openSource.why);
 for (const step of openSource.loop) step.body = noWidow(step.body);
 for (let i = 0; i < openSource.philosophy.length; i++) openSource.philosophy[i] = noWidow(openSource.philosophy[i]);
 for (const s of openSource.screenshots) s.caption = noWidow(s.caption);
+
+renewGuardVision.intro = noWidow(renewGuardVision.intro);
+for (let i = 0; i < renewGuardVision.steps.length; i++) renewGuardVision.steps[i] = noWidow(renewGuardVision.steps[i]);
