@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { products, openSource } from "@/lib/products";
+import { products } from "@/lib/products";
 import ExpandingPanels, { type Panel } from "@/components/ExpandingPanels";
 import PageHero, { CtaBand } from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
@@ -11,38 +11,28 @@ export const metadata: Metadata = {
   description: "Culprit, a Chrome extension for software debugging, and RenewGuard, renewal and recurring-commitment management. Products built by Ethora Labs.",
 };
 
-const panels: Panel[] = [
-  ...products.map((p) => ({
-    key: p.slug,
-    icon: p.slug === "culprit" ? "target" : "loop",
-    art: p.art,
-    title: p.name,
-    subtitle: p.tagline,
-    detail: p.summary,
-    chip: { label: p.status.label, highlight: p.status.available },
-    href: `/products/${p.slug}`,
-    cta: `About ${p.name}`,
-  })),
-  {
-    key: openSource.key,
-    icon: "terminal",
-    art: "terminal" as const,
-    title: openSource.name,
-    subtitle: openSource.tagline,
-    detail: openSource.summary,
-    chip: { label: "Open source", highlight: false },
-    href: `/products/${openSource.slug}`,
-    cta: `About ${openSource.name}`,
-  },
-];
+// Only the two real Ethora products. TerminalQuest is open-source, not part of
+// the commercial Products division, and is deliberately not listed here.
+const panels: Panel[] = products.map((p) => ({
+  key: p.slug,
+  icon: p.slug === "culprit" ? "target" : "loop",
+  art: p.art,
+  title: p.name,
+  subtitle: p.tagline,
+  detail: p.summary,
+  chip: { label: p.status.label, highlight: p.status.available },
+  href: `/products/${p.slug}`,
+  cta: `About ${p.name}`,
+}));
 
 export default function ProductsIndex() {
   return (
     <>
       <PageHero
+        breadcrumb={[{ label: "Home", href: "/" }]}
         eyebrow="Products"
         title="Products we build"
-        intro="Alongside our consulting work, we build our own products: one available today, one in development. We also publish open-source CLI tools on GitHub."
+        intro="Alongside our consulting work, we build our own products: one available today, one in development."
       />
 
       <section className="bg-navy">
@@ -52,7 +42,7 @@ export default function ProductsIndex() {
           </Reveal>
           <p className="mt-10 text-muted-dark">
             Looking for our consulting work instead?{" "}
-            <Link href="/services" className="text-gold underline underline-offset-4 hover:text-ivory">See our capabilities</Link>.
+            <Link href="/#capabilities" className="text-gold underline underline-offset-4 hover:text-ivory">See our capabilities</Link>.
           </p>
         </div>
       </section>

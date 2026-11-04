@@ -63,7 +63,7 @@ export default function ApproachPage() {
           </p>
           <p className="mt-6 text-muted-light">
             See how this plays out across a specific engagement on our{" "}
-            <Link href="/services" className="text-gold-deep underline underline-offset-4">capability pages</Link>.
+            <Link href="/#capabilities" className="text-gold-deep underline underline-offset-4">capability pages</Link>.
           </p>
         </div>
       </section>

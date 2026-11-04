@@ -5,15 +5,12 @@ import { useEffect, useRef, useState } from "react";
 import { Icon, Wordmark } from "./Icons";
 import { ButtonLink } from "./Button";
 import { services } from "@/lib/services";
-import { products, openSource } from "@/lib/products";
+import { products } from "@/lib/products";
 import { nav } from "@/lib/content";
 
-// Same three entries the Products index page and home showcase use: the two
-// real products, plus the open-source project (which also has its own page now).
-const productLinks = [
-  ...products.map((p) => ({ slug: p.slug, name: p.name, tagline: p.tagline })),
-  { slug: openSource.slug, name: openSource.name, tagline: openSource.tagline },
-];
+// Only the two real Ethora products. TerminalQuest is open-source, not part of the
+// Products division, and is intentionally not linked from here.
+const productLinks = products.map((p) => ({ slug: p.slug, name: p.name, tagline: p.tagline }));
 
 export default function Header() {
   const [open, setOpen] = useState(false);       // mobile menu
@@ -88,7 +85,7 @@ export default function Header() {
                   </li>
                 ))}
                 <li className="mt-1 border-t border-ivory/10 pt-1">
-                  <Link href="/services" onClick={close} className="block rounded px-3 py-2.5 text-[15px] font-medium text-gold hover:bg-ivory/10">All capabilities</Link>
+                  <Link href="/#capabilities" onClick={close} className="block rounded px-3 py-2.5 text-[15px] font-medium text-gold hover:bg-ivory/10">All capabilities</Link>
                 </li>
               </ul>
             )}
@@ -151,7 +148,7 @@ export default function Header() {
                   </li>
                 ))}
                 <li>
-                  <Link href="/services" onClick={close} className="flex min-h-12 items-center rounded px-2 text-[16px] font-medium text-gold">All capabilities</Link>
+                  <Link href="/#capabilities" onClick={close} className="flex min-h-12 items-center rounded px-2 text-[16px] font-medium text-gold">All capabilities</Link>
                 </li>
               </ul>
             </li>

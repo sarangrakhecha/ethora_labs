@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { products, openSource, CULPRIT_STORE_URL } from "@/lib/products";
+import { products, CULPRIT_STORE_URL } from "@/lib/products";
 import ScreenshotStrip from "@/components/ScreenshotStrip";
 import ProductArt from "@/components/ProductArt";
 import PageHero, { CtaBand } from "@/components/PageHero";
@@ -25,17 +25,13 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
   const { slug } = await params;
   const p = products.find((x) => x.slug === slug);
   if (!p) notFound();
-  // Every other entry in the Products division: the other real product, plus the
-  // open-source project (which has no page of its own, so it links straight to GitHub).
-  const others = [
-    ...products.filter((x) => x.slug !== slug).map((x) => ({
-      key: x.slug, name: x.name, tagline: x.tagline, art: x.art,
-      chip: x.status.label, highlight: x.status.available,
-      href: `/products/${x.slug}`, external: false,
-    })),
-    { key: openSource.key, name: openSource.name, tagline: openSource.tagline, art: "terminal" as const,
-      chip: "Open source", highlight: false, href: `/products/${openSource.slug}`, external: false },
-  ];
+  // The other real product in the Products division. TerminalQuest is open-source and
+  // intentionally not part of this commercial line-up.
+  const others = products.filter((x) => x.slug !== slug).map((x) => ({
+    key: x.slug, name: x.name, tagline: x.tagline, art: x.art,
+    chip: x.status.label, highlight: x.status.available,
+    href: `/products/${x.slug}`, external: false,
+  }));
   const storeLive = p.slug === "culprit" && CULPRIT_STORE_URL.length > 0;
   const shots = p.screenshots;
 
@@ -143,7 +139,7 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
             <p>
               <Link href="/approach" className="text-gold underline underline-offset-4 hover:text-ivory">How we work</Link>
               {" · "}
-              <Link href="/services" className="text-gold underline underline-offset-4 hover:text-ivory">Consulting capabilities</Link>
+              <Link href="/#capabilities" className="text-gold underline underline-offset-4 hover:text-ivory">Consulting capabilities</Link>
             </p>
           </Reveal>
         </div>
@@ -173,11 +169,7 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
                 );
                 return (
                   <li key={o.key}>
-                    {o.external ? (
-                      <a href={o.href} target="_blank" rel="noopener noreferrer" className={cls}>{inner}</a>
-                    ) : (
-                      <Link href={o.href} className={cls}>{inner}</Link>
-                    )}
+                    <Link href={o.href} className={cls}>{inner}</Link>
                   </li>
                 );
               })}

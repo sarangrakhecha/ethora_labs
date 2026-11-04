@@ -142,7 +142,7 @@ export default function AboutPage() {
                 Ethora Labs is a new, small and senior company. We have no client logos to show you, no case studies and
                 no success percentages, because inventing them would contradict the first value on this page. What we can
                 show is how we think — in our{" "}
-                <Link href="/services" className="text-gold-deep underline underline-offset-4">capability pages</Link>,
+                <Link href="/#capabilities" className="text-gold-deep underline underline-offset-4">capability pages</Link>,
                 the working demonstrations inside them, and the products we are building.
               </p>
             </div>
