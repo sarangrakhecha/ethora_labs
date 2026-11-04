@@ -3,7 +3,7 @@ import { site } from "@/lib/content";
 
 const links = [
   { label: "Capabilities", href: "/#capabilities" },
-  { label: "Products", href: "/#products" },
+  { label: "Products", href: "/products" },
   { label: "Approach", href: "/#approach" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
