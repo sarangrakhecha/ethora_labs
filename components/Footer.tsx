@@ -8,6 +8,7 @@ const DESCRIPTION = "Engineering-led software development, quality engineering a
 
 const explore = [
   { label: "Capabilities", href: "/#capabilities" },
+  { label: "Technologies", href: "/technologies" },
   { label: "Products", href: "/products" },
   { label: "Our Approach", href: "/approach" },
 ];

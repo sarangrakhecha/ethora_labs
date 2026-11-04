@@ -90,6 +90,8 @@ export default function Header() {
             )}
           </div>
 
+          <Link href="/technologies" aria-current={isCurrent("/technologies") ? "page" : undefined} className={linkCls(isCurrent("/technologies"))}>Technologies</Link>
+
           <div ref={prodRef} className="relative">
             <button type="button" aria-expanded={prodOpen} aria-controls="prod-menu" aria-haspopup="true"
               onClick={() => { setProdOpen((v) => !v); setCapOpen(false); }} className={`${linkCls(onProducts)} gap-1.5`}>
@@ -149,6 +151,11 @@ export default function Header() {
                   </li>
                 ))}
               </ul>
+            </li>
+
+            <li>
+              <Link href="/technologies" onClick={close} aria-current={isCurrent("/technologies") ? "page" : undefined}
+                className={`flex min-h-12 items-center rounded px-2 text-[16px] ${isCurrent("/technologies") ? "text-gold" : "text-ivory"}`}>Technologies</Link>
             </li>
 
             <li>

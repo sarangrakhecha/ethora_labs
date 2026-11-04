@@ -1,5 +1,4 @@
 import Hero from "@/components/Hero";
-import Approach from "@/components/Approach";
 import Capabilities from "@/components/Capabilities";
 import ProblemFirst from "@/components/ProblemFirst";
 import ProductsShowcase from "@/components/ProductsShowcase";
@@ -10,7 +9,6 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <Approach />
       <Capabilities />
       <ProblemFirst />
       <ProductsShowcase />

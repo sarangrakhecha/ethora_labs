@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { services, getService, SERVICE_ENGAGEMENT_NOTE } from "@/lib/services";
+import { getTechnology } from "@/lib/technologies";
 import { ServiceDemo } from "@/components/demos";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
@@ -105,6 +106,23 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
               </li>
             ))}
           </ul>
+
+          {s.techIds && s.techIds.length > 0 && (
+            <Reveal delay={120} className="mt-10 border-t border-ivory/10 pt-8">
+              <h3 className="text-sm font-medium uppercase tracking-wider text-slate">Technologies we work with</h3>
+              <ul className="mt-3 flex flex-wrap gap-2">
+                {s.techIds.map((id) => {
+                  const t = getTechnology(id);
+                  return t ? (
+                    <li key={id} className="rounded-full border border-ivory/20 px-3 py-1 text-sm text-ivory/90">{t.name}</li>
+                  ) : null;
+                })}
+              </ul>
+              <Link href="/technologies" className="mt-3 inline-flex min-h-9 items-center gap-2 rounded text-sm font-medium text-gold hover:text-ivory">
+                See all technologies <Icon name="arrow" className="h-4 w-4" />
+              </Link>
+            </Reveal>
+          )}
         </div>
       </section>
 

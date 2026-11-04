@@ -24,6 +24,9 @@ export type Service = {
   approach: { phase: string; body: string }[];
   engagements: { name: string; shape: string; body: string }[];
   related: string[];
+  /** Ids into lib/technologies.ts, for a compact contextual strip -- only the
+   * technologies genuinely relevant to this service, not the full verified list. */
+  techIds?: string[];
 };
 
 const sharedEngagementNote =
@@ -85,6 +88,7 @@ export const services: Service[] = [
       { name: "Ongoing engineering support", shape: "Continuing, reviewed regularly", body: "Continuous work alongside your team, for products that need steady development and maintenance rather than a one-off push." },
     ],
     related: ["quality-engineering", "test-automation"],
+    techIds: ["nextjs", "react", "typescript", "nodejs"],
   },
 
   /* ------------------------------------------------------- quality engineering */
@@ -141,6 +145,7 @@ export const services: Service[] = [
       { name: "Ongoing quality support", shape: "Continuing, reviewed regularly", body: "Continuous quality work embedded with your team through each release cycle." },
     ],
     related: ["test-automation", "software-engineering"],
+    techIds: ["playwright", "node-test"],
   },
 
   /* -------------------------------------------------------- test automation */
@@ -197,6 +202,7 @@ export const services: Service[] = [
       { name: "Ongoing automation support", shape: "Continuing, reviewed regularly", body: "Keeping automation healthy as the product changes, including triage and maintenance." },
     ],
     related: ["quality-engineering", "software-engineering"],
+    techIds: ["playwright", "node-test", "pipeline", "git"],
   },
 
   /* ----------------------------------------------------------- innovation */
