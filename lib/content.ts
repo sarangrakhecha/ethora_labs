@@ -181,9 +181,7 @@ export const problems = [
   },
 ] as const;
 
-// Hash links are prefixed with "/" so they also work from the capability pages.
-export const nav = [
-  { label: "Approach", href: "/approach" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
-];
+// "About" renders in its own fixed position (first, right after the logo) and
+// "Contact" is covered by the "Start a Conversation" CTA, so this is just the one
+// remaining plain nav link, placed after the Capabilities/Products dropdowns.
+export const nav = [{ label: "Our Approach", href: "/approach" }];

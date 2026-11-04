@@ -17,11 +17,11 @@ const panels: Panel[] = [
   {
     key: "view-all",
     icon: "layers",
-    title: "View all",
-    subtitle: "The full Products line-up.",
-    detail: "Culprit and RenewGuard, each with their own page: features, status and what's next.",
+    title: "Why we build",
+    subtitle: "Our product philosophy.",
+    detail: "Why Ethora builds products alongside consulting, how we think about what's worth building, and what we've made so far.",
     href: "/products",
-    cta: "See all products",
+    cta: "See our product philosophy",
   },
 ];
 

@@ -68,6 +68,8 @@ export default function Header() {
 
         {/* Desktop */}
         <nav aria-label="Primary" className="hidden items-center gap-2 lg:flex">
+          <Link href="/about" aria-current={isCurrent("/about") ? "page" : undefined} className={linkCls(isCurrent("/about"))}>About</Link>
+
           <div ref={capRef} className="relative">
             <button type="button" aria-expanded={capOpen} aria-controls="cap-menu" aria-haspopup="true"
               onClick={() => { setCapOpen((v) => !v); setProdOpen(false); }} className={`${linkCls(onServices)} gap-1.5`}>
@@ -84,9 +86,6 @@ export default function Header() {
                     </Link>
                   </li>
                 ))}
-                <li className="mt-1 border-t border-ivory/10 pt-1">
-                  <Link href="/#capabilities" onClick={close} className="block rounded px-3 py-2.5 text-[15px] font-medium text-gold hover:bg-ivory/10">All capabilities</Link>
-                </li>
               </ul>
             )}
           </div>
@@ -107,9 +106,6 @@ export default function Header() {
                     </Link>
                   </li>
                 ))}
-                <li className="mt-1 border-t border-ivory/10 pt-1">
-                  <Link href="/products" onClick={close} className="block rounded px-3 py-2.5 text-[15px] font-medium text-gold hover:bg-ivory/10">All products</Link>
-                </li>
               </ul>
             )}
           </div>
@@ -132,6 +128,11 @@ export default function Header() {
         <nav id="mobile-menu" aria-label="Mobile" className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-ivory/10 bg-navy-deep px-4 pb-6 pt-3 lg:hidden">
           <ul className="flex flex-col">
             <li>
+              <Link href="/about" onClick={close} aria-current={isCurrent("/about") ? "page" : undefined}
+                className={`flex min-h-12 items-center rounded px-2 text-[16px] ${isCurrent("/about") ? "text-gold" : "text-ivory"}`}>About</Link>
+            </li>
+
+            <li>
               <button type="button" aria-expanded={capExpanded} aria-controls="m-cap"
                 onClick={() => setCapExpanded((v) => !v)}
                 className={`flex min-h-12 w-full items-center justify-between rounded px-2 text-[16px] ${onServices ? "text-gold" : "text-ivory"}`}>
@@ -147,9 +148,6 @@ export default function Header() {
                     </Link>
                   </li>
                 ))}
-                <li>
-                  <Link href="/#capabilities" onClick={close} className="flex min-h-12 items-center rounded px-2 text-[16px] font-medium text-gold">All capabilities</Link>
-                </li>
               </ul>
             </li>
 
@@ -169,9 +167,6 @@ export default function Header() {
                     </Link>
                   </li>
                 ))}
-                <li>
-                  <Link href="/products" onClick={close} className="flex min-h-12 items-center rounded px-2 text-[16px] font-medium text-gold">All products</Link>
-                </li>
               </ul>
             </li>
 

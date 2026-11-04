@@ -103,6 +103,69 @@ for (const p of products) {
 }
 
 /**
+ * Content for the /products/ vision page: why Ethora builds products at all, alongside
+ * (not instead of) consulting. Kept separate from `products` above, which is the two
+ * products' own factual data (features, status, screenshots).
+ */
+export const productVision = {
+  eyebrow: "Products",
+  headline: "We don't just solve problems. We build what we wish existed.",
+  body: "At Ethora Labs, we believe useful products begin with a clear understanding of an everyday problem. We explore those problems, question existing workflows, and build thoughtful software that makes complex tasks simpler.",
+};
+
+export const whyWeBuild = {
+  headline: "Some problems deserve more than a workaround.",
+  points: [
+    "Useful products often begin with small frustrations people encounter repeatedly.",
+    "A better solution does not always require a revolutionary technology.",
+    "Sometimes it requires understanding a workflow and removing unnecessary friction.",
+    "We value practical usefulness over feature count.",
+    "We aim to build products that are dependable, understandable and respectful of users.",
+  ],
+  connection: "The same engineering principles that shape our consulting work — integrity, rigour, curiosity and ownership — shape what we choose to build and how we build it.",
+};
+
+export type PhilosophyStage = { id: string; name: string; question: string; body: string };
+
+/**
+ * Observe → Question → Simplify → Build → Validate → Improve: an illustrative
+ * product-development framework, not a record that every product here has completed
+ * every stage. Deliberately a different shape from the Engineering Canvas (Design,
+ * Build, Verify, Improve) — this one is about deciding what is worth building at all,
+ * not about delivering a piece of client work.
+ */
+export const PHILOSOPHY_STAGES: PhilosophyStage[] = [
+  { id: "observe", name: "Observe", question: "What is actually happening?", body: "Understand an actual problem and its context — who has it, how often, and what they do about it today." },
+  { id: "question", name: "Question", question: "Why does it work this way?", body: "Challenge existing assumptions and workflows, including the ones that have simply never been questioned before." },
+  { id: "simplify", name: "Simplify", question: "What is the smallest real fix?", body: "Identify the smallest useful solution — not the most impressive one, the one that actually removes the friction." },
+  { id: "build", name: "Build", question: "Can this be trusted?", body: "Engineer a dependable implementation: the part that has to work correctly every time, not just in a demo." },
+  { id: "validate", name: "Validate", question: "Does it actually work?", body: "Test whether it works technically and solves the intended problem — both questions, not just the first one." },
+  { id: "improve", name: "Improve", question: "What did we learn?", body: "Refine based on evidence and feedback, and feed what is learned back into the next thing observed." },
+];
+
+export const productsConnect = {
+  headline: "Different problems. The same principles.",
+  intro: "Culprit and RenewGuard solve very different problems, for very different people, and they do not share a platform, data or infrastructure. What connects them is how we approach building anything:",
+  points: [
+    "Reduce unnecessary complexity.",
+    "Make important information visible.",
+    "Help people act with greater confidence.",
+    "Respect user control.",
+    "Build dependable, practical tools.",
+  ],
+};
+
+export const productsClosing = noWidow(
+  "We build products because we believe engineering should make everyday work clearer, simpler and more dependable. Culprit and RenewGuard are two expressions of that belief — and our curiosity doesn't end there."
+);
+
+for (const s of PHILOSOPHY_STAGES) s.body = noWidow(s.body);
+for (let i = 0; i < whyWeBuild.points.length; i++) whyWeBuild.points[i] = noWidow(whyWeBuild.points[i]);
+whyWeBuild.connection = noWidow(whyWeBuild.connection);
+productVision.body = noWidow(productVision.body);
+productsConnect.intro = noWidow(productsConnect.intro);
+
+/**
  * The open-source project, kept deliberately outside `products`: it is not one of ours
  * to sell. It has its own page (not the shared [slug] product template, since its shape
  * is genuinely different \u2014 no store listing, no commercial status) that explains it
