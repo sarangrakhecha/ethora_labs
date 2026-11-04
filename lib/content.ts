@@ -4,6 +4,7 @@ export const site = {
   name: "Ethora Labs",
   tagline: "Built on Principles. Driven by Possibility.",
   domain: "ethoralabs.co",
+  email: "hello@ethoralabs.co",
   legal: "Ethora Labs Private Limited",
   year: 2026,
 };

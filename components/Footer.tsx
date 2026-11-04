@@ -27,6 +27,9 @@ export default function Footer() {
             <p><span className="inline-flex min-h-11 items-center text-muted-dark" aria-disabled="true">Privacy Policy (coming soon)</span></p>
             <p className="text-ivory/90">{site.domain}</p>
             <p>
+              <a href={`mailto:${site.email}`} className="inline-flex min-h-11 items-center rounded text-ivory/90 hover:text-gold">{site.email}</a>
+            </p>
+            <p>
               <a href="https://github.com/sarangrakhecha" target="_blank" rel="noopener noreferrer"
                 className="inline-flex min-h-11 items-center gap-2 rounded text-ivory/90 hover:text-gold">
                 Open source on GitHub

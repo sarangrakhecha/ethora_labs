@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState, type FormEvent } from "react";
 import { services } from "@/lib/services";
-import { problems } from "@/lib/content";
+import { problems, site } from "@/lib/content";
 
 type Values = { name: string; email: string; company: string; service: string; message: string };
 type Errors = Partial<Record<keyof Values, string>>;
@@ -157,7 +157,10 @@ export default function ContactForm() {
           </div>
 
           {!SUBMIT_ENABLED && (
-            <p id="form-note" className="mt-3 max-w-md text-sm leading-relaxed text-muted-dark">{FALLBACK_NOTE} Please check back soon.</p>
+            <p id="form-note" className="mt-3 max-w-md text-sm leading-relaxed text-muted-dark">
+              {FALLBACK_NOTE} In the meantime, email us directly at{" "}
+              <a href={`mailto:${site.email}`} className="text-gold underline underline-offset-4 hover:text-ivory">{site.email}</a>.
+            </p>
           )}
         </div>
       </form>
