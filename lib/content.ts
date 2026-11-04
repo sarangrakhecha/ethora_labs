@@ -147,7 +147,6 @@ export const problems = [
 
 // Hash links are prefixed with "/" so they also work from the capability pages.
 export const nav = [
-  { label: "Products", href: "/products" },
   { label: "Approach", href: "/approach" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },

@@ -5,13 +5,24 @@ import { useEffect, useRef, useState } from "react";
 import { Icon, Wordmark } from "./Icons";
 import { ButtonLink } from "./Button";
 import { services } from "@/lib/services";
+import { products, openSource } from "@/lib/products";
 import { nav } from "@/lib/content";
 
+// Same three entries the Products index page and home showcase use: the two
+// real products, plus the open-source project (which also has its own page now).
+const productLinks = [
+  ...products.map((p) => ({ slug: p.slug, name: p.name, tagline: p.tagline })),
+  { slug: openSource.slug, name: openSource.name, tagline: openSource.tagline },
+];
+
 export default function Header() {
-  const [open, setOpen] = useState(false);      // mobile menu
-  const [capOpen, setCapOpen] = useState(false); // desktop dropdown
-  const [capExpanded, setCapExpanded] = useState(false); // mobile accordion
+  const [open, setOpen] = useState(false);       // mobile menu
+  const [capOpen, setCapOpen] = useState(false);  // desktop Capabilities dropdown
+  const [prodOpen, setProdOpen] = useState(false); // desktop Products dropdown
+  const [capExpanded, setCapExpanded] = useState(false);   // mobile Capabilities accordion
+  const [prodExpanded, setProdExpanded] = useState(false); // mobile Products accordion
   const capRef = useRef<HTMLDivElement>(null);
+  const prodRef = useRef<HTMLDivElement>(null);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
@@ -23,18 +34,22 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") { setCapOpen(false); setOpen(false); } };
-    const onClick = (e: MouseEvent) => { if (capRef.current && !capRef.current.contains(e.target as Node)) setCapOpen(false); };
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") { setCapOpen(false); setProdOpen(false); setOpen(false); } };
+    const onClick = (e: MouseEvent) => {
+      if (capRef.current && !capRef.current.contains(e.target as Node)) setCapOpen(false);
+      if (prodRef.current && !prodRef.current.contains(e.target as Node)) setProdOpen(false);
+    };
     document.addEventListener("keydown", onKey);
     document.addEventListener("click", onClick);
     return () => { document.removeEventListener("keydown", onKey); document.removeEventListener("click", onClick); };
   }, []);
 
   // Close everything on navigation.
-  useEffect(() => { setOpen(false); setCapOpen(false); }, [pathname]);
+  useEffect(() => { setOpen(false); setCapOpen(false); setProdOpen(false); }, [pathname]);
 
-  const close = () => { setOpen(false); setCapOpen(false); };
+  const close = () => { setOpen(false); setCapOpen(false); setProdOpen(false); };
   const onServices = pathname?.startsWith("/services") ?? false;
+  const onProducts = pathname?.startsWith("/products") ?? false;
   const isCurrent = (href: string) => href.startsWith("/#") ? false : pathname === href || pathname === `${href}/`;
 
   const linkCls = (active: boolean) =>
@@ -58,7 +73,7 @@ export default function Header() {
         <nav aria-label="Primary" className="hidden items-center gap-2 lg:flex">
           <div ref={capRef} className="relative">
             <button type="button" aria-expanded={capOpen} aria-controls="cap-menu" aria-haspopup="true"
-              onClick={() => setCapOpen((v) => !v)} className={`${linkCls(onServices)} gap-1.5`}>
+              onClick={() => { setCapOpen((v) => !v); setProdOpen(false); }} className={`${linkCls(onServices)} gap-1.5`}>
               Capabilities <Icon name="chevron" className={`transition-transform ${capOpen ? "rotate-180" : ""}`} />
             </button>
             {capOpen && (
@@ -78,6 +93,30 @@ export default function Header() {
               </ul>
             )}
           </div>
+
+          <div ref={prodRef} className="relative">
+            <button type="button" aria-expanded={prodOpen} aria-controls="prod-menu" aria-haspopup="true"
+              onClick={() => { setProdOpen((v) => !v); setCapOpen(false); }} className={`${linkCls(onProducts)} gap-1.5`}>
+              Products <Icon name="chevron" className={`transition-transform ${prodOpen ? "rotate-180" : ""}`} />
+            </button>
+            {prodOpen && (
+              <ul id="prod-menu" className="absolute left-0 top-full mt-2 w-[20rem] rounded-lg border border-ivory/15 bg-navy-deep p-2 shadow-xl">
+                {productLinks.map((p) => (
+                  <li key={p.slug}>
+                    <Link href={`/products/${p.slug}`} onClick={close} aria-current={isCurrent(`/products/${p.slug}`) ? "page" : undefined}
+                      className="block rounded px-3 py-2 hover:bg-ivory/10">
+                      <span className="block text-[15px] font-medium text-ivory">{p.name}</span>
+                      <span className="mt-0.5 block text-sm leading-snug text-muted-dark">{p.tagline}</span>
+                    </Link>
+                  </li>
+                ))}
+                <li className="mt-1 border-t border-ivory/10 pt-1">
+                  <Link href="/products" onClick={close} className="block rounded px-3 py-2.5 text-[15px] font-medium text-gold hover:bg-ivory/10">All products</Link>
+                </li>
+              </ul>
+            )}
+          </div>
+
           {nav.map((n) => (
             <Link key={n.href} href={n.href} aria-current={isCurrent(n.href) ? "page" : undefined} className={linkCls(isCurrent(n.href))}>{n.label}</Link>
           ))}
@@ -116,6 +155,29 @@ export default function Header() {
                 </li>
               </ul>
             </li>
+
+            <li>
+              <button type="button" aria-expanded={prodExpanded} aria-controls="m-prod"
+                onClick={() => setProdExpanded((v) => !v)}
+                className={`flex min-h-12 w-full items-center justify-between rounded px-2 text-[16px] ${onProducts ? "text-gold" : "text-ivory"}`}>
+                Products <Icon name="chevron" className={`transition-transform ${prodExpanded ? "rotate-180" : ""}`} />
+              </button>
+              <ul id="m-prod" hidden={!prodExpanded} className="border-l border-ivory/15 pl-3">
+                {productLinks.map((p) => (
+                  <li key={p.slug}>
+                    <Link href={`/products/${p.slug}`} onClick={close} aria-current={isCurrent(`/products/${p.slug}`) ? "page" : undefined}
+                      className={`block rounded px-2 py-3 ${isCurrent(`/products/${p.slug}`) ? "text-gold" : "text-ivory"}`}>
+                      <span className="block text-[16px]">{p.name}</span>
+                      <span className="mt-0.5 block text-sm leading-snug text-muted-dark">{p.tagline}</span>
+                    </Link>
+                  </li>
+                ))}
+                <li>
+                  <Link href="/products" onClick={close} className="flex min-h-12 items-center rounded px-2 text-[16px] font-medium text-gold">All products</Link>
+                </li>
+              </ul>
+            </li>
+
             <li className="my-2 h-px bg-ivory/10" aria-hidden="true" />
             {nav.map((n) => (
               <li key={n.href}>
