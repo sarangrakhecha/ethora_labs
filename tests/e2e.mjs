@@ -16,8 +16,9 @@ const PORT = 4188;
 const BASE = `http://localhost:${PORT}`;
 const ROUTES = [
   "/", "/services/software-engineering/", "/services/quality-engineering/",
-  "/services/test-automation/", "/services/innovation/", "/products/", "/products/culprit/",
-  "/products/renewguard/", "/about/", "/contact/",
+  "/services/test-automation/", "/services/innovation/", "/approach/", "/technologies/",
+  "/products/", "/products/culprit/", "/products/renewguard/", "/products/terminalquest/",
+  "/about/", "/contact/",
 ];
 
 let failures = 0;
@@ -106,8 +107,11 @@ const run = async () => {
   check("capabilities collapsed by default", await m.locator("#m-cap").isHidden());
   await m.tap('button[aria-controls="m-cap"]');
   check("capabilities expand on tap", await m.locator("#m-cap").isVisible());
-  const small = await m.$$eval("#mobile-menu a", (as) => as.filter((a) => a.getBoundingClientRect().height < 44).length);
-  check("all touch targets at least 44px tall", small === 0, `${small} links below 44px`);
+  // Only flag links that are actually rendered (height > 0): a collapsed accordion's
+  // links are present in the DOM but not visible or tappable, so their 0px height is
+  // not a real touch-target violation.
+  const small = await m.$$eval("#mobile-menu a", (as) => as.filter((a) => { const h = a.getBoundingClientRect().height; return h > 0 && h < 44; }).length);
+  check("all visible touch targets at least 44px tall", small === 0, `${small} links below 44px`);
   await m.close();
 
   /* ------------------------------------------------------- homepage interactions */
@@ -153,7 +157,33 @@ const run = async () => {
   await page.click('button:has-text("Stop")');
   check("prototype: decision explains stopping", (await page.textContent("#demo")).includes("successful outcome"));
 
-  /* ------------------------------------------------- wordmark returns to the top */
+  /* ------------------------------------------------------- technology playground */
+  console.log("\nTechnology playground");
+  await page.goto(BASE + "/technologies/");
+  const defaultHeading = await page.textContent('[aria-live="polite"] h4');
+  check("defaults to the first technology", defaultHeading.trim() === "Next.js", defaultHeading);
+  await page.click('button:has-text("Playwright")');
+  const afterSelect = await page.textContent('[aria-live="polite"] h4');
+  check("selecting a technology updates the preview", afterSelect.trim() === "Playwright", afterSelect);
+  check("preview shows the role badge", (await page.textContent('[aria-live="polite"]')).includes("Testing tool"));
+  check("preview links to a related service", (await page.getAttribute('[aria-live="polite"] a', "href") ?? "").startsWith("/services/"));
+  // On desktop the preview is sticky, so selecting another item must not scroll the page.
+  const scrollYBefore = await page.evaluate(() => window.scrollY);
+  await page.click('button:has-text("Git & GitHub")');
+  const scrollYAfter = await page.evaluate(() => window.scrollY);
+  check("desktop selection does not cause a page scroll", scrollYBefore === scrollYAfter, `${scrollYBefore} -> ${scrollYAfter}`);
+
+  const tp = await browser.newPage({ viewport: { width: 390, height: 800 }, hasTouch: true });
+  await tp.goto(BASE + "/technologies/");
+  await tp.tap('button:has-text("Node.js")');
+  await sleep(200);
+  const mobilePreview = await tp.textContent('[aria-live="polite"] h4');
+  check("mobile selection updates the preview too", mobilePreview.trim() === "Node.js", mobilePreview);
+  const previewBox = await tp.locator('[aria-live="polite"]').boundingBox();
+  check("preview is scrolled into view on mobile", previewBox && previewBox.y >= 0 && previewBox.y < 800, JSON.stringify(previewBox));
+  await tp.close();
+
+  /* ------------------------------------------------------- wordmark returns to the top */
   console.log("\nWordmark");
   await page.goto(BASE + "/");
   await page.evaluate(() => window.scrollTo(0, 2500));
@@ -201,7 +231,9 @@ const run = async () => {
   /* ------------------------------------------------------------------ SEO + a11y */
   /* --------------------------------- product panels: artwork band + CTA stay in place */
   console.log("\nProduct panels");
-  for (const [url, sel, label] of [["/products/", "section ul", "products"], ["/", "#products ul", "home"]]) {
+  // /products/ is now the editorial product-vision page (no ExpandingPanels card grid
+  // there any more); the homepage showcase is still the one real instance of this pattern.
+  for (const [url, sel, label] of [["/", "#products ul", "home"]]) {
     for (const width of [1024, 1440, 1920]) {
       const pp = await browser.newPage({ viewport: { width, height: 1000 } });
       await pp.goto(BASE + url);
@@ -227,9 +259,14 @@ const run = async () => {
           if (!r.inside) bad.push(`active ${i}: panel ${j} CTA clipped`);
           if (r.art === 0) bad.push(`active ${i}: panel ${j} has no diagram`);
         });
-        // The diagram grows with the panel, so the active one must be the widest.
-        const widest = Math.max(...rows.map((r) => r.art));
-        if (rows[i].art !== widest) bad.push(`active ${i}: diagram ${rows[i].art}px is not the largest (${widest}px)`);
+        // The diagram grows with the panel, so the active one must be the widest --
+        // but only among panels with an actual scaling diagram (a fixed-size icon,
+        // like the "Why we build" tile's, is expected to stay small regardless).
+        const diagramRows = rows.filter((r) => r.art > 50);
+        if (diagramRows.length > 1 && rows[i].art > 50) {
+          const widest = Math.max(...diagramRows.map((r) => r.art));
+          if (rows[i].art !== widest) bad.push(`active ${i}: diagram ${rows[i].art}px is not the largest (${widest}px)`);
+        }
       }
       check(`${label} ${width}px: artwork and CTA hold their place`, bad.length === 0, bad.slice(0, 3).join("; "));
       await pp.close();
@@ -257,22 +294,9 @@ const run = async () => {
   }
 
   /* ------------------------------------------------------------- column alignment */
-  console.log("\nApproach section alignment");
-  for (const width of [1440, 1280, 1024, 768]) {
-    const ap = await browser.newPage({ viewport: { width, height: 900 } });
-    await ap.goto(BASE + "/");
-    await ap.evaluate(() => document.querySelectorAll(".reveal").forEach((e) => e.classList.add("is-visible")));
-    const pos = await ap.evaluate(() => {
-      const sec = document.querySelector("#approach");
-      const left = (el) => (el ? Math.round(el.getBoundingClientRect().left) : null);
-      return {
-        intro: left(sec.querySelector("div.grid > div:nth-child(2) p")),
-        body: left(sec.querySelector("ol li p.max-w-2xl")),
-      };
-    });
-    check(`${width}px: intro aligns with timeline body`, pos.intro === pos.body, `intro ${pos.intro} vs body ${pos.body}`);
-    await ap.close();
-  }
+  // The separate home "Our Approach" section (and its internal timeline-alignment
+  // check that used to live here) was intentionally removed -- it duplicated the
+  // Hero's Engineering Canvas. The full write-up lives only on /approach/ now.
 
   /* ------------------------------------------- no single word stranded on a last line */
   console.log("\nTypography: no orphaned last-line words");

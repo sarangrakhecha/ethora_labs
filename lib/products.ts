@@ -164,6 +164,7 @@ for (let i = 0; i < whyWeBuild.points.length; i++) whyWeBuild.points[i] = noWido
 whyWeBuild.connection = noWidow(whyWeBuild.connection);
 productVision.body = noWidow(productVision.body);
 productsConnect.intro = noWidow(productsConnect.intro);
+for (let i = 0; i < productsConnect.points.length; i++) productsConnect.points[i] = noWidow(productsConnect.points[i]);
 
 /**
  * The open-source project, kept deliberately outside `products`: it is not one of ours

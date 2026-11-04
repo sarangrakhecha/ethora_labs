@@ -21,7 +21,7 @@ const panels: Panel[] = [
     subtitle: "Our product philosophy.",
     detail: "Why Ethora builds products alongside consulting, how we think about what's worth building, and what we've made so far.",
     href: "/products",
-    cta: "See our product philosophy",
+    cta: "See our philosophy",
   },
 ];
 

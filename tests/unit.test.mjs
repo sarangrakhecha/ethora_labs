@@ -9,6 +9,7 @@ const { riskScore, SCENARIOS, PIPELINE_STAGES, reachedStages, PROTOTYPE_STEPS, A
   await import("../lib/demos.ts");
 const { services } = await import("../lib/services.ts");
 const { products } = await import("../lib/products.ts");
+const { technologies, techCategories, getTechnology } = await import("../lib/technologies.ts");
 
 describe("riskScore", () => {
   test("maximum exposure with no coverage is critical", () => {
@@ -192,5 +193,44 @@ describe("content integrity", () => {
       assert.ok(p.status.detail.length > 0, `${p.slug}: status detail`);
       if (!p.status.available) assert.equal(p.features.length, 0, `${p.slug}: unavailable product should not list features it cannot demonstrate`);
     }
+  });
+});
+
+describe("technologies", () => {
+  const VALID_VISUALS = new Set(["web", "testing", "ops"]);
+  const serviceSlugs = new Set(services.map((s) => s.slug));
+
+  test("every category's items resolve to a real technology", () => {
+    for (const cat of techCategories) {
+      assert.ok(cat.items.length > 0, `${cat.id}: has no items`);
+      for (const id of cat.items) assert.ok(getTechnology(id), `${cat.id} references unknown technology "${id}"`);
+    }
+  });
+
+  test("every technology has a role, a valid visual kind, and considerations", () => {
+    for (const t of technologies) {
+      assert.ok(t.role.length > 0, `${t.id}: role`);
+      assert.ok(VALID_VISUALS.has(t.visual), `${t.id}: invalid visual kind "${t.visual}"`);
+      assert.ok(t.considerations.length >= 2, `${t.id}: considerations`);
+      assert.ok(t.usedFor.length > 0, `${t.id}: usedFor`);
+    }
+  });
+
+  test("technology ids are unique and every related service is real", () => {
+    const ids = technologies.map((t) => t.id);
+    assert.equal(new Set(ids).size, ids.length, "duplicate technology id");
+    for (const t of technologies) {
+      for (const slug of t.relatedServices) assert.ok(serviceSlugs.has(slug), `${t.id} links to unknown service "${slug}"`);
+    }
+  });
+
+  test("every technology belongs to exactly one category", () => {
+    const assigned = techCategories.flatMap((c) => c.items);
+    assert.equal(new Set(assigned).size, assigned.length, "a technology is listed in more than one category");
+    for (const t of technologies) assert.ok(assigned.includes(t.id), `${t.id} is not listed in any category`);
+  });
+
+  test("no technology tier reads as more than hands-on experience", () => {
+    for (const t of technologies) assert.equal(t.tier, "hands-on", `${t.id}: unexpected tier "${t.tier}"`);
   });
 });

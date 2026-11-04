@@ -25,6 +25,8 @@ export function Icon({ name, ...p }: { name: string } & SVGProps<SVGSVGElement>)
     case "plus": return <svg {...props} width={16} height={16} strokeWidth={2}><path d="M12 5v14M5 12h14" /></svg>;
     case "menu": return <svg {...props}><path d="M4 7h16M4 12h16M4 17h16" /></svg>;
     case "close": return <svg {...props}><path d="M6 6l12 12M18 6L6 18" /></svg>;
+    case "cloud": return <svg {...props}><path d="M7 18h10a4 4 0 000-8 5.5 5.5 0 00-10.6-1.5A4.5 4.5 0 007 18z" /></svg>;
+    case "branch": return <svg {...props}><circle cx="6" cy="6" r="2.2" /><circle cx="6" cy="18" r="2.2" /><circle cx="18" cy="10" r="2.2" /><path d="M6 8.2V18M6 8.2a6 6 0 006 6h4" /></svg>;
     default: return null;
   }
 }
