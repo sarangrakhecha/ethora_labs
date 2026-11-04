@@ -23,7 +23,7 @@ export default function ProductsShowcase() {
         </Reveal>
 
         <Reveal delay={80} className="mt-12 block">
-          <ExpandingPanels heightClass="lg:h-[27rem] xl:h-[24rem]" panels={products.map((p) => ({
+          <ExpandingPanels heightClass="lg:h-[36rem]" panels={products.map((p) => ({
             key: p.slug,
             icon: p.slug === "culprit" ? "target" : "loop",
             art: p.art,

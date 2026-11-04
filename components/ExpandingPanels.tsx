@@ -26,7 +26,7 @@ export type Panel = {
  * its width with no dead space. Hover or keyboard focus sets the active panel; clicking
  * follows the link. Stacks to a plain list below lg, where width animation makes no sense.
  */
-export default function ExpandingPanels({ panels, heightClass = "lg:h-[30rem] xl:h-[26rem]" }: { panels: Panel[]; heightClass?: string }) {
+export default function ExpandingPanels({ panels, heightClass = "lg:h-[38rem]" }: { panels: Panel[]; heightClass?: string }) {
   const [active, setActive] = useState(0);
 
   return (
@@ -35,24 +35,24 @@ export default function ExpandingPanels({ panels, heightClass = "lg:h-[30rem] xl
         const isActive = i === active;
         const inner: ReactNode = (
           <>
-            {/* Mobile: the diagram sits above the text, where the panel is full width. */}
+            {/* The diagram spans the panel and grows with it, so the motion enlarges it. */}
             {p.art && (
-              <span className="-mx-6 -mt-6 mb-5 block h-24 shrink-0 overflow-hidden border-b border-ivory/10 lg:hidden">
+              <span className="-mx-6 -mt-6 mb-5 block aspect-[400/150] max-h-56 shrink-0 overflow-hidden border-b border-ivory/10">
                 <ProductArt name={p.art} />
               </span>
             )}
-            {(!p.art || !isActive) && (
-              <Icon name={p.icon} className={`h-9 w-9 shrink-0 text-gold ${p.art ? "hidden lg:block" : ""}`} />
-            )}
-            <span className={`block font-serif text-2xl leading-tight ${!p.art ? "mt-5" : isActive ? "lg:mt-0" : "lg:mt-5"}`}>
+            {!p.art && <Icon name={p.icon} className="h-9 w-9 shrink-0 text-gold" />}
+            <span className={`block font-serif text-2xl leading-tight ${p.art ? "" : "mt-5"}`}>
               {p.title}
             </span>
             <span className={`mt-2 block font-serif text-lg italic leading-snug text-muted-dark ${isActive ? "" : "lg:line-clamp-2"}`}>
               {p.subtitle}
             </span>
             <span
-              className={`mt-4 block leading-relaxed text-ivory transition-opacity duration-500 lg:border-t lg:border-gold/30 lg:pt-4 ${
-                isActive ? "lg:opacity-100" : "lg:mt-0 lg:h-0 lg:overflow-hidden lg:border-0 lg:pt-0 lg:opacity-0"
+              // Inactive panels keep a clamped version rather than nothing, so a narrow
+              // panel is not mostly empty; expanding simply lets it run to full length.
+              className={`mt-4 block leading-relaxed transition-colors duration-500 lg:border-t lg:border-gold/30 lg:pt-4 ${
+                isActive ? "text-ivory" : "text-muted-dark lg:line-clamp-4"
               }`}
             >
               {p.detail}
@@ -69,24 +69,11 @@ export default function ExpandingPanels({ panels, heightClass = "lg:h-[30rem] xl
           </>
         );
 
-        const cls = `group flex h-full min-w-0 flex-col overflow-hidden rounded-xl border p-6 transition-colors duration-500 lg:flex-row lg:items-stretch lg:gap-8 ${
+        const cls = `group flex h-full min-w-0 flex-col overflow-hidden rounded-xl border p-6 transition-colors duration-500 ${
           isActive ? "border-gold/70 bg-navy-deep" : "border-ivory/15 bg-navy-deep/50 hover:border-gold/50"
         }`;
 
-        // On wide screens the diagram moves beside the copy of the active panel, where the
-        // panel is wide enough to show it without cropping and the space is otherwise dead.
-        const body: ReactNode = (
-          <>
-            <span className="flex min-w-0 flex-1 flex-col">{inner}</span>
-            {p.art && isActive && (
-              <span data-art className="hidden shrink-0 self-start lg:block lg:w-[38%]">
-                <span className="block aspect-[400/150] overflow-hidden rounded-lg border border-ivory/10">
-                  <ProductArt name={p.art} />
-                </span>
-              </span>
-            )}
-          </>
-        );
+        const body: ReactNode = inner;
 
         return (
           <li

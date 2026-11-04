@@ -111,3 +111,5 @@ export const openSource = {
     "A small arcade game that teaches the command line by making you use it. Each station drops you into a real bash prompt: what you type actually runs, and a real file has to move before anything unlocks. 502 automated tests, 98% coverage, zero dependencies, MIT.",
   href: "https://github.com/sarangrakhecha/TerminalQuest",
 };
+
+openSource.summary = noWidow(openSource.summary);

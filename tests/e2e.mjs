@@ -216,19 +216,20 @@ const run = async () => {
           as.map((a) => {
             const box = a.getBoundingClientRect();
             const cta = a.querySelector("[data-cta]").getBoundingClientRect();
-            const art = a.querySelector("[data-art] svg");
+            const svg = a.querySelector("svg");
             return {
               inside: cta.bottom <= box.bottom + 1 && cta.right <= box.right + 1,
-              artWidth: art ? Math.round(art.getBoundingClientRect().width) : 0,
+              art: svg ? Math.round(svg.getBoundingClientRect().width) : 0,
             };
           })
         );
         rows.forEach((r, j) => {
           if (!r.inside) bad.push(`active ${i}: panel ${j} CTA clipped`);
-          // The active panel shows its diagram beside the copy; the others must not.
-          if (j === i && r.artWidth > 0 && r.artWidth < 120) bad.push(`active ${i}: diagram only ${r.artWidth}px`);
-          if (j !== i && r.artWidth > 0) bad.push(`active ${i}: panel ${j} still shows a diagram`);
+          if (r.art === 0) bad.push(`active ${i}: panel ${j} has no diagram`);
         });
+        // The diagram grows with the panel, so the active one must be the widest.
+        const widest = Math.max(...rows.map((r) => r.art));
+        if (rows[i].art !== widest) bad.push(`active ${i}: diagram ${rows[i].art}px is not the largest (${widest}px)`);
       }
       check(`${label} ${width}px: artwork and CTA hold their place`, bad.length === 0, bad.slice(0, 3).join("; "));
       await pp.close();
