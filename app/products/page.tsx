@@ -38,22 +38,24 @@ export default function ProductsIndex() {
         intro={productVision.body}
       />
 
-      {/* B. Why we build */}
+      {/* B. Why we build -- heading full-width above a two-column grid of bullets,
+          rather than paired against a short heading column that runs out of
+          content long before the bullets and paragraph beside it do. */}
       <section className="on-light bg-ivory text-ink">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 md:py-20 lg:grid-cols-[1fr_2fr] lg:gap-16 lg:px-8">
-          <Reveal>
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
+          <Reveal className="max-w-2xl">
             <h2 className="font-serif text-3xl sm:text-4xl">{whyWeBuild.headline}</h2>
             <span className="gold-rule mt-5 bg-gold-deep" />
           </Reveal>
-          <Reveal delay={80} className="max-w-2xl">
-            <ul className="space-y-3.5">
+          <Reveal delay={80} className="mt-10">
+            <ul className="grid gap-x-10 gap-y-3.5 sm:grid-cols-2">
               {whyWeBuild.points.map((pt) => (
                 <li key={pt} className="flex gap-3 leading-relaxed text-muted-light">
                   <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold-deep" aria-hidden="true" />{pt}
                 </li>
               ))}
             </ul>
-            <p className="mt-6 border-t border-gold-deep/25 pt-6 leading-relaxed text-ink">{whyWeBuild.connection}</p>
+            <p className="mt-8 max-w-3xl border-t border-gold-deep/25 pt-6 leading-relaxed text-ink">{whyWeBuild.connection}</p>
           </Reveal>
         </div>
       </section>
@@ -111,29 +113,32 @@ export default function ProductsIndex() {
         </div>
       </section>
 
-      {/* D2. RenewGuard */}
+      {/* D2. RenewGuard -- the image and the intro are paired (and roughly similar
+          in height), so centering them no longer leaves one side empty; the
+          workflow, segments and disclaimer that would have dwarfed the image run
+          full-width below instead of being stacked inside the narrower column. */}
       <section className="on-light bg-ivory text-ink">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 md:py-20 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-8">
-          <Reveal>
-            <div className="overflow-hidden rounded-xl border border-gold-deep/25">
-              <div className="aspect-[400/150]"><ProductArt name="renewguard" /></div>
-            </div>
-            <p className="mt-3 text-sm text-slate">Conceptual illustration. RenewGuard is in development.</p>
-          </Reveal>
-          <Reveal delay={80}>
-            <p className="text-xs font-medium uppercase tracking-[0.3em] text-gold-deep">Renewal &amp; Recurring-Commitment Management</p>
-            <h2 className="mt-4 font-serif text-3xl sm:text-4xl">{renewguard.name}</h2>
-            <p className="mt-2 font-serif text-xl italic text-muted-light">{renewguard.tagline}</p>
-            <p className="mt-6 leading-relaxed text-ink">
-              RenewGuard helps businesses and individuals manage renewals and recurring commitments. It goes beyond
-              reminders by helping users make decisions, track real-world actions, and confirm outcomes.
-            </p>
-            <p className="mt-4 leading-relaxed text-muted-light">
-              Renewal dates are easy to overlook, but the larger problem is that decisions and actions often happen too
-              late. RenewGuard is designed to make upcoming commitments visible and help users act before deadlines.
-            </p>
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
+          <div className="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
+            <Reveal>
+              <div className="overflow-hidden rounded-xl border border-gold-deep/25">
+                <div className="aspect-[400/150]"><ProductArt name="renewguard" /></div>
+              </div>
+              <p className="mt-3 text-sm text-slate">Conceptual illustration. RenewGuard is in development.</p>
+            </Reveal>
+            <Reveal delay={80}>
+              <p className="text-xs font-medium uppercase tracking-[0.3em] text-gold-deep">Renewal &amp; Recurring-Commitment Management</p>
+              <h2 className="mt-4 font-serif text-3xl sm:text-4xl">{renewguard.name}</h2>
+              <p className="mt-2 font-serif text-xl italic text-muted-light">{renewguard.tagline}</p>
+              <p className="mt-6 leading-relaxed text-ink">
+                RenewGuard helps businesses and individuals manage renewals and recurring commitments. It goes beyond
+                reminders by helping users make decisions, track real-world actions, and confirm outcomes.
+              </p>
+            </Reveal>
+          </div>
 
-            <ol className="mt-6 flex flex-wrap items-center gap-x-2 gap-y-2 text-sm font-medium text-gold-deep">
+          <Reveal delay={120} className="mt-14 border-t border-gold-deep/20 pt-12">
+            <ol className="flex flex-wrap items-center gap-x-2 gap-y-2 text-sm font-medium text-gold-deep">
               {renewGuardWorkflow.map((step, i) => (
                 <li key={step} className="flex items-center gap-2">
                   <span className="rounded-full border border-gold-deep/40 bg-white/50 px-3 py-1">{step}</span>
@@ -141,8 +146,12 @@ export default function ProductsIndex() {
                 </li>
               ))}
             </ol>
+            <p className="mt-5 max-w-2xl leading-relaxed text-muted-light">
+              Renewal dates are easy to overlook, but the larger problem is that decisions and actions often happen too
+              late. RenewGuard is designed to make upcoming commitments visible and help users act before deadlines.
+            </p>
 
-            <div className="mt-6 grid gap-6 sm:grid-cols-2">
+            <div className="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1.3fr]">
               <div>
                 <h3 className="text-sm font-medium uppercase tracking-wider text-slate">For businesses</h3>
                 <ul className="mt-2 space-y-1 text-muted-light">{renewGuardBusiness.map((x) => <li key={x}>{x}</li>)}</ul>
@@ -151,15 +160,17 @@ export default function ProductsIndex() {
                 <h3 className="text-sm font-medium uppercase tracking-wider text-slate">For personal use</h3>
                 <ul className="mt-2 space-y-1 text-muted-light">{renewGuardPersonal.map((x) => <li key={x}>{x}</li>)}</ul>
               </div>
+              <div>
+                <h3 className="text-sm font-medium uppercase tracking-wider text-slate">Worth knowing</h3>
+                <p className="mt-2 leading-relaxed text-muted-light">
+                  RenewGuard does not automatically cancel subscriptions, negotiate contracts, or guarantee savings.
+                  Potential savings are not realised savings — they become protected only once the real-world outcome
+                  is confirmed.
+                </p>
+              </div>
             </div>
 
-            <p className="mt-6 text-sm leading-relaxed text-slate">
-              RenewGuard does not automatically cancel subscriptions, negotiate contracts, or guarantee savings.
-              Potential savings are not realised savings — they become protected only once the real-world outcome is
-              confirmed.
-            </p>
-
-            <Link href="/products/renewguard/" className="mt-8 inline-flex min-h-11 items-center gap-2 rounded-md bg-navy px-5 py-2.5 text-[15px] font-medium text-ivory transition-colors hover:bg-navy-deep">
+            <Link href="/products/renewguard/" className="mt-10 inline-flex min-h-11 items-center gap-2 rounded-md bg-navy px-5 py-2.5 text-[15px] font-medium text-ivory transition-colors hover:bg-navy-deep">
               Explore RenewGuard <Icon name="arrow" />
             </Link>
           </Reveal>

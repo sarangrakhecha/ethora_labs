@@ -42,14 +42,15 @@ export default function AboutPage() {
         intro="Ethora Labs is an engineering-led technology consultancy built on a simple belief: great software comes from clear thinking, strong engineering, and thoughtful execution."
       />
 
-      {/* The name */}
+      {/* The name -- heading stacked above the prose (not paired side-by-side in a
+          narrow column that runs out of content well before the text does). */}
       <section className="on-light bg-ivory text-ink">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 md:py-20 lg:grid-cols-[1fr_2fr] lg:gap-16 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
           <Reveal>
             <h2 className="font-serif text-3xl sm:text-4xl">The name</h2>
             <span className="gold-rule mt-5 bg-gold-deep" />
           </Reveal>
-          <Reveal delay={80} className="max-w-3xl space-y-5 text-lg leading-relaxed text-muted-light">
+          <Reveal delay={80} className="mt-8 max-w-3xl space-y-5 text-lg leading-relaxed text-muted-light">
             <p>
               Ethora comes from two Greek-rooted ideas: <span className="text-ink">ethics</span> and{" "}
               <span className="text-ink">ethos</span>. Ethics is how we choose to work. Ethos is the character and
@@ -66,12 +67,12 @@ export default function AboutPage() {
 
       {/* Philosophy */}
       <section className="bg-navy">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 md:py-20 lg:grid-cols-[1fr_2fr] lg:gap-16 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
           <Reveal>
             <h2 className="font-serif text-3xl sm:text-4xl">Our philosophy</h2>
             <span className="gold-rule mt-5" />
           </Reveal>
-          <Reveal delay={80} className="max-w-3xl space-y-5 text-lg leading-relaxed text-muted-dark">
+          <Reveal delay={80} className="mt-8 max-w-3xl space-y-5 text-lg leading-relaxed text-muted-dark">
             <p>
               Most software problems are not really technology problems. They are problems of judgement: what to build,
               what to verify, what to leave alone, and when to say that an approach is not working.
@@ -128,12 +129,12 @@ export default function AboutPage() {
 
       {/* How we work with clients */}
       <section className="bg-navy">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 md:py-20 lg:grid-cols-[1fr_2fr] lg:gap-16 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
           <Reveal>
             <h2 className="font-serif text-3xl sm:text-4xl">How we work with clients</h2>
             <span className="gold-rule mt-5" />
           </Reveal>
-          <Reveal delay={80} className="max-w-3xl space-y-5 text-lg leading-relaxed text-muted-dark">
+          <Reveal delay={80} className="mt-8 max-w-3xl space-y-5 text-lg leading-relaxed text-muted-dark">
             <p>
               We treat a working relationship as a long one, even before it starts. That means answering honestly —
               including when we are not the right fit, or when you may not need us at all — and proposing a first

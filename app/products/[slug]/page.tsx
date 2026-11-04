@@ -92,17 +92,19 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
         </div>
       </section>
 
-      {/* What it covers — only the areas the team has confirmed */}
+      {/* What it covers — only the areas the team has confirmed. Full-width heading
+          above a responsive grid, rather than pairing a short heading against a
+          column of cards that runs on for several rows below it. */}
       {(p.features.length > 0 || p.areas.length > 0) && (
         <section className="on-light bg-ivory text-ink">
-          <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 md:py-20 lg:grid-cols-[1fr_2fr] lg:gap-16 lg:px-8">
+          <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
             <Reveal>
               <h2 className="font-serif text-3xl sm:text-4xl">What it does</h2>
               <span className="gold-rule mt-5 bg-gold-deep" />
             </Reveal>
-            <Reveal delay={80}>
+            <Reveal delay={80} className="mt-10">
               {p.features.length > 0 ? (
-                <ul className="grid gap-4 sm:grid-cols-2">
+                <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {p.features.map((f) => (
                     <li key={f.title} className="rounded-lg border border-gold-deep/25 bg-white/50 p-5">
                       <h3 className="flex items-start gap-3 font-medium">
@@ -113,7 +115,7 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
                   ))}
                 </ul>
               ) : (
-                <ul className="grid gap-3 sm:grid-cols-2">
+                <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                   {p.areas.map((a) => (
                     <li key={a} className="flex items-center gap-3 rounded-lg border border-gold-deep/25 bg-white/50 px-4 py-4 font-medium">
                       <Icon name="check" className="h-5 w-5 shrink-0 text-gold-deep" />{a}
@@ -128,12 +130,12 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
 
       {/* Where it came from / what's next */}
       <section className="bg-navy">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 md:py-20 lg:grid-cols-[1fr_2fr] lg:gap-16 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
           <Reveal>
             <h2 className="font-serif text-3xl sm:text-4xl">Built by Ethora</h2>
             <span className="gold-rule mt-5" />
           </Reveal>
-          <Reveal delay={80} className="space-y-5 leading-relaxed text-muted-dark">
+          <Reveal delay={80} className="mt-8 max-w-2xl space-y-5 leading-relaxed text-muted-dark">
             <p>
               {p.name} is built and maintained by Ethora Labs. It comes from the same engineering approach we bring to
               client work: design the right thing, build it carefully, verify it properly, and keep improving it.
