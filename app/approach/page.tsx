@@ -40,7 +40,18 @@ export default function ApproachPage() {
                         <h2 className="font-serif text-3xl leading-tight">{s.title}</h2>
                         <p className="mt-1 text-sm font-medium text-gold-deep">{noWidow(s.short)}</p>
                       </div>
-                      <p className="max-w-2xl leading-relaxed text-muted-light">{noWidow(`${s.long} ${s.detail}`)}</p>
+                      <div className="max-w-2xl">
+                        <p className="leading-relaxed text-ink">{noWidow(s.long)}</p>
+                        {/* Concrete and scannable, rather than one more paragraph of prose. */}
+                        <ul className="mt-4 space-y-2.5">
+                          {s.points.map((point) => (
+                            <li key={point} className="flex gap-3 leading-relaxed text-muted-light">
+                              <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold-deep" aria-hidden="true" />
+                              {noWidow(point)}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
                   </Reveal>
                 </li>

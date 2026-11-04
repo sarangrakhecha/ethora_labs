@@ -10,10 +10,46 @@ export const site = {
 };
 
 export const stages = [
-  { id: "design", title: "Design", short: "Define the right solution", long: "Define the problem, plan the architecture, and identify risks before writing a line of code.", detail: "Requirements, constraints and architecture are made explicit, and the riskiest assumptions surface early, when they are cheapest to address." },
-  { id: "build", title: "Build", short: "Create with engineering rigour", long: "Implement reliable, maintainable technology using disciplined engineering practices.", detail: "Work proceeds in small, reviewable increments with clear interfaces and readable code, so your own team can understand, extend and own it." },
-  { id: "verify", title: "Verify", short: "Assure quality and reliability", long: "Validate functionality, automate testing, and assess quality before anything ships.", detail: "Quality is built in from the start, not inspected at the end, with risk-based strategy and automated checks giving an honest picture of readiness." },
-  { id: "improve", title: "Improve", short: "Evolve for greater impact", long: "Optimize, iterate, and continuously refine based on what verification reveals.", detail: "What verification and real use reveal feeds back into design, so each cycle tightens the product, the process and the confidence behind both." },
+  {
+    id: "design", title: "Design", short: "Define the right solution",
+    long: "Define the problem, plan the architecture, and identify risks before writing a line of code.",
+    detail: "Requirements, constraints and architecture are made explicit, and the riskiest assumptions surface early, when they are cheapest to address.",
+    points: [
+      "Write down the actual problem and who has it, before any solution is proposed",
+      "Map the architecture and the constraints it has to work within",
+      "Name the riskiest assumptions and the cheapest way to test each one",
+    ],
+  },
+  {
+    id: "build", title: "Build", short: "Create with engineering rigour",
+    long: "Implement reliable, maintainable technology using disciplined engineering practices.",
+    detail: "Work proceeds in small, reviewable increments with clear interfaces and readable code, so your own team can understand, extend and own it.",
+    points: [
+      "Ship in small, reviewable increments rather than one large change",
+      "Keep interfaces explicit and code readable by people who did not write it",
+      "Record the decisions made and why, not just the code itself",
+    ],
+  },
+  {
+    id: "verify", title: "Verify", short: "Assure quality and reliability",
+    long: "Validate functionality, automate testing, and assess quality before anything ships.",
+    detail: "Quality is built in from the start, not inspected at the end, with risk-based strategy and automated checks giving an honest picture of readiness.",
+    points: [
+      "Weight testing by what failure would actually cost, not by habit",
+      "Automate the checks that run often and matter most",
+      "Give an honest readiness signal before release, including what was not covered",
+    ],
+  },
+  {
+    id: "improve", title: "Improve", short: "Evolve for greater impact",
+    long: "Optimize, iterate, and continuously refine based on what verification reveals.",
+    detail: "What verification and real use reveal feeds back into design, so each cycle tightens the product, the process and the confidence behind both.",
+    points: [
+      "Feed what verification and real use reveal back into the next Design",
+      "Fix the process, not just the product, when something goes wrong",
+      "Treat a release as a checkpoint, not a finish line",
+    ],
+  },
 ] as const;
 
 export type Capability = {
