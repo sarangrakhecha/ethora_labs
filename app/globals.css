@@ -41,6 +41,10 @@ p, li, dd, dt, figcaption, blockquote, label, summary { text-wrap: pretty; }
 
 .gold-rule { display: block; height: 1px; width: 3rem; background: var(--gold); }
 
+/* Scrollable strips that use dots/fades as their own affordance instead of a native bar. */
+.hide-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+
 /* Scroll reveal (see components/Reveal.tsx). Content is visible without JS. */
 .js .reveal { opacity: 0; transform: translateY(16px); transition: opacity .7s ease, transform .7s ease; }
 .js .reveal.is-visible { opacity: 1; transform: none; }

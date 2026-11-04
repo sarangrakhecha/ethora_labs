@@ -1,24 +1,70 @@
 "use client";
 import Image from "next/image";
-import { useRef } from "react";
-import { Icon } from "./Icons";
+import { useEffect, useRef, useState } from "react";
 
 type Shot = { src: string; alt: string; caption: string; w: number; h: number };
 
 /**
- * A compact horizontal filmstrip of screenshots. Native scroll-snap does the work;
- * the arrow buttons are a convenience on top of it, not a replacement for it, so the
- * strip stays usable with touch, trackpad, or keyboard (focus it and use arrow keys).
+ * A compact horizontal filmstrip of screenshots. Native scroll-snap does the work,
+ * with the browser's own scrollbar hidden; dots show position and double as controls,
+ * and a soft edge fade hints there is more to scroll. Still fully usable with touch,
+ * trackpad, or keyboard (focus the strip and use arrow keys).
  */
 export default function ScreenshotStrip({ shots }: { shots: Shot[] }) {
   const trackRef = useRef<HTMLUListElement>(null);
+  const cardRefs = useRef<(HTMLLIElement | null)[]>([]);
+  const [active, setActive] = useState(0);
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(false);
 
-  const scrollByCard = (dir: 1 | -1) => {
+  // Tracks which card is most visible, rather than computing it from scroll offsets,
+  // so it stays correct regardless of card width or gap. Each IntersectionObserver
+  // callback only reports entries whose ratio changed since the last check, not every
+  // observed element \u2014 so intersection state is kept per element in a map and the
+  // active card is recomputed from the whole map, not just the latest batch.
+  useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
-    const card = track.querySelector("li");
-    const amount = (card?.clientWidth ?? 320) + 16; // card width + gap
-    track.scrollBy({ left: dir * amount, behavior: "smooth" });
+    const intersecting = new Map<Element, boolean>();
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) intersecting.set(e.target, e.isIntersecting);
+
+        // Near the very end, the last couple of cards can share one scroll position \u2014
+        // there isn't enough trailing track to left-align each one separately \u2014 so
+        // there is no real distinction to detect. The honest answer is the last card.
+        const maxScroll = track.scrollWidth - track.clientWidth;
+        if (maxScroll > 0 && track.scrollLeft >= maxScroll - 2) {
+          setActive(shots.length - 1);
+          return;
+        }
+
+        // Otherwise, cards snap to the leading (left) edge, so with several cards
+        // fully visible at once, "active" means the one sitting at that edge.
+        const rootLeft = track.getBoundingClientRect().left;
+        let bestIndex = -1;
+        let bestDist = Infinity;
+        cardRefs.current.forEach((el, i) => {
+          if (!el || !intersecting.get(el)) return;
+          const dist = Math.abs(el.getBoundingClientRect().left - rootLeft);
+          if (dist < bestDist) { bestDist = dist; bestIndex = i; }
+        });
+        if (bestIndex >= 0) setActive(bestIndex);
+      },
+      { root: track, threshold: [0, 0.5, 0.75, 1] }
+    );
+    cardRefs.current.forEach((el) => el && io.observe(el));
+    const onScroll = () => {
+      setAtStart(track.scrollLeft <= 4);
+      setAtEnd(track.scrollLeft + track.clientWidth >= track.scrollWidth - 4);
+    };
+    onScroll();
+    track.addEventListener("scroll", onScroll, { passive: true });
+    return () => { io.disconnect(); track.removeEventListener("scroll", onScroll); };
+  }, []);
+
+  const goTo = (i: number) => {
+    cardRefs.current[i]?.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
   };
 
   return (
@@ -27,11 +73,12 @@ export default function ScreenshotStrip({ shots }: { shots: Shot[] }) {
         ref={trackRef}
         tabIndex={0}
         aria-label="Culprit screenshots"
-        className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 [scrollbar-width:thin]"
+        className="hide-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto"
       >
-        {shots.map((s) => (
+        {shots.map((s, i) => (
           <li
             key={s.src}
+            ref={(el) => { cardRefs.current[i] = el; }}
             className="w-[82vw] shrink-0 snap-start overflow-hidden rounded-xl border border-ivory/15 bg-navy sm:w-[26rem]"
           >
             <Image src={s.src} alt={s.alt} width={s.w} height={s.h} className="h-auto w-full" />
@@ -40,25 +87,23 @@ export default function ScreenshotStrip({ shots }: { shots: Shot[] }) {
         ))}
       </ul>
 
-      {/* Desktop convenience controls; the strip itself works without them. */}
-      <div className="mt-3 hidden items-center gap-2 sm:flex">
-        <button
-          type="button"
-          onClick={() => scrollByCard(-1)}
-          aria-label="Previous screenshot"
-          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-ivory/25 text-ivory transition-colors hover:border-gold hover:text-gold"
-        >
-          <Icon name="arrow" className="h-4 w-4 rotate-180" />
-        </button>
-        <button
-          type="button"
-          onClick={() => scrollByCard(1)}
-          aria-label="Next screenshot"
-          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-ivory/25 text-ivory transition-colors hover:border-gold hover:text-gold"
-        >
-          <Icon name="arrow" className="h-4 w-4" />
-        </button>
-        <span className="ml-1 text-sm text-slate">Scroll or use the arrows</span>
+      {/* Edge fades hint there is more to scroll, without text saying so. */}
+      <span aria-hidden="true" className={`pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-navy-deep to-transparent transition-opacity ${atStart ? "opacity-0" : "opacity-100"}`} />
+      <span aria-hidden="true" className={`pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-navy-deep to-transparent transition-opacity ${atEnd ? "opacity-0" : "opacity-100"}`} />
+
+      {/* Dots: position indicator and direct controls in one. */}
+      <div className="mt-4 flex items-center justify-center gap-2" role="tablist" aria-label="Screenshot">
+        {shots.map((s, i) => (
+          <button
+            key={s.src}
+            type="button"
+            role="tab"
+            aria-selected={i === active}
+            aria-label={`Screenshot ${i + 1} of ${shots.length}`}
+            onClick={() => goTo(i)}
+            className={`h-2 rounded-full transition-all ${i === active ? "w-6 bg-gold" : "w-2 bg-ivory/25 hover:bg-ivory/40"}`}
+          />
+        ))}
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { products, CULPRIT_STORE_URL } from "@/lib/products";
+import { products, openSource, CULPRIT_STORE_URL } from "@/lib/products";
 import ScreenshotStrip from "@/components/ScreenshotStrip";
 import ProductArt from "@/components/ProductArt";
 import PageHero, { CtaBand } from "@/components/PageHero";
@@ -25,7 +25,17 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
   const { slug } = await params;
   const p = products.find((x) => x.slug === slug);
   if (!p) notFound();
-  const other = products.find((x) => x.slug !== slug);
+  // Every other entry in the Products division: the other real product, plus the
+  // open-source project (which has no page of its own, so it links straight to GitHub).
+  const others = [
+    ...products.filter((x) => x.slug !== slug).map((x) => ({
+      key: x.slug, name: x.name, tagline: x.tagline, art: x.art,
+      chip: x.status.label, highlight: x.status.available,
+      href: `/products/${x.slug}`, external: false,
+    })),
+    { key: openSource.key, name: openSource.name, tagline: openSource.tagline, art: "terminal" as const,
+      chip: "Open source", highlight: false, href: openSource.href, external: true },
+  ];
   const storeLive = p.slug === "culprit" && CULPRIT_STORE_URL.length > 0;
   const shots = p.screenshots;
 
@@ -139,23 +149,39 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
         </div>
       </section>
 
-      {/* The other product */}
-      {other && (
+      {/* The rest of the Products division */}
+      {others.length > 0 && (
         <section className="bg-navy-deep">
           <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-            <h2 className="font-serif text-2xl">Our other product</h2>
-            <Link href={`/products/${other.slug}`} className="group mt-5 flex flex-col gap-4 rounded-xl border border-ivory/15 p-6 transition-colors hover:border-gold/70 sm:flex-row sm:items-center">
-              <div className="h-24 w-40 shrink-0 overflow-hidden rounded-lg"><ProductArt name={other.art} /></div>
-              <span>
-                <span className="block font-serif text-xl">{other.name}</span>
-                <span className="mt-1 block text-sm text-muted-dark">{other.tagline}</span>
-                <span className={`mt-2 inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs ${other.status.available ? "border-gold/50 bg-gold/10 text-ivory" : "border-ivory/25 text-muted-dark"}`}>
-                  <span className={`h-1.5 w-1.5 rounded-full ${other.status.available ? "bg-gold" : "bg-slate"}`} aria-hidden="true" />
-                  {other.status.label}
-                </span>
-              </span>
-              <Icon name="arrow" className="text-gold sm:ml-auto" />
-            </Link>
+            <h2 className="font-serif text-2xl">{others.length > 1 ? "Our other products" : "Our other product"}</h2>
+            <ul className="mt-5 grid gap-4 sm:grid-cols-2">
+              {others.map((o) => {
+                const cls = "group flex h-full flex-col gap-4 rounded-xl border border-ivory/15 p-6 transition-colors hover:border-gold/70 sm:flex-row sm:items-center";
+                const inner = (
+                  <>
+                    <div className="h-24 w-40 shrink-0 overflow-hidden rounded-lg"><ProductArt name={o.art} /></div>
+                    <span>
+                      <span className="block font-serif text-xl">{o.name}</span>
+                      <span className="mt-1 block text-sm text-muted-dark">{o.tagline}</span>
+                      <span className={`mt-2 inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs ${o.highlight ? "border-gold/50 bg-gold/10 text-ivory" : "border-ivory/25 text-muted-dark"}`}>
+                        <span className={`h-1.5 w-1.5 rounded-full ${o.highlight ? "bg-gold" : "bg-slate"}`} aria-hidden="true" />
+                        {o.chip}
+                      </span>
+                    </span>
+                    <Icon name="arrow" className="text-gold sm:ml-auto" />
+                  </>
+                );
+                return (
+                  <li key={o.key}>
+                    {o.external ? (
+                      <a href={o.href} target="_blank" rel="noopener noreferrer" className={cls}>{inner}</a>
+                    ) : (
+                      <Link href={o.href} className={cls}>{inner}</Link>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
           </div>
         </section>
       )}
