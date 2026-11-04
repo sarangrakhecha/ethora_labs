@@ -1,43 +1,65 @@
+import Link from "next/link";
 import { Wordmark } from "./Icons";
 import { site } from "@/lib/content";
 
-const links = [
+// Short, already-established positioning (trimmed from the sitewide meta description in
+// app/layout.tsx) rather than new marketing copy invented for the footer.
+const DESCRIPTION = "Engineering-led software development, quality engineering and test automation.";
+
+const explore = [
   { label: "Capabilities", href: "/#capabilities" },
   { label: "Products", href: "/products" },
-  { label: "Approach", href: "/approach" },
+  { label: "Our Approach", href: "/approach" },
+];
+const company = [
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
 
+// Same small-caps "eyebrow" token used for section labels elsewhere on the site.
+const heading = "text-xs font-medium uppercase tracking-[0.3em] text-gold";
+const link = "inline-flex items-center rounded py-1 text-[15px] text-ivory/90 transition-colors hover:text-gold";
+
 export default function Footer() {
   return (
     <footer className="border-t border-gold/30 bg-navy-deep">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr]">
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr] lg:gap-10">
           <div>
             <Wordmark />
-            <p className="mt-4 font-serif text-lg italic text-muted-dark">{site.tagline}</p>
+            <p className="mt-4 text-[15px] font-medium text-ivory/90">{site.tagline}</p>
+            <p className="mt-2 max-w-xs text-sm leading-relaxed text-muted-dark">{DESCRIPTION}</p>
           </div>
-          <nav aria-label="Footer">
-            <ul className="space-y-1">
-              {links.map((l) => <li key={l.href}><a href={l.href} className="inline-flex min-h-11 items-center rounded text-[15px] text-ivory/90 hover:text-gold">{l.label}</a></li>)}
+
+          <nav aria-label="Explore">
+            <h2 className={heading}>Explore</h2>
+            <ul className="mt-4 space-y-1.5">
+              {explore.map((l) => (
+                <li key={l.href}><Link href={l.href} className={link}>{l.label}</Link></li>
+              ))}
             </ul>
           </nav>
-          <div className="space-y-3 text-[15px]">
-            <p><span className="inline-flex min-h-11 items-center text-muted-dark" aria-disabled="true">Privacy Policy (coming soon)</span></p>
-            <p className="text-ivory/90">{site.domain}</p>
-            <p>
-              <a href={`mailto:${site.email}`} className="inline-flex min-h-11 items-center rounded text-ivory/90 hover:text-gold">{site.email}</a>
-            </p>
-            <p>
-              <a href="https://github.com/sarangrakhecha" target="_blank" rel="noopener noreferrer"
-                className="inline-flex min-h-11 items-center gap-2 rounded text-ivory/90 hover:text-gold">
-                Open source on GitHub
-              </a>
+
+          <nav aria-label="Company">
+            <h2 className={heading}>Company</h2>
+            <ul className="mt-4 space-y-1.5">
+              {company.map((l) => (
+                <li key={l.href}><Link href={l.href} className={link}>{l.label}</Link></li>
+              ))}
+            </ul>
+          </nav>
+
+          <div>
+            <h2 className={heading}>Get in Touch</h2>
+            <p className="mt-4">
+              <a href={`mailto:${site.email}`} className={link}>{site.email}</a>
             </p>
           </div>
         </div>
-        <p className="mt-10 border-t border-ivory/10 pt-6 text-sm text-muted-dark">&copy; {site.year} {site.legal}</p>
+
+        <p className="mt-8 border-t border-ivory/10 pt-5 text-sm text-muted-dark">
+          &copy; {new Date().getFullYear()} {site.legal}
+        </p>
       </div>
     </footer>
   );
