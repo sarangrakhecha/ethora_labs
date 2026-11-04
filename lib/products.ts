@@ -131,9 +131,28 @@ export const openSource = {
     "Progress without pressure \u2014 no timers, no speed bonuses, no typing races.",
     "Accessible by default \u2014 a high-contrast mode uses bold, underline and reverse video, not colour alone.",
   ],
+  // Rendered directly from the game's own drawing code, not mockups.
+  screenshots: [
+    { src: "/products/terminalquest/title.webp", w: 990, h: 614,
+      alt: "TerminalQuest title screen: block-letter logo reading TERMINALQUEST, signal lost, with the controls and station legend below.",
+      caption: "The title screen, with the controls and what each symbol on the map means." },
+    { src: "/products/terminalquest/overworld.webp", w: 1035, h: 596,
+      alt: "The overworld map with teal rooms, a sealed level 3 area, a HUD showing lives, stations cleared and the next terminal.",
+      caption: "The overworld: a sealed level ahead, a live HUD, and a legend coloured to match the map." },
+    { src: "/products/terminalquest/station.webp", w: 1098, h: 722,
+      alt: "A terminal station showing the command cat key.txt, what it does, its syntax, the task, and a real bash prompt with a failed attempt and a tip.",
+      caption: "A station: the command, what it does, the task \u2014 and a real bash prompt underneath, with a tip after a wrong attempt." },
+    { src: "/products/terminalquest/level-complete.webp", w: 1035, h: 578,
+      alt: "A LEVEL 1 COMPLETE popup over the overworld map, with a highlighted PRESS SPACE TO CONTINUE bar.",
+      caption: "Clearing a level is a deliberate beat, not a screen you blink and miss." },
+    { src: "/products/terminalquest/win.webp", w: 981, h: 398,
+      alt: "The YOU WIN screen in block letters, with score, lives left, quiz result, the commands actually used, and a real :wq prompt to exit.",
+      caption: "Finishing the game: the commands actually used, printed back as a takeaway, and a real prompt that answers you." },
+  ],
 };
 
 openSource.summary = noWidow(openSource.summary);
 openSource.why = noWidow(openSource.why);
 for (const step of openSource.loop) step.body = noWidow(step.body);
 for (let i = 0; i < openSource.philosophy.length; i++) openSource.philosophy[i] = noWidow(openSource.philosophy[i]);
+for (const s of openSource.screenshots) s.caption = noWidow(s.caption);

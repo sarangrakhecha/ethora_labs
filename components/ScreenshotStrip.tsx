@@ -10,28 +10,47 @@ type Shot = { src: string; alt: string; caption: string; w: number; h: number };
  * and a soft edge fade hints there is more to scroll. Still fully usable with touch,
  * trackpad, or keyboard (focus the strip and use arrow keys).
  */
-export default function ScreenshotStrip({ shots }: { shots: Shot[] }) {
+export default function ScreenshotStrip({ shots, label = "Screenshots" }: { shots: Shot[]; label?: string }) {
   const trackRef = useRef<HTMLUListElement>(null);
   const cardRefs = useRef<(HTMLLIElement | null)[]>([]);
   const [active, setActive] = useState(0);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
+  // Which card indices represent a genuinely distinct scroll position, at the current
+  // width. Near the end, several trailing cards can share one position because there
+  // is not enough track left to left-align each one separately — a dot for each of
+  // those would promise a stop that does not exist, so only one dot (the real last
+  // card) stands for that shared position.
+  const [dotIndices, setDotIndices] = useState<number[]>(() => shots.map((_, i) => i));
 
-  // Tracks which card is most visible, rather than computing it from scroll offsets,
-  // so it stays correct regardless of card width or gap. Each IntersectionObserver
-  // callback only reports entries whose ratio changed since the last check, not every
-  // observed element \u2014 so intersection state is kept per element in a map and the
-  // active card is recomputed from the whole map, not just the latest batch.
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
+
+    const recomputeDots = () => {
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      const last = shots.length - 1;
+      if (maxScroll <= 0) { setDotIndices(shots.map((_, i) => i)); return; }
+      const reachable: number[] = [];
+      cardRefs.current.forEach((el, i) => {
+        if (!el) return;
+        if (el.offsetLeft < maxScroll || i === last) reachable.push(i);
+      });
+      setDotIndices(reachable.length ? reachable : [last]);
+    };
+
     const intersecting = new Map<Element, boolean>();
+    // Tracks which card is most visible, rather than computing it from scroll offsets,
+    // so it stays correct regardless of card width or gap. Each IntersectionObserver
+    // callback only reports entries whose ratio changed since the last check, not every
+    // observed element — so intersection state is kept per element in a map and the
+    // active card is recomputed from the whole map, not just the latest batch.
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) intersecting.set(e.target, e.isIntersecting);
 
-        // Near the very end, the last couple of cards can share one scroll position \u2014
-        // there isn't enough trailing track to left-align each one separately \u2014 so
+        // Near the very end, the last couple of cards can share one scroll position —
+        // there isn't enough trailing track to left-align each one separately — so
         // there is no real distinction to detect. The honest answer is the last card.
         const maxScroll = track.scrollWidth - track.clientWidth;
         if (maxScroll > 0 && track.scrollLeft >= maxScroll - 2) {
@@ -54,14 +73,21 @@ export default function ScreenshotStrip({ shots }: { shots: Shot[] }) {
       { root: track, threshold: [0, 0.5, 0.75, 1] }
     );
     cardRefs.current.forEach((el) => el && io.observe(el));
+
     const onScroll = () => {
       setAtStart(track.scrollLeft <= 4);
       setAtEnd(track.scrollLeft + track.clientWidth >= track.scrollWidth - 4);
     };
     onScroll();
+    recomputeDots();
     track.addEventListener("scroll", onScroll, { passive: true });
-    return () => { io.disconnect(); track.removeEventListener("scroll", onScroll); };
-  }, []);
+    window.addEventListener("resize", recomputeDots);
+    return () => {
+      io.disconnect();
+      track.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", recomputeDots);
+    };
+  }, [shots]);
 
   const goTo = (i: number) => {
     cardRefs.current[i]?.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
@@ -72,7 +98,7 @@ export default function ScreenshotStrip({ shots }: { shots: Shot[] }) {
       <ul
         ref={trackRef}
         tabIndex={0}
-        aria-label="Culprit screenshots"
+        aria-label={`${label} screenshots`}
         className="hide-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto"
       >
         {shots.map((s, i) => (
@@ -91,11 +117,11 @@ export default function ScreenshotStrip({ shots }: { shots: Shot[] }) {
       <span aria-hidden="true" className={`pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-navy-deep to-transparent transition-opacity ${atStart ? "opacity-0" : "opacity-100"}`} />
       <span aria-hidden="true" className={`pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-navy-deep to-transparent transition-opacity ${atEnd ? "opacity-0" : "opacity-100"}`} />
 
-      {/* Dots: position indicator and direct controls in one. */}
-      <div className="mt-4 flex items-center justify-center gap-2" role="tablist" aria-label="Screenshot">
-        {shots.map((s, i) => (
+      {/* Dots: one per genuinely reachable stop, not one per image. */}
+      <div className="mt-4 flex items-center justify-center gap-2" role="tablist" aria-label={`${label} position`}>
+        {dotIndices.map((i) => (
           <button
-            key={s.src}
+            key={shots[i].src}
             type="button"
             role="tab"
             aria-selected={i === active}

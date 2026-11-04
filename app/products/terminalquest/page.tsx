@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { products, openSource } from "@/lib/products";
 import ProductArt from "@/components/ProductArt";
+import ScreenshotStrip from "@/components/ScreenshotStrip";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import { Icon } from "@/components/Icons";
@@ -41,13 +42,11 @@ export default function TerminalQuestPage() {
         </div>
       </section>
 
-      {/* Diagram */}
+      {/* Screenshots, rendered from the game's own drawing code \u2014 not mockups */}
       <section className="bg-navy-deep">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
           <Reveal>
-            <div className="overflow-hidden rounded-xl border border-ivory/15">
-              <div className="aspect-[400/150] max-h-[20rem]"><ProductArt name="terminal" /></div>
-            </div>
+            <ScreenshotStrip shots={openSource.screenshots} label={openSource.name} />
           </Reveal>
         </div>
       </section>

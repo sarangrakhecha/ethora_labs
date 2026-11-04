@@ -75,7 +75,7 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
           <Reveal>
             {shots.length > 0 ? (
-              <ScreenshotStrip shots={shots} />
+              <ScreenshotStrip shots={shots} label={p.name} />
             ) : (
               <>
                 <div className="overflow-hidden rounded-xl border border-ivory/15">
