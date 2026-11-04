@@ -9,6 +9,15 @@ export const site = {
   year: 2026,
 };
 
+// The real, already-published engagement sequence (originally just on /contact/).
+// Shared here so the About page can reference the same honest 3 steps rather than a
+// separately invented "process".
+export const engagementSteps = [
+  { t: "We read it properly", b: "A person reads your message. There is no sales pipeline here." },
+  { t: "We reply honestly", b: "Including when the answer is that we are not the right fit, or that you may not need us at all." },
+  { t: "We propose something small", b: "If it makes sense to work together, we suggest a first step small enough to judge us on." },
+];
+
 export const stages = [
   {
     id: "design", title: "Design", short: "Define the right solution",

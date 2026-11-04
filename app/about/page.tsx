@@ -3,6 +3,10 @@ import Link from "next/link";
 import PageHero, { CtaBand } from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import { Icon } from "@/components/Icons";
+import { engagementSteps } from "@/lib/content";
+import HeroMark from "@/components/about-visuals/HeroMark";
+import NameMark from "@/components/about-visuals/NameMark";
+import PhilosophyDiagram from "@/components/about-visuals/PhilosophyDiagram";
 
 export const metadata: Metadata = {
   title: "Ethora Labs | About",
@@ -10,7 +14,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://ethoralabs.co/about/" },
 };
 
-// ETHORA \u2014 our own name, spelled out as six behaviours rather than slogans.
+// ETHORA — our own name, spelled out as six behaviours rather than slogans.
 // The name itself comes from ethics + ethos (see the section above); this is that
 // idea made concrete and checkable, not a separate framework bolted on top of it.
 const culture = [
@@ -40,56 +44,64 @@ export default function AboutPage() {
         eyebrow="About"
         title="Built on principles. Driven by possibility."
         intro="Ethora Labs is an engineering-led technology consultancy built on a simple belief: great software comes from clear thinking, strong engineering, and thoughtful execution."
+        aside={<HeroMark />}
       />
 
-      {/* The name -- heading stacked above the prose (not paired side-by-side in a
-          narrow column that runs out of content well before the text does). */}
+      {/* The name -- prose beside a large typographic treatment of the wordmark itself,
+          using the full width instead of a short heading over empty space. */}
       <section className="on-light bg-ivory text-ink">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 md:py-20 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-16 lg:px-8">
           <Reveal>
             <h2 className="font-serif text-3xl sm:text-4xl">The name</h2>
             <span className="gold-rule mt-5 bg-gold-deep" />
+            <div className="mt-8 max-w-xl space-y-5 text-lg leading-relaxed text-muted-light">
+              <p>
+                Ethora comes from two Greek-rooted ideas: <span className="text-ink">ethics</span> and{" "}
+                <span className="text-ink">ethos</span>. Ethics is how we choose to work. Ethos is the character and
+                conviction behind that choice.
+              </p>
+              <p>
+                Together they describe the company we are trying to build: one that is trusted for how it builds, not
+                only for what it builds. In a field where it is easy to overstate, we would rather be known for saying
+                what is actually true about software — including when that is inconvenient.
+              </p>
+            </div>
           </Reveal>
-          <Reveal delay={80} className="mt-8 max-w-3xl space-y-5 text-lg leading-relaxed text-muted-light">
-            <p>
-              Ethora comes from two Greek-rooted ideas: <span className="text-ink">ethics</span> and{" "}
-              <span className="text-ink">ethos</span>. Ethics is how we choose to work. Ethos is the character and
-              conviction behind that choice.
-            </p>
-            <p>
-              Together they describe the company we are trying to build: one that is trusted for how it builds, not only
-              for what it builds. In a field where it is easy to overstate, we would rather be known for saying what is
-              actually true about software — including when that is inconvenient.
-            </p>
+          <Reveal delay={100}>
+            <NameMark />
           </Reveal>
         </div>
       </section>
 
-      {/* Philosophy */}
+      {/* Philosophy -- the diagram on the right makes visible the structure already in
+          the prose (judgement, engineering rigour, honesty), rather than decoration. */}
       <section className="bg-navy">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 md:py-20 lg:grid-cols-[1.15fr_1fr] lg:items-center lg:gap-16 lg:px-8">
           <Reveal>
             <h2 className="font-serif text-3xl sm:text-4xl">Our philosophy</h2>
             <span className="gold-rule mt-5" />
+            <div className="mt-8 max-w-xl space-y-5 text-lg leading-relaxed text-muted-dark">
+              <p>
+                Most software problems are not really technology problems. They are problems of judgement: what to
+                build, what to verify, what to leave alone, and when to say that an approach is not working.
+              </p>
+              <p>
+                So we lead with engineering judgement rather than with tools. We would rather spend a day understanding
+                why a system behaves the way it does than a week working around it. We would rather tell you that a
+                rewrite is not justified than sell you one.
+              </p>
+              <p>
+                The long-term ambition is to build technology that matters — our own products alongside our consulting
+                work — and to be the kind of company engineers want to work with twice.
+              </p>
+              <p className="text-ivory">
+                <Link href="/approach" className="text-gold underline underline-offset-4 hover:text-ivory">See how that works in practice</Link>{" "}
+                in our Design, Build, Verify, Improve cycle.
+              </p>
+            </div>
           </Reveal>
-          <Reveal delay={80} className="mt-8 max-w-3xl space-y-5 text-lg leading-relaxed text-muted-dark">
-            <p>
-              Most software problems are not really technology problems. They are problems of judgement: what to build,
-              what to verify, what to leave alone, and when to say that an approach is not working.
-            </p>
-            <p>
-              So we lead with engineering judgement rather than with tools. We would rather spend a day understanding why
-              a system behaves the way it does than a week working around it. We would rather tell you that a rewrite is
-              not justified than sell you one.
-            </p>
-            <p>
-              The long-term ambition is to build technology that matters — our own products alongside our consulting
-              work — and to be the kind of company engineers want to work with twice.
-            </p>
-            <p className="text-ivory">
-              <Link href="/approach" className="text-gold underline underline-offset-4 hover:text-ivory">See how that works in practice</Link>{" "}
-              in our Design, Build, Verify, Improve cycle.
-            </p>
+          <Reveal delay={100}>
+            <PhilosophyDiagram />
           </Reveal>
         </div>
       </section>
@@ -101,7 +113,7 @@ export default function AboutPage() {
             <h2 className="font-serif text-3xl sm:text-4xl">ETHORA, as a practice</h2>
             <span className="gold-rule mt-5 bg-gold-deep" />
             <p className="mt-6 max-w-2xl text-muted-light">
-              Six behaviours, not six slogans \u2014 each one spelling out our own name, and each one
+              Six behaviours, not six slogans — each one spelling out our own name, and each one
               something you could actually hold us to.
             </p>
           </Reveal>
@@ -127,23 +139,35 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* How we work with clients */}
+      {/* How we work with clients -- paired with the same real engagement sequence
+          published on /contact/, not a separately invented "process". */}
       <section className="bg-navy">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 md:py-20 lg:grid-cols-[1fr_1.2fr] lg:items-center lg:gap-16 lg:px-8">
           <Reveal>
             <h2 className="font-serif text-3xl sm:text-4xl">How we work with clients</h2>
             <span className="gold-rule mt-5" />
+            <div className="mt-8 max-w-xl space-y-5 text-lg leading-relaxed text-muted-dark">
+              <p>
+                We treat a working relationship as a long one, even before it starts. That means answering honestly —
+                including when we are not the right fit, or when you may not need us at all — and proposing a first
+                step small enough for you to judge the approach on before committing to anything larger.
+              </p>
+              <p className="text-ivory">
+                See exactly what happens when you{" "}
+                <Link href="/contact" className="text-gold underline underline-offset-4 hover:text-ivory">get in touch</Link>.
+              </p>
+            </div>
           </Reveal>
-          <Reveal delay={80} className="mt-8 max-w-3xl space-y-5 text-lg leading-relaxed text-muted-dark">
-            <p>
-              We treat a working relationship as a long one, even before it starts. That means answering honestly —
-              including when we are not the right fit, or when you may not need us at all — and proposing a first
-              step small enough for you to judge the approach on before committing to anything larger.
-            </p>
-            <p className="text-ivory">
-              See exactly what happens when you{" "}
-              <Link href="/contact" className="text-gold underline underline-offset-4 hover:text-ivory">get in touch</Link>.
-            </p>
+          <Reveal delay={100}>
+            <ol className="space-y-6 sm:grid sm:grid-cols-3 sm:gap-6 sm:space-y-0">
+              {engagementSteps.map((s, i) => (
+                <li key={s.t} className="rounded-xl border border-ivory/15 bg-navy-deep/60 p-5">
+                  <span className="font-serif text-2xl text-gold tabular-nums" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+                  <p className="mt-2 font-medium text-ivory">{s.t}</p>
+                  <p className="mt-1.5 text-sm leading-relaxed text-muted-dark">{s.b}</p>
+                </li>
+              ))}
+            </ol>
           </Reveal>
         </div>
       </section>

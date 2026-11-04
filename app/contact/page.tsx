@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
+import { engagementSteps } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Ethora Labs | Contact",
@@ -23,11 +24,7 @@ export default function ContactPage() {
             <h2 className="font-serif text-2xl">What happens next</h2>
             <span className="gold-rule mt-5" />
             <ol className="mt-6 space-y-5">
-              {[
-                { t: "We read it properly", b: "A person reads your message. There is no sales pipeline here." },
-                { t: "We reply honestly", b: "Including when the answer is that we are not the right fit, or that you may not need us at all." },
-                { t: "We propose something small", b: "If it makes sense to work together, we suggest a first step small enough to judge us on." },
-              ].map((s, i) => (
+              {engagementSteps.map((s, i) => (
                 <li key={s.t} className="grid grid-cols-[2rem_1fr] gap-4">
                   <span className="font-serif text-xl text-gold tabular-nums" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
                   <span>

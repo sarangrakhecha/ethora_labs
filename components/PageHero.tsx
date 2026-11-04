@@ -3,10 +3,16 @@ import type { ReactNode } from "react";
 
 const BASE = "https://ethoralabs.co";
 
-/** Shared opener for inner pages: breadcrumb, title, standfirst. */
-export default function PageHero({ eyebrow, title, intro, breadcrumb }: {
+/**
+ * Shared opener for inner pages: breadcrumb, title, standfirst.
+ * `aside` is optional: when a page passes one, the hero becomes a two-column
+ * composition (text left, aside right) at lg+ and stacks below the text on
+ * smaller screens. No page currently using PageHero without it is affected.
+ */
+export default function PageHero({ eyebrow, title, intro, breadcrumb, aside }: {
   eyebrow?: string; title: string; intro: string;
   breadcrumb?: { label: string; href: string }[];
+  aside?: ReactNode;
 }) {
   // BreadcrumbList structured data, generated once here rather than per page.
   const jsonLd = breadcrumb && {
@@ -35,10 +41,15 @@ export default function PageHero({ eyebrow, title, intro, breadcrumb }: {
             </ol>
           </nav>
         )}
-        {eyebrow && <p className="mb-4 text-xs font-medium uppercase tracking-[0.3em] text-gold">{eyebrow}</p>}
-        <h1 className="max-w-4xl font-serif text-[2.4rem] leading-[1.1] sm:text-5xl lg:text-[3.2rem]">{title}</h1>
-        <span className="gold-rule mt-6" />
-        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ivory/90">{intro}</p>
+        <div className={aside ? "grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-16" : undefined}>
+          <div>
+            {eyebrow && <p className="mb-4 text-xs font-medium uppercase tracking-[0.3em] text-gold">{eyebrow}</p>}
+            <h1 className={`font-serif text-[2.4rem] leading-[1.1] sm:text-5xl lg:text-[3.2rem] ${aside ? "" : "max-w-4xl"}`}>{title}</h1>
+            <span className="gold-rule mt-6" />
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ivory/90">{intro}</p>
+          </div>
+          {aside && <div className="mt-2 lg:mt-0">{aside}</div>}
+        </div>
       </div>
     </section>
   );
