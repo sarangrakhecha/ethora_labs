@@ -16,8 +16,8 @@ export default function Hero() {
             Ethora Labs is an engineering-led technology consultancy that designs, builds, tests, and improves software — with a focus on quality, reliability, and lasting value.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <ButtonLink href="#capabilities">Explore Capabilities</ButtonLink>
-            <ButtonLink href="#approach" variant="outline" arrow={false}>Our Approach</ButtonLink>
+            <ButtonLink href="/services">Explore Capabilities</ButtonLink>
+            <ButtonLink href="/approach" variant="outline" arrow={false}>Our Approach</ButtonLink>
           </div>
           <p className="mt-8 font-serif text-lg italic text-muted-dark">Built on Principles. Driven by Possibility.</p>
         </div>
