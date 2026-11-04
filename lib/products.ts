@@ -98,8 +98,10 @@ export const products: Product[] = [
       { title: "Renewals, ordered by urgency", body: "Sorted by the last date you can still act, with a visible countdown to that deadline rather than just the renewal date itself." },
       { title: "Every vendor in one place", body: "Software, suppliers, leases and service contracts together, each with its category, owner and annual cost." },
       { title: "Savings you can trust", body: "A three-stage funnel — Identified, Approved, Protected — so a potential saving is never shown as money already saved." },
-      { title: "A dedicated forwarding address", body: "An address to forward renewal emails to, with approved sender addresses per workspace. See the vision below for how this is designed to work end to end." },
     ],
+    // A 5th feature (the forwarding address) was dropped from this list -- it left an
+    // uneven grid, and it's already covered in full in the "Forward it. We'll track it."
+    // vision section below, so nothing is lost by not repeating it here too.
     screenshots: [
       { src: "/products/renewguard/overview.webp", w: 2000, h: 1250,
         alt: "RenewGuard overview dashboard greeting the user, showing renewing-soon total, potential savings, protected savings, and a list of renewals that need attention.",
@@ -113,10 +115,12 @@ export const products: Product[] = [
       { src: "/products/renewguard/savings.webp", w: 2000, h: 1250,
         alt: "RenewGuard savings page showing Identified, Approved and Protected totals as a funnel, with a per-vendor breakdown underneath.",
         caption: "Savings: a figure only counts once the real-world action is actually confirmed." },
-      { src: "/products/renewguard/settings-forwarding.webp", w: 2000, h: 1825,
-        alt: "RenewGuard settings page for forwarding renewal emails, showing a dedicated forwarding address, a list of approved sender addresses, and a demo-only test-send tool labelled as a demo build.",
-        caption: "Settings: the forwarding address and approved senders, shown here in our internal demo build." },
     ],
+    // The settings/forwarding screenshot (public/products/renewguard/settings-forwarding.webp)
+    // is a noticeably taller aspect ratio than the four above. ScreenshotStrip's cards share
+    // one row height, so including it stretched the other cards and left visible blank space
+    // under their captions. Left out of the carousel rather than distorted to fit; the
+    // forwarding address is still covered in the "What it does" feature list below.
     art: "renewguard",
     waitlistEmail: "hello@renewguardhq.com",
   },

@@ -79,7 +79,7 @@ export default function RenewGuardPage() {
             <span className="gold-rule mt-5 bg-gold-deep" />
           </Reveal>
           <Reveal delay={80} className="mt-10">
-            <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="grid gap-4 sm:grid-cols-2">
               {renewguard.features.map((f) => (
                 <li key={f.title} className="rounded-lg border border-gold-deep/25 bg-white/50 p-5">
                   <h3 className="flex items-start gap-3 font-medium">
