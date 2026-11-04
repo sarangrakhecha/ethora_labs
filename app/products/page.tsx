@@ -6,9 +6,15 @@ import PageHero, { CtaBand } from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import { Icon } from "@/components/Icons";
 
+const title = "Products | Ethora Labs";
+const description = "Culprit, a Chrome extension for software debugging, and RenewGuard, renewal and recurring-commitment management. Products built by Ethora Labs.";
+const url = "https://ethoralabs.co/products/";
+
 export const metadata: Metadata = {
-  title: "Products | Ethora Labs",
-  description: "Culprit, a Chrome extension for software debugging, and RenewGuard, renewal and recurring-commitment management. Products built by Ethora Labs.",
+  title, description,
+  alternates: { canonical: url },
+  openGraph: { title, description, url, siteName: "Ethora Labs", type: "website", images: ["/og.png"] },
+  twitter: { card: "summary_large_image", title, description, images: ["/og.png"] },
 };
 
 // Only the two real Ethora products. TerminalQuest is open-source, not part of

@@ -18,7 +18,14 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const { slug } = await params;
   const p = products.find((x) => x.slug === slug);
   if (!p) return {};
-  return { title: `${p.name} | Ethora Labs`, description: p.summary };
+  const title = `${p.name} | Ethora Labs`;
+  const url = `https://ethoralabs.co/products/${p.slug}/`;
+  return {
+    title, description: p.summary,
+    alternates: { canonical: url },
+    openGraph: { title, description: p.summary, url, siteName: "Ethora Labs", type: "website", images: ["/og.png"] },
+    twitter: { card: "summary_large_image", title, description: p.summary, images: ["/og.png"] },
+  };
 }
 
 export default async function ProductPage({ params }: { params: Promise<Params> }) {

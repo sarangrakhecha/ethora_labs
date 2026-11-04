@@ -16,6 +16,10 @@ export type Service = {
   whatWeDo: { title: string; body: string }[];
   demo: "architecture" | "risk" | "pipeline" | "prototype";
   demoIntro: { title: string; body: string };
+  /** Bespoke next-step CTA label for this service, rather than one templated string
+   * reused everywhere (and which read oddly for "Engineering & Innovation" -- "Discuss
+   * a engineering..."). */
+  cta: string;
   deliverables: string[];
   approach: { phase: string; body: string }[];
   engagements: { name: string; shape: string; body: string }[];
@@ -55,6 +59,7 @@ export const services: Service[] = [
       { title: "Technical discovery and prototyping", body: "When the right answer is not yet obvious, a short, time-boxed investigation that produces evidence instead of a longer meeting." },
     ],
     demo: "architecture",
+    cta: "Discuss a Software Project",
     demoIntro: {
       title: "Architecture Explorer",
       body: "An illustrative architecture for a typical business application. Select any part to see what it is responsible for and the engineering questions that come with it. This is a teaching example, not a diagram of any client's system.",
@@ -110,6 +115,7 @@ export const services: Service[] = [
       { title: "Cross-platform quality", body: "Deciding which browsers, devices and configurations genuinely need coverage, based on who uses the product." },
     ],
     demo: "risk",
+    cta: "Discuss a Quality Challenge",
     demoIntro: {
       title: "Risk-Based Testing Explorer",
       body: "A deliberately simple model of how testing priority can be reasoned about. Adjust the inputs and the arithmetic stays visible — the point is the conversation it structures, not the number it produces. It is illustrative, not a prediction engine.",
@@ -165,6 +171,7 @@ export const services: Service[] = [
       { title: "Test reporting", body: "Results a developer can read in under a minute, and trends a lead can act on." },
     ],
     demo: "pipeline",
+    cta: "Improve Your Test Automation",
     demoIntro: {
       title: "CI Pipeline Simulator",
       body: "Four predefined scenarios through a simplified pipeline. Pick one and step through the stages to see what each outcome means and how it should be investigated. Everything here is a fixed demonstration — no pipeline is running, and no result describes real work.",
@@ -219,6 +226,7 @@ export const services: Service[] = [
       { title: "Hardware and software integration", body: "An area we expect to grow into rather than one we are presenting as established practice. We would scope any such work honestly, and tell you where our experience ends." },
     ],
     demo: "prototype",
+    cta: "Explore an Idea",
     demoIntro: {
       title: "Idea to Prototype Explorer",
       body: "How an idea moves from a sentence to a decision. Step through each stage to see what happens, what it produces, and why stopping can be the most valuable outcome. The stages are illustrative; no project shown here is a real one.",

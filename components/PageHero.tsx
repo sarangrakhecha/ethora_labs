@@ -1,13 +1,26 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
+const BASE = "https://ethoralabs.co";
+
 /** Shared opener for inner pages: breadcrumb, title, standfirst. */
 export default function PageHero({ eyebrow, title, intro, breadcrumb }: {
   eyebrow?: string; title: string; intro: string;
   breadcrumb?: { label: string; href: string }[];
 }) {
+  // BreadcrumbList structured data, generated once here rather than per page.
+  const jsonLd = breadcrumb && {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      ...breadcrumb.map((b, i) => ({ "@type": "ListItem", position: i + 1, name: b.label, item: `${BASE}${b.href}` })),
+      { "@type": "ListItem", position: breadcrumb.length + 1, name: title },
+    ],
+  };
+
   return (
     <section className="border-b border-ivory/10 bg-navy">
+      {jsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />}
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-16 lg:px-8">
         {breadcrumb && (
           <nav aria-label="Breadcrumb" className="mb-8">

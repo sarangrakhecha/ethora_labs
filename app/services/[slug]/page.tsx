@@ -59,7 +59,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
         <div className="mx-auto flex max-w-7xl flex-col gap-5 px-4 py-8 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
           <p className="max-w-2xl text-muted-dark">{s.addresses}</p>
           <Link href={contactHref} className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-md bg-gold px-5 py-2.5 text-[15px] font-medium text-navy-deep transition-colors hover:bg-[#d4b98f]">
-            Discuss a {s.nav.label.toLowerCase()} project <Icon name="arrow" />
+            {s.cta} <Icon name="arrow" />
           </Link>
         </div>
       </section>

@@ -126,6 +126,27 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* How we work with clients */}
+      <section className="bg-navy">
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 md:py-20 lg:grid-cols-[1fr_2fr] lg:gap-16 lg:px-8">
+          <Reveal>
+            <h2 className="font-serif text-3xl sm:text-4xl">How we work with clients</h2>
+            <span className="gold-rule mt-5" />
+          </Reveal>
+          <Reveal delay={80} className="max-w-3xl space-y-5 text-lg leading-relaxed text-muted-dark">
+            <p>
+              We treat a working relationship as a long one, even before it starts. That means answering honestly —
+              including when we are not the right fit, or when you may not need us at all — and proposing a first
+              step small enough for you to judge the approach on before committing to anything larger.
+            </p>
+            <p className="text-ivory">
+              See exactly what happens when you{" "}
+              <Link href="/contact" className="text-gold underline underline-offset-4 hover:text-ivory">get in touch</Link>.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
       {/* Founder section removed at the client's request for now.
           To restore: a heading, optional portrait (public/founder.jpg), name and role, and a
           short bio. Keep the founder's own professional experience clearly separate from
