@@ -34,32 +34,33 @@ export default function RenewGuardPage() {
         intro={renewguard.summary}
       />
 
-      {/* Status + waitlist CTA */}
+      {/* Status -- the waitlist CTA lives once, with the sneak peek below, rather than
+          repeated here too. */}
       <section className="border-b border-ivory/10 bg-navy">
-        <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-10 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
-          <div>
-            <p className="flex items-center gap-2 font-medium">
-              <span className="h-2 w-2 rounded-full" style={{ background: "#d9a441" }} aria-hidden="true" />
-              {renewguard.status.label}
-            </p>
-            <p className="mt-2 max-w-xl text-muted-dark">{renewguard.status.detail}</p>
-          </div>
-          <a href={waitlistHref} className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-md px-5 py-2.5 text-[15px] font-medium text-ivory transition-colors hover:brightness-110" style={{ background: forest }}>
-            Join the Waitlist <Icon name="arrow" />
-          </a>
+        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+          <p className="flex items-center gap-2 font-medium">
+            <span className="h-2 w-2 rounded-full" style={{ background: "#d9a441" }} aria-hidden="true" />
+            {renewguard.status.label}
+          </p>
+          <p className="mt-2 max-w-xl text-muted-dark">{renewguard.status.detail}</p>
         </div>
       </section>
 
       {/* Product sneak peek */}
       <section className="bg-navy-deep">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-          <Reveal>
-            <p className="text-xs font-medium uppercase tracking-[0.3em]" style={{ color: "#d9a441" }}>Product sneak peek</p>
-            <h2 className="mt-3 font-serif text-3xl sm:text-4xl">What RenewGuard looks like today</h2>
-            <p className="mt-4 max-w-2xl leading-relaxed text-muted-dark">
-              Real screens from our own internal build, not mockups — RenewGuard isn&rsquo;t publicly available yet,
-              so this is the closest look we can offer right now.
-            </p>
+          <Reveal className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-xs font-medium uppercase tracking-[0.3em]" style={{ color: "#d9a441" }}>Product sneak peek</p>
+              <h2 className="mt-3 font-serif text-3xl sm:text-4xl">A first look behind the curtain</h2>
+              <p className="mt-4 max-w-2xl leading-relaxed text-muted-dark">
+                These are real screens from our own build — nothing public yet, but here&rsquo;s exactly what&rsquo;s
+                waiting on the other side of the waitlist.
+              </p>
+            </div>
+            <a href={waitlistHref} className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-md px-5 py-2.5 text-[15px] font-medium text-ivory transition-colors hover:brightness-110" style={{ background: forest }}>
+              Join the Waitlist <Icon name="arrow" />
+            </a>
           </Reveal>
           <Reveal delay={80} className="mt-10">
             {renewguard.screenshots.length > 0 ? (
