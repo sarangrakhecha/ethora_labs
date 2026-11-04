@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import { products, CULPRIT_STORE_URL } from "@/lib/products";
+import ScreenshotStrip from "@/components/ScreenshotStrip";
 import ProductArt from "@/components/ProductArt";
 import PageHero, { CtaBand } from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
@@ -65,15 +65,7 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
           <Reveal>
             {shots.length > 0 ? (
-              <ul className="grid gap-5 md:grid-cols-2">
-                {shots.map((s, i) => (
-                  <li key={s.src} className={`overflow-hidden rounded-xl border border-ivory/15 bg-navy ${i === 0 ? "md:col-span-2" : ""}`}>
-                    <Image src={s.src} alt={s.alt} width={s.w} height={s.h} priority={i === 0}
-                      className={i === 0 ? "h-auto w-full" : "mx-auto h-auto w-full max-w-[26rem]"} />
-                    <p className="border-t border-ivory/10 px-5 py-4 text-sm text-muted-dark">{s.caption}</p>
-                  </li>
-                ))}
-              </ul>
+              <ScreenshotStrip shots={shots} />
             ) : (
               <>
                 <div className="overflow-hidden rounded-xl border border-ivory/15">
