@@ -141,9 +141,9 @@ export default async function ProductPage({ params }: { params: Promise<Params> 
                 : "If this is a problem you have, we would be glad to hear how you handle it today — it genuinely shapes what we build."}
             </p>
             <p>
-              <Link href="/#approach" className="text-gold underline underline-offset-4 hover:text-ivory">How we work</Link>
+              <Link href="/approach" className="text-gold underline underline-offset-4 hover:text-ivory">How we work</Link>
               {" · "}
-              <Link href="/#capabilities" className="text-gold underline underline-offset-4 hover:text-ivory">Consulting capabilities</Link>
+              <Link href="/services" className="text-gold underline underline-offset-4 hover:text-ivory">Consulting capabilities</Link>
             </p>
           </Reveal>
         </div>

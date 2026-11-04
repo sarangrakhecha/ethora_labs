@@ -16,7 +16,7 @@ export default function NotFound() {
         <ul className="mt-8 flex flex-wrap gap-3">
           {[
             { href: "/", label: "Home" },
-            { href: "/#capabilities", label: "Capabilities" },
+            { href: "/services", label: "Capabilities" },
             { href: "/products", label: "Products" },
             { href: "/contact", label: "Contact" },
           ].map((l) => (

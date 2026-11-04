@@ -10,13 +10,16 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://ethoralabs.co/about/" },
 };
 
-// Values expressed as behaviours rather than slogans.
-const values = [
-  { name: "Integrity", behaviour: "We report engineering risks honestly, including when the news is unwelcome or reflects badly on our own estimate." },
-  { name: "Quality", behaviour: "We build verification into development rather than bolting it on before a release." },
-  { name: "Intelligence", behaviour: "We understand the problem before choosing a solution, and we are willing to say the problem is not what you thought." },
-  { name: "Curiosity", behaviour: "We question assumptions, including our own, and investigate alternatives before committing." },
-  { name: "Ownership", behaviour: "We build maintainable systems and write decisions down, so the work outlives our involvement." },
+// ETHORA \u2014 our own name, spelled out as six behaviours rather than slogans.
+// The name itself comes from ethics + ethos (see the section above); this is that
+// idea made concrete and checkable, not a separate framework bolted on top of it.
+const culture = [
+  { letter: "E", name: "Excellence", behaviour: "We build verification into development rather than bolting it on before a release." },
+  { letter: "T", name: "Trust", behaviour: "We report engineering risks honestly, including when the news is unwelcome or reflects badly on our own estimate." },
+  { letter: "H", name: "Humility", behaviour: "We question assumptions, including our own, and investigate alternatives before committing." },
+  { letter: "O", name: "Ownership", behaviour: "We build maintainable systems and write decisions down, so the work outlives our involvement." },
+  { letter: "R", name: "Rigour", behaviour: "We understand the problem before choosing a solution, and we are willing to say the problem is not what you thought." },
+  { letter: "A", name: "Adaptability", behaviour: "We let what verification and real use reveal shape what we build next, rather than treating a release as a finish line." },
 ];
 
 export default function AboutPage() {
@@ -83,32 +86,38 @@ export default function AboutPage() {
               work — and to be the kind of company engineers want to work with twice.
             </p>
             <p className="text-ivory">
-              <Link href="/#approach" className="text-gold underline underline-offset-4 hover:text-ivory">See how that works in practice</Link>{" "}
+              <Link href="/approach" className="text-gold underline underline-offset-4 hover:text-ivory">See how that works in practice</Link>{" "}
               in our Design, Build, Verify, Improve cycle.
             </p>
           </Reveal>
         </div>
       </section>
 
-      {/* Values as behaviours */}
+      {/* Culture, spelled out as our own name */}
       <section className="on-light bg-ivory text-ink">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
           <Reveal>
-            <h2 className="font-serif text-3xl sm:text-4xl">What our values look like in practice</h2>
+            <h2 className="font-serif text-3xl sm:text-4xl">ETHORA, as a practice</h2>
             <span className="gold-rule mt-5 bg-gold-deep" />
             <p className="mt-6 max-w-2xl text-muted-light">
-              Values are only worth stating if they describe a behaviour someone could hold you to.
+              Six behaviours, not six slogans \u2014 each one spelling out our own name, and each one
+              something you could actually hold us to.
             </p>
           </Reveal>
-          {/* Single row at lg+ (5 equal columns, never an uneven trailing row) and a
-              single stacked column below that, rather than a grid that wraps unevenly. */}
-          <ul className="mt-10 grid gap-5 lg:grid-cols-5">
-            {values.map((v, i) => (
-              <li key={v.name}>
+          {/* 2 or 3 columns, so six items always fill the grid exactly: 3 rows of 2, or
+              2 rows of 3. No breakpoint ever leaves a trailing, uneven row. */}
+          <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {culture.map((v, i) => (
+              <li key={v.letter}>
                 <Reveal delay={i * 60} className="h-full">
-                  <div className="h-full rounded-xl border border-gold-deep/25 bg-white/50 p-6">
-                    <h3 className="font-serif text-2xl">{v.name}</h3>
-                    <p className="mt-3 leading-relaxed text-muted-light">{v.behaviour}</p>
+                  <div className="flex h-full gap-4 rounded-xl border border-gold-deep/25 bg-white/50 p-6">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-navy font-serif text-xl text-gold" aria-hidden="true">
+                      {v.letter}
+                    </span>
+                    <div>
+                      <h3 className="font-serif text-2xl leading-tight">{v.name}</h3>
+                      <p className="mt-2 leading-relaxed text-muted-light">{v.behaviour}</p>
+                    </div>
                   </div>
                 </Reveal>
               </li>
@@ -133,7 +142,7 @@ export default function AboutPage() {
                 Ethora Labs is a new, small and senior company. We have no client logos to show you, no case studies and
                 no success percentages, because inventing them would contradict the first value on this page. What we can
                 show is how we think — in our{" "}
-                <Link href="/#capabilities" className="text-gold-deep underline underline-offset-4">capability pages</Link>,
+                <Link href="/services" className="text-gold-deep underline underline-offset-4">capability pages</Link>,
                 the working demonstrations inside them, and the products we are building.
               </p>
             </div>

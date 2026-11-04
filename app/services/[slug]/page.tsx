@@ -49,7 +49,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <PageHero
-        breadcrumb={[{ label: "Home", href: "/" }, { label: "Capabilities", href: "/#capabilities" }]}
+        breadcrumb={[{ label: "Home", href: "/" }, { label: "Capabilities", href: "/services" }]}
         eyebrow={s.nav.label}
         title={s.headline}
         intro={s.intro}
@@ -151,7 +151,7 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
             </ol>
             <p className="mt-6 text-muted-dark">
               This sits inside our wider{" "}
-              <Link href="/#approach" className="text-gold underline underline-offset-4 hover:text-ivory">Design, Build, Verify, Improve</Link> cycle.
+              <Link href="/approach" className="text-gold underline underline-offset-4 hover:text-ivory">Design, Build, Verify, Improve</Link> cycle.
             </p>
           </Reveal>
         </div>

@@ -52,7 +52,7 @@ export default function ProductsIndex() {
           </Reveal>
           <p className="mt-10 text-muted-dark">
             Looking for our consulting work instead?{" "}
-            <Link href="/#capabilities" className="text-gold underline underline-offset-4 hover:text-ivory">See our capabilities</Link>.
+            <Link href="/services" className="text-gold underline underline-offset-4 hover:text-ivory">See our capabilities</Link>.
           </p>
         </div>
       </section>
