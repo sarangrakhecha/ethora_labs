@@ -1,7 +1,9 @@
 /**
  * Technologies hero's right-side composition: the four selection criteria named in the
  * intro paragraph (maintainability, reliability, performance, long-term value), shown
- * as spokes around a central "fit" node rather than restated as another sentence.
+ * as spokes around a central hub rather than restated as another sentence. The hub
+ * itself carries no label -- a cryptic abbreviation there read as unexplained rather
+ * than self-evident, so the "what this is" job is done once, by the caption above it.
  */
 export default function HeroMark() {
   const spokes = [
@@ -16,6 +18,7 @@ export default function HeroMark() {
 
   return (
     <div className="relative mx-auto w-full max-w-[34rem]" aria-hidden="true">
+      <p className="text-center text-[11px] font-medium uppercase tracking-[0.2em] text-muted-dark">What we weigh for every choice</p>
       <svg viewBox="-70 0 760 395" className="h-auto w-full drop-shadow-[0_0_36px_rgba(196,167,122,0.1)]">
         <defs>
           <radialGradient id="techHeroGlow" cx="0.5" cy="0.5" r="0.5">
@@ -38,7 +41,6 @@ export default function HeroMark() {
         <g fill="#D9C8A8" fontSize="11.5" letterSpacing="1.8" style={{ fontFamily: "system-ui, sans-serif" }}>
           {spokes.map((s) => <text key={s.label} x={s.x} y={s.y} textAnchor={s.anchor}>{s.label}</text>)}
         </g>
-        <text x="321" y="205" textAnchor="middle" fill="#F6F3EC" fontSize="11" letterSpacing="1.5" style={{ fontFamily: "system-ui, sans-serif" }}>FIT</text>
       </svg>
       <p className="mt-2 text-center text-[11px] font-medium uppercase tracking-[0.2em] text-muted-dark">Chosen for the problem, not the trend</p>
     </div>
