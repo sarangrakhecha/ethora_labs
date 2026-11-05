@@ -15,7 +15,7 @@ export function validate(v: Values): Errors {
   const e: Errors = {};
   if (!v.name.trim()) e.name = "Please enter your name.";
   else if (v.name.length > LIMITS.name) e.name = `Please keep your name under ${LIMITS.name} characters.`;
-  if (!v.email.trim()) e.email = "Please enter your work email address.";
+  if (!v.email.trim()) e.email = "Please enter your email.";
   else if (!emailRe.test(v.email.trim())) e.email = "Please enter a valid email address.";
   else if (v.email.length > LIMITS.email) e.email = `Please keep your email under ${LIMITS.email} characters.`;
   if (!v.message.trim()) e.message = "Please tell us a little about your project.";

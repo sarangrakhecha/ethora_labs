@@ -4,7 +4,7 @@ import { useEffect, useLayoutEffect } from "react";
 
 function scrollToHashTarget(hash: string) {
   const el = document.getElementById(hash.slice(1));
-  if (el) el.scrollIntoView({ block: "start" });
+  if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
 }
 
 /**
@@ -13,11 +13,10 @@ function scrollToHashTarget(hash: string) {
  * link, which points at "/#capabilities" on the homepage).
  *
  * `html { scroll-behavior: smooth }` (globals.css) applies to every script-driven
- * scroll, including the browser's own scroll restoration. With that in play, the
- * landing position can settle a little below true 0 instead of snapping there, or
- * a cross-page hash link can land on the right URL without ever scrolling to the
- * target section. Both are fixed explicitly here rather than relying on the
- * browser/router's own scroll restoration.
+ * scroll, including a plain `window.scrollTo(0, 0)` -- left to animate, that smooth
+ * scroll can settle a little below true 0 instead of snapping there, which is why
+ * every scroll below passes `behavior: "instant"` explicitly rather than relying on
+ * the browser/router's own scroll restoration.
  */
 export default function ScrollToTop() {
   const pathname = usePathname();
@@ -26,7 +25,7 @@ export default function ScrollToTop() {
   useLayoutEffect(() => {
     const hash = window.location.hash;
     if (hash) { scrollToHashTarget(hash); return; }
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   }, [pathname]);
 
   // A same-page hash link (e.g. "/#capabilities" clicked while already on "/") never

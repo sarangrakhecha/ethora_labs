@@ -32,22 +32,31 @@ export function Icon({ name, ...p }: { name: string } & SVGProps<SVGSVGElement>)
   }
 }
 
-export function LogoMark({ className = "" }: { className?: string }) {
-  // Placeholder geometric mark: a faceted diamond with an inner rule. Temporary, not a permanent logo.
+/**
+ * "Synthesis" mark: two ribbon bands (Ethics, in gold) crossed by a third (Ethos),
+ * open into an E-shaped silhouette. Flat, matte fills only -- no gradients, bevels
+ * or shadows. The crossing band swaps tone so it reads against either background.
+ */
+export function LogoMark({ className = "", tone = "dark" }: { className?: string; tone?: "dark" | "light" }) {
+  const crossing = tone === "light" ? "#101c2a" : "#f6f3ec";
   return (
-    <svg viewBox="0 0 32 32" className={className} fill="none" aria-hidden="true">
-      <path d="M16 3l13 13-13 13L3 16z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
-      <path d="M9.5 16h13M16 9.5v13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity=".55" />
+    <svg viewBox="10 8 80 84" className={className} aria-hidden="true">
+      <path d="M17 36 C17 22 36 14 61 12 C70 11 77 11 83 12 L83 27 C61 27 36 34 17 47 Z" fill="#c4a77a" />
+      <path d="M17 49 C37 39 59 36 83 32 L83 48 C59 53 36 61 17 71 Z" fill={crossing} />
+      <path d="M17 74 C37 63 58 60 83 55 L83 72 C63 83 39 89 17 90 Z" fill="#c4a77a" />
     </svg>
   );
 }
 
-export function Wordmark({ className = "" }: { className?: string }) {
+export function Wordmark({ className = "", tone = "dark" }: { className?: string; tone?: "dark" | "light" }) {
+  const textCls = tone === "light" ? "text-ink" : "text-ivory";
+  const labsCls = tone === "light" ? "text-gold-deep" : "text-gold";
   return (
-    <span className={`inline-flex items-center gap-3 ${className}`}>
-      <LogoMark className="h-7 w-7 text-gold" />
-      <span className="h-6 w-px bg-slate/50" aria-hidden="true" />
-      <span className="font-sans text-[15px] font-medium tracking-[0.18em]">ETHORA LABS</span>
+    <span className={`inline-flex items-center gap-2.5 text-[15px] ${className}`}>
+      <LogoMark tone={tone} className="h-5 w-5 shrink-0" />
+      <span className={`font-sans font-medium tracking-[0.18em] ${textCls}`}>
+        ETHORA <span className={labsCls}>LABS</span>
+      </span>
     </span>
   );
 }

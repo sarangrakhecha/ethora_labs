@@ -27,7 +27,11 @@
   --font-sans: var(--font-dm-sans), system-ui, sans-serif;
 }
 
-html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+/* overflow-anchor: none stops the browser from silently re-adjusting scroll position
+   to compensate for layout shift (web fonts, images, Reveal animations) right after
+   a route change -- without it, the explicit scroll-to-top in ScrollToTop.tsx can
+   get quietly overridden a few hundred ms later as the new page finishes loading. */
+html { scroll-behavior: smooth; scroll-padding-top: 5rem; overflow-anchor: none; }
 body { background: var(--navy); color: var(--ivory); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
 
 /* Visible focus everywhere */
@@ -38,6 +42,21 @@ body { background: var(--navy); color: var(--ivory); font-family: var(--font-san
    `balance` evens out short headings; `pretty` pulls a word down to avoid orphans. */
 h1, h2, h3, h4, h5, h6, .text-balance { text-wrap: balance; }
 p, li, dd, dt, figcaption, blockquote, label, summary { text-wrap: pretty; }
+
+/* Justify body prose wherever there's room for it to read well: every multi-line
+   paragraph in the codebase already carries `leading-relaxed` as its marker, so that
+   class doubles as the selector here rather than touching dozens of components.
+   Narrower than `sm`, a justified column gets noticeably uneven word gaps, so this
+   stays left-aligned (ragged) below that width. The justify spec never stretches a
+   paragraph's last line, so the noWidow() orphan-prevention above is unaffected. */
+@media (min-width: 640px) {
+  .leading-relaxed { text-align: justify; text-justify: inter-word; }
+  /* Repeated card/list text (service and product feature lists, the culture grid,
+     nav dropdown descriptions, the footer blurb) sits in too narrow a column for
+     justify to look good -- short lines there show visible gaps rather than reading
+     smoothly. Long-form paragraphs outside a <li> keep the justified treatment above. */
+  li .leading-relaxed, footer .leading-relaxed { text-align: left; }
+}
 
 .gold-rule { display: block; height: 1px; width: 3rem; background: var(--gold); }
 

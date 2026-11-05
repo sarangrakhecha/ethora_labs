@@ -12,7 +12,10 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://ethoralabs.co"),
   title: "Ethora Labs | Software Engineering, Quality & IT Consulting",
   description: "Engineering-led IT consulting: custom software development, quality engineering, test automation and CI/CD. Ethora Labs helps teams build software that works, scales and lasts.",
-  icons: { icon: "/favicon.svg" },
+  // Versioned so browsers and Cloudflare's edge cache fetch the new mark instead of
+  // serving a stale cached copy of /favicon.svg under the same unchanged URL. Bump
+  // this query value again any time the favicon's content changes.
+  icons: { icon: "/favicon.svg?v=2" },
   alternates: { canonical: "https://ethoralabs.co/" },
   openGraph: {
     title: "Ethora Labs | Software Engineering, Quality & IT Consulting",
@@ -31,7 +34,7 @@ export const viewport: Viewport = { themeColor: "#101C2A" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${serif.variable} ${sans.variable}`}>
+    <html lang="en" data-scroll-behavior="smooth" className={`${serif.variable} ${sans.variable}`}>
       <head>
         {/* Enables scroll-reveal only when JS runs, so content is never hidden without it. */}
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
