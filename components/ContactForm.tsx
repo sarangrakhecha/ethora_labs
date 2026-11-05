@@ -152,13 +152,13 @@ export default function ContactForm() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
           <div>
             <label htmlFor="c-name" className="text-[15px] font-medium text-ink">Name <span className="text-gold-deep">*</span></label>
-            <input id="c-name" name="name" autoComplete="name" required maxLength={LIMITS.name} placeholder="e.g. Sarang Rakhecha"
+            <input id="c-name" name="name" autoComplete="name" required maxLength={LIMITS.name}
               aria-invalid={!!show("name")} aria-describedby="e-name" value={values.name} onChange={set("name")} onBlur={blur("name")} className={`${field} ${border("name")}`} />
             <Err id="e-name" k="name" />
           </div>
           <div>
             <label htmlFor="c-email" className="text-[15px] font-medium text-ink">Work email <span className="text-gold-deep">*</span></label>
-            <input id="c-email" name="email" type="email" autoComplete="email" required maxLength={LIMITS.email} placeholder="e.g. sarang@company.com"
+            <input id="c-email" name="email" type="email" autoComplete="email" required maxLength={LIMITS.email}
               aria-invalid={!!show("email")} aria-describedby="e-email" value={values.email} onChange={set("email")} onBlur={blur("email")} className={`${field} ${border("email")}`} />
             <Err id="e-email" k="email" />
           </div>
@@ -167,7 +167,7 @@ export default function ContactForm() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
           <div>
             <label htmlFor="c-company" className="text-[15px] font-medium text-ink">Company <span className="text-muted-light">(optional)</span></label>
-            <input id="c-company" name="company" autoComplete="organization" maxLength={LIMITS.company} placeholder="e.g. Acme Corp"
+            <input id="c-company" name="company" autoComplete="organization" maxLength={LIMITS.company}
               value={values.company} onChange={set("company")} className={`${field} border-ink/15`} />
           </div>
           <div>
