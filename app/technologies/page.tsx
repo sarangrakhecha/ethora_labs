@@ -5,12 +5,15 @@ import TechnologyExplorer from "@/components/TechnologyExplorer";
 import Reveal from "@/components/Reveal";
 import HeroMark from "@/components/technologies-visuals/HeroMark";
 import { Icon } from "@/components/Icons";
+import { noWidow } from "@/lib/typography";
 
-// Four of the six categories in lib/technologies.ts, as quick-access tiles -- the
-// other two (Quality & Testing, DevOps & Operations) stay one click away via "View
-// all technologies" rather than crowding this row, matching the approved reference.
+// All six categories in lib/technologies.ts, as quick-access tiles -- showing only
+// a curated four read as incomplete next to a "View all technologies" link that
+// implies there's more hiding behind it.
 const showcase = [
   { id: "web", icon: "code", title: "Application", description: "Web, backend, and APIs" },
+  { id: "qe", icon: "check", title: "Quality & Testing", description: "Testing strategy and automation" },
+  { id: "ops", icon: "branch", title: "DevOps & Operations", description: "CI/CD, version control, and release" },
   { id: "infra", icon: "cloud", title: "Cloud & Infrastructure", description: "Hosting and deployment platforms" },
   { id: "data", icon: "database", title: "Data & Storage", description: "Databases and data systems" },
   { id: "mobile", icon: "phone", title: "Mobile", description: "Native and cross-platform" },
@@ -44,20 +47,22 @@ export default function TechnologiesPage() {
             <div className="lg:flex lg:items-center lg:gap-10">
               <h2 className="shrink-0 font-serif text-3xl leading-tight sm:text-4xl">Explore our technologies</h2>
               <span className="mt-5 block h-px w-12 bg-gold lg:mt-0 lg:h-14 lg:w-px" aria-hidden="true" />
-              <p className="mt-5 max-w-2xl leading-relaxed text-muted-dark lg:mt-0">
-                This list is deliberately selective: it covers technologies we have genuine, hands-on experience with —
-                the stack this site itself is built and tested with, plus the cloud, data and mobile tooling we use in
-                client engagements — rather than every tool we could plausibly use.
-              </p>
-            </div>
-            <div className="mt-4 flex justify-end">
-              <Link href="#explore-technologies" className="inline-flex items-center gap-2 border-b border-gold/60 pb-1 text-sm text-gold transition-colors hover:text-[#d4b98f]">
-                View all technologies <Icon name="arrow" className="h-4 w-4" />
-              </Link>
+              <div className="mt-5 max-w-2xl lg:mt-0">
+                <p className="leading-relaxed text-muted-dark">
+                  {noWidow(
+                    "This list is deliberately selective: it covers technologies we have genuine, hands-on experience with — the stack this site itself is built and tested with, plus the cloud, data and mobile tooling we use in client engagements — rather than every tool we could plausibly use."
+                  )}
+                </p>
+                <div className="mt-4 flex justify-end">
+                  <Link href="#explore-technologies" className="inline-flex items-center gap-2 border-b border-gold/60 pb-1 text-sm text-gold transition-colors hover:text-[#d4b98f]">
+                    View all technologies <Icon name="arrow" className="h-4 w-4" />
+                  </Link>
+                </div>
+              </div>
             </div>
           </Reveal>
 
-          <Reveal delay={60} className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <Reveal delay={60} className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {showcase.map((s) => (
               <Link key={s.id} href={`#${s.id}`}
                 className="group flex min-h-[6.5rem] items-center gap-3.5 rounded-xl border border-ivory/20 bg-ivory/[0.025] p-4 transition-colors hover:border-gold hover:bg-gold/[0.08]">
