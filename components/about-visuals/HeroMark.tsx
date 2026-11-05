@@ -35,7 +35,9 @@ export default function HeroMark() {
           <path d="M473 112 445 123" />
         </g>
       </svg>
-      <p className="mt-2 text-right text-[11px] font-medium uppercase tracking-[0.2em] text-muted-dark">Engineering with intention</p>
+      {/* Right-edge matches x=529 of the viewBox (the diagram's rightmost point), not the
+          full 620-wide box -- the linework doesn't reach the edge of the SVG itself. */}
+      <p className="mt-2 text-right text-[11px] font-medium uppercase tracking-[0.2em] text-muted-dark" style={{ paddingRight: `${(1 - 529 / 620) * 100}%` }}>Engineering with intention</p>
     </div>
   );
 }

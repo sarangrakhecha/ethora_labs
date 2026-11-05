@@ -194,6 +194,24 @@ export const technologies: Technology[] = [
     considerations: ["Designing for real device and OS fragmentation, not just the newest phone", "Background work and battery impact treated as first-class concerns", "Permissions requested only for what a feature actually needs"],
     relatedServices: ["software-engineering"],
   },
+  {
+    id: "python", name: "Python", tier: "hands-on", role: "Language", icon: "code", visual: "role",
+    usedFor: "A general-purpose language for scripting, automation and backend services where it is the right fit for a client's stack.",
+    considerations: ["Typed where it matters, using type hints rather than skipping them for convenience", "Dependencies pinned and reproducible, not resolved differently on every machine", "Automation scripts held to the same review discipline as application code"],
+    relatedServices: ["software-engineering"],
+  },
+  {
+    id: "jenkins", name: "Jenkins", tier: "hands-on", role: "CI/CD platform", icon: "loop", visual: "role",
+    usedFor: "Build and release automation for clients whose infrastructure is already built around a self-hosted CI/CD platform.",
+    considerations: ["Pipelines defined as code and versioned, not configured by hand in the UI", "Credentials and secrets scoped tightly per job", "Reaching for it where a client's existing setup justifies it, not as a default over simpler options"],
+    relatedServices: ["software-engineering", "test-automation"],
+  },
+  {
+    id: "swift", name: "Swift", tier: "hands-on", role: "Native language", icon: "terminal", visual: "role",
+    usedFor: "Native iOS and macOS development for clients who need the best possible fit with Apple's ecosystem.",
+    considerations: ["Reaching for native only where a cross-platform framework genuinely falls short", "Modern Swift concurrency used deliberately, not retrofitted without care", "Platform and accessibility conventions followed, not approximated"],
+    relatedServices: ["software-engineering"],
+  },
 ];
 
 export type TechCategory = { id: string; name: string; blurb: string; items: string[] };
@@ -202,22 +220,22 @@ export const techCategories: TechCategory[] = [
   {
     id: "web", name: "Web & Application Development",
     blurb: "The languages and framework behind building and shipping an application.",
-    items: ["nextjs", "react", "typescript", "tailwind", "nodejs"],
+    items: ["react", "nextjs", "typescript", "python", "nodejs", "tailwind"],
   },
   {
     id: "qe", name: "Quality Engineering & Testing",
     blurb: "How we check that software actually does what it is supposed to.",
-    items: ["playwright", "node-test", "selenium", "appium", "postman", "k6"],
+    items: ["playwright", "selenium", "appium", "postman", "k6", "node-test"],
+  },
+  {
+    id: "ops", name: "DevOps & Engineering Operations",
+    blurb: "The practices that keep a codebase's history and release process trustworthy.",
+    items: ["git", "pipeline", "jenkins", "cloudflare"],
   },
   {
     id: "infra", name: "Deployment & Infrastructure",
     blurb: "Where and how an application actually runs once it is built.",
-    items: ["aws", "azure", "gcp", "docker", "kubernetes"],
-  },
-  {
-    id: "ops", name: "Engineering Operations",
-    blurb: "The practices that keep a codebase's history and release process trustworthy.",
-    items: ["cloudflare", "git", "pipeline"],
+    items: ["docker", "kubernetes", "aws", "azure", "gcp"],
   },
   {
     id: "data", name: "Data & Storage",
@@ -227,7 +245,7 @@ export const techCategories: TechCategory[] = [
   {
     id: "mobile", name: "Mobile",
     blurb: "Native and cross-platform apps beyond the browser.",
-    items: ["react-native", "flutter", "ios", "android"],
+    items: ["react-native", "flutter", "ios", "swift", "android"],
   },
 ];
 

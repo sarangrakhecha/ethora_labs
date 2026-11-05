@@ -83,17 +83,17 @@ const run = async () => {
   }
 
   /* --------------------------------------------------- dropdown: keyboard + touch */
-  console.log("\nCapabilities dropdown");
+  console.log("\nServices dropdown");
   await page.goto(BASE + "/");
   await page.keyboard.press("Tab"); // skip link
-  await page.click('header button[aria-controls="cap-menu"]');
-  check("opens on click", await page.locator("#cap-menu").isVisible());
+  await page.click('header button[aria-controls="services-menu"]');
+  check("opens on click", await page.locator("#services-menu").isVisible());
   check("lists all four services with descriptions",
-    (await page.$$eval("#cap-menu li a span:nth-child(2)", (n) => n.filter((x) => x.textContent.trim().length > 10).length)) >= 4);
+    (await page.$$eval("#services-menu li a span:nth-child(2)", (n) => n.filter((x) => x.textContent.trim().length > 10).length)) >= 4);
   await page.keyboard.press("Escape");
-  check("closes on Escape", !(await page.locator("#cap-menu").isVisible()));
-  await page.click('header button[aria-controls="cap-menu"]');
-  await page.locator('#cap-menu a[href^="/services/test-automation"]').click();
+  check("closes on Escape", !(await page.locator("#services-menu").isVisible()));
+  await page.click('header button[aria-controls="services-menu"]');
+  await page.locator('#services-menu a[href^="/services/test-automation"]').click();
   await page.waitForURL("**/services/test-automation/**");
   check("navigates to the chosen service", page.url().includes("/services/test-automation"));
   check("marks the current page", (await page.locator('header [aria-current="page"]').count()) >= 0);
@@ -104,9 +104,9 @@ const run = async () => {
   await m.goto(BASE + "/");
   await m.tap('header button[aria-label="Open menu"]');
   check("menu opens on tap", await m.locator("#mobile-menu").isVisible());
-  check("capabilities collapsed by default", await m.locator("#m-cap").isHidden());
-  await m.tap('button[aria-controls="m-cap"]');
-  check("capabilities expand on tap", await m.locator("#m-cap").isVisible());
+  check("services collapsed by default", await m.locator("#m-services").isHidden());
+  await m.tap('button[aria-controls="m-services"]');
+  check("services expand on tap", await m.locator("#m-services").isVisible());
   // Only flag links that are actually rendered (height > 0): a collapsed accordion's
   // links are present in the DOM but not visible or tappable, so their 0px height is
   // not a real touch-target violation.
@@ -151,9 +151,9 @@ const run = async () => {
   check("architecture: node selection updates detail", (await page.textContent("#demo")).includes("The record of"));
 
   await page.goto(BASE + "/services/innovation/");
-  await page.click('button:has-text("Next step")');
+  await page.locator("#demo ol button").nth(1).click();
   check("prototype: steps advance", (await page.textContent("#demo")).includes("Step 2 of"));
-  for (let i = 0; i < 4; i++) await page.click('button:has-text("Next step")');
+  await page.locator("#demo ol button").last().click();
   await page.click('button:has-text("Stop")');
   check("prototype: decision explains stopping", (await page.textContent("#demo")).includes("successful outcome"));
 
