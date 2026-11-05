@@ -32,6 +32,11 @@ export default function RenewGuardPage() {
         eyebrow={renewguard.kind}
         title={renewguard.name}
         intro={renewguard.summary}
+        aside={
+          <div className="overflow-hidden rounded-xl border border-ivory/15">
+            <div className="aspect-[400/150]"><ProductArt name="renewguard" /></div>
+          </div>
+        }
       />
 
       {/* Status -- the waitlist CTA lives once, with the sneak peek below, rather than

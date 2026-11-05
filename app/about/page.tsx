@@ -72,47 +72,48 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Philosophy -- the intro pairs with the heading at the top, then an unboxed band
-          makes visible three concepts the prose already names (judgement, engineering
-          rigour, honesty) before the remaining prose continues below. */}
+      {/* Philosophy -- one clean left/right split instead of three stacked bands:
+          prose on the left, the three named concepts plus the ambition on the right,
+          separated by a single vertical rule. */}
       <section className="bg-navy">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
-          <Reveal className="grid gap-6 lg:grid-cols-2 lg:items-end lg:gap-16">
+          <Reveal className="grid gap-12 lg:grid-cols-2 lg:gap-16">
             <div>
               <h2 className="font-serif text-3xl sm:text-4xl">Our philosophy</h2>
               <span className="gold-rule mt-5" />
+              <p className="mt-6 text-lg leading-relaxed text-muted-dark">
+                Most software problems are not really technology problems. They are problems of judgement: what to
+                build, what to verify, what to leave alone, and when to say that an approach is not working.
+              </p>
+              <p className="mt-5 leading-relaxed text-muted-dark">
+                So we lead with engineering judgement rather than with tools. We would rather spend a day
+                understanding why a system behaves the way it does than a week working around it. We would rather
+                tell you that a rewrite is not justified than sell you one.
+              </p>
             </div>
-            <p className="text-lg leading-relaxed text-muted-dark">
-              Most software problems are not really technology problems. They are problems of judgement: what to
-              build, what to verify, what to leave alone, and when to say that an approach is not working.
-            </p>
-          </Reveal>
 
-          <Reveal delay={80} className="mt-12 grid gap-8 border-y border-gold/20 py-10 sm:grid-cols-3">
-            {principles.map((p, i) => (
-              <div key={p.title} className={i > 0 ? "sm:border-l sm:border-gold/20 sm:pl-8" : ""}>
-                <Icon name={p.icon} className="h-7 w-7 text-gold" />
-                <h3 className="mt-4 font-serif text-2xl">{p.title}</h3>
-                <p className="mt-2 leading-relaxed text-muted-dark">{noWidow(p.body)}</p>
+            <div className="lg:border-l lg:border-gold/20 lg:pl-16">
+              <ul className="space-y-7">
+                {principles.map((p) => (
+                  <li key={p.title} className="flex gap-4">
+                    <Icon name={p.icon} className="mt-1 h-6 w-6 shrink-0 text-gold" />
+                    <div>
+                      <h3 className="font-serif text-xl">{p.title}</h3>
+                      <p className="mt-1 leading-relaxed text-muted-dark">{noWidow(p.body)}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-8 border-t border-gold/20 pt-6">
+                <p className="leading-relaxed text-muted-dark">
+                  The long-term ambition is to build technology that matters — our own products alongside our
+                  consulting work — and to be the kind of company engineers want to work with twice.
+                </p>
+                <p className="mt-3 text-ivory">
+                  <Link href="/approach" className="text-gold underline underline-offset-4 hover:text-ivory">See how that works in practice</Link>{" "}
+                  in our Design, Build, Verify, Improve cycle.
+                </p>
               </div>
-            ))}
-          </Reveal>
-
-          <Reveal delay={120} className="mt-10 grid gap-10 text-lg leading-relaxed text-muted-dark sm:grid-cols-2">
-            <p>
-              So we lead with engineering judgement rather than with tools. We would rather spend a day understanding
-              why a system behaves the way it does than a week working around it. We would rather tell you that a
-              rewrite is not justified than sell you one.
-            </p>
-            <div className="space-y-5">
-              <p>
-                The long-term ambition is to build technology that matters — our own products alongside our
-                consulting work — and to be the kind of company engineers want to work with twice.
-              </p>
-              <p className="text-ivory">
-                <Link href="/approach" className="text-gold underline underline-offset-4 hover:text-ivory">See how that works in practice</Link>{" "}
-                in our Design, Build, Verify, Improve cycle.
-              </p>
             </div>
           </Reveal>
         </div>
@@ -153,7 +154,7 @@ export default function AboutPage() {
           published on /contact/, not a separately invented "process". */}
       <section className="bg-navy">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
-          <Reveal className="grid gap-6 lg:grid-cols-2 lg:items-end lg:gap-16">
+          <Reveal className="grid gap-6 lg:grid-cols-2 lg:items-center lg:gap-16">
             <div>
               <h2 className="font-serif text-3xl sm:text-4xl">How we work with clients</h2>
               <span className="gold-rule mt-5" />
@@ -199,7 +200,7 @@ export default function AboutPage() {
             <Icon name="shield" className="h-7 w-7 shrink-0 text-gold-deep" />
             <div>
               <h2 className="font-serif text-2xl">Where we are today</h2>
-              <p className="mt-3 max-w-3xl leading-relaxed text-muted-light">
+              <p className="mt-3 leading-relaxed text-muted-light">
                 Ethora Labs is a new, small and senior company. We have no client logos to show you, no case studies and
                 no success percentages, because inventing them would contradict the first value on this page. What we can
                 show is how we think — in our{" "}
