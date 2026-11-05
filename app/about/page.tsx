@@ -122,13 +122,18 @@ export default function AboutPage() {
       {/* Culture, spelled out as our own name */}
       <section className="on-light bg-ivory text-ink">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
-          <Reveal>
-            <h2 className="font-serif text-3xl sm:text-4xl">ETHORA, as a practice</h2>
-            <span className="gold-rule mt-5 bg-gold-deep" />
-            <p className="mt-6 max-w-2xl text-muted-light">
-              Six behaviours, not six slogans — each one spelling out our own name, and each one
-              something you could actually hold us to.
-            </p>
+          <Reveal className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <h2 className="font-serif text-3xl sm:text-4xl">ETHORA, as a practice</h2>
+              <span className="gold-rule mt-5 bg-gold-deep" />
+              <p className="mt-6 max-w-2xl text-muted-light">
+                Six behaviours, not six slogans — each one spelling out our own name, and each one
+                something you could actually hold us to.
+              </p>
+            </div>
+            <Link href="/approach" className="inline-flex shrink-0 items-center gap-2 text-gold-deep underline underline-offset-4 hover:text-ink">
+              See how it shows up in our process <Icon name="arrow" />
+            </Link>
           </Reveal>
           {/* 2 or 3 columns, so six items always fill the grid exactly: 3 rows of 2, or
               2 rows of 3. No breakpoint ever leaves a trailing, uneven row. */}
