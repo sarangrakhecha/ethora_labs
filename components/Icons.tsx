@@ -1,4 +1,4 @@
-import type { SVGProps } from "react";
+import { useId, type SVGProps } from "react";
 
 const base: SVGProps<SVGSVGElement> = {
   width: 28, height: 28, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor",
@@ -33,17 +33,35 @@ export function Icon({ name, ...p }: { name: string } & SVGProps<SVGSVGElement>)
 }
 
 /**
- * "Synthesis" mark: two ribbon bands (Ethics, in gold) crossed by a third (Ethos),
- * open into an E-shaped silhouette. Flat, matte fills only -- no gradients, bevels
- * or shadows. The crossing band swaps tone so it reads against either background.
+ * "Synthesis" mark: a single ribbon woven into an E -- a gold band top and bottom
+ * (Ethics) crossed by a third band (Ethos) that threads behind the top band and in
+ * front of the bottom one, so the weave itself reads as depth. Each band carries a
+ * gradient (pale at its tucked-under tip, gold at its open cut end). The crossing
+ * band swaps to ink on a light background, where ivory would disappear.
  */
 export function LogoMark({ className = "", tone = "dark" }: { className?: string; tone?: "dark" | "light" }) {
-  const crossing = tone === "light" ? "#101c2a" : "#f6f3ec";
+  const uid = useId();
+  const crossingFrom = tone === "light" ? "#17212c" : "#f6f3ec";
+  const crossingTo = tone === "light" ? "#3a4651" : "#d9c6a0";
   return (
-    <svg viewBox="10 8 80 84" className={className} aria-hidden="true">
-      <path d="M17 36 C17 22 36 14 61 12 C70 11 77 11 83 12 L83 27 C61 27 36 34 17 47 Z" fill="#c4a77a" />
-      <path d="M17 49 C37 39 59 36 83 32 L83 48 C59 53 36 61 17 71 Z" fill={crossing} />
-      <path d="M17 74 C37 63 58 60 83 55 L83 72 C63 83 39 89 17 90 Z" fill="#c4a77a" />
+    <svg viewBox="0 0 100 85" className={className} aria-hidden="true">
+      <defs>
+        <linearGradient id={`${uid}-top`} x1="24" y1="32.5" x2="84" y2="15" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#f6f3ec" />
+          <stop offset="1" stopColor="#c4a77a" />
+        </linearGradient>
+        <linearGradient id={`${uid}-cross`} x1="24" y1="68.5" x2="74" y2="17.5" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor={crossingFrom} />
+          <stop offset="1" stopColor={crossingTo} />
+        </linearGradient>
+        <linearGradient id={`${uid}-bottom`} x1="22" y1="50" x2="88" y2="60" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#a98a54" />
+          <stop offset="1" stopColor="#c4a77a" />
+        </linearGradient>
+      </defs>
+      <path d="M22,50 C30,68 62,72 88,60" fill="none" stroke={`url(#${uid}-bottom)`} strokeWidth="13" strokeLinecap="round" />
+      <path d="M24,68.5 C30,50.5 46,29.5 74,17.5" fill="none" stroke={`url(#${uid}-cross)`} strokeWidth="12" strokeLinecap="round" />
+      <path d="M24,32.5 C30,18 50,15 84,15" fill="none" stroke={`url(#${uid}-top)`} strokeWidth="13" strokeLinecap="round" />
     </svg>
   );
 }
