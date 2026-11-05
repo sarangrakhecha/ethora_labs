@@ -3,6 +3,9 @@
 export const site = {
   name: "Ethora Labs",
   tagline: "Built on Principles. Driven by Possibility.",
+  // Short lockup line set directly under the wordmark (footer). Distinct from `tagline`
+  // above, which is the longer narrative line used in the Hero section and metadata.
+  signature: "Engineered with Integrity",
   domain: "ethoralabs.co",
   email: "hello@ethoralabs.co",
   legal: "Ethora Labs Private Limited",

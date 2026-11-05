@@ -28,7 +28,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr] lg:gap-10">
           <div>
             <Wordmark />
-            <p className="mt-4 text-[15px] font-medium text-ivory/90">{site.tagline}</p>
+            <p className="mt-3 text-xs font-medium uppercase tracking-[0.25em] text-muted-dark">{site.signature}</p>
             <p className="mt-2 max-w-xs text-sm leading-relaxed text-muted-dark">{DESCRIPTION}</p>
           </div>
 
