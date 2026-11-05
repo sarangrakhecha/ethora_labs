@@ -212,12 +212,12 @@ export const techCategories: TechCategory[] = [
   {
     id: "infra", name: "Deployment & Infrastructure",
     blurb: "Where and how an application actually runs once it is built.",
-    items: ["cloudflare", "aws", "azure", "gcp", "docker", "kubernetes"],
+    items: ["aws", "azure", "gcp", "docker", "kubernetes"],
   },
   {
     id: "ops", name: "Engineering Operations",
     blurb: "The practices that keep a codebase's history and release process trustworthy.",
-    items: ["git", "pipeline"],
+    items: ["cloudflare", "git", "pipeline"],
   },
   {
     id: "data", name: "Data & Storage",
