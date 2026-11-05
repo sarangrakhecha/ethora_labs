@@ -6,6 +6,7 @@
 export default function HeroMark() {
   return (
     <div className="relative mx-auto w-full max-w-[34rem]" aria-hidden="true">
+      <p className="mb-2 text-center text-[11px] font-medium uppercase tracking-[0.2em] text-muted-dark">The roots of our name</p>
       <svg viewBox="0 0 620 395" className="h-auto w-full drop-shadow-[0_0_36px_rgba(196,167,122,0.1)]">
         <defs>
           <linearGradient id="aboutHeroGlow" x1="0" x2="1" y1="1" y2="0">
@@ -35,9 +36,6 @@ export default function HeroMark() {
           <path d="M473 112 445 123" />
         </g>
       </svg>
-      {/* Right-edge matches x=529 of the viewBox (the diagram's rightmost point), not the
-          full 620-wide box -- the linework doesn't reach the edge of the SVG itself. */}
-      <p className="mt-2 text-right text-[11px] font-medium uppercase tracking-[0.2em] text-muted-dark" style={{ paddingRight: `${(1 - 529 / 620) * 100}%` }}>Engineering with intention</p>
     </div>
   );
 }
