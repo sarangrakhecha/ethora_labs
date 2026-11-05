@@ -33,45 +33,72 @@ export function Icon({ name, ...p }: { name: string } & SVGProps<SVGSVGElement>)
 }
 
 /**
- * "Synthesis" mark: a single ribbon woven into an E -- a gold band top and bottom
- * (Ethics) crossed by a third band (Ethos) that threads behind the top band and in
- * front of the bottom one, so the weave itself reads as depth. Each band carries a
- * gradient (pale at its tucked-under tip, gold at its open cut end). The crossing
- * band swaps to ink on a light background, where ivory would disappear.
+ * "Synthesis" mark: one ribbon coiled into an E, seen from the front. The two ivory
+ * faces sweep up to the right; the darker back of the coil shows through the gap
+ * between them, and the gold lower band slips out from behind the middle face. Shapes
+ * are traced from the brand identity sheet; public/brand/ethora-symbol-on-dark.svg and
+ * public/favicon.svg carry the same geometry, so change all three together.
  */
 export function LogoMark({ className = "", tone = "dark" }: { className?: string; tone?: "dark" | "light" }) {
-  const uid = useId();
-  const crossingFrom = tone === "light" ? "#17212c" : "#f6f3ec";
-  const crossingTo = tone === "light" ? "#3a4651" : "#d9c6a0";
+  const id = useId();
+  const u = (name: string) => `url(#${id}${name})`;
+  // On ivory the back of the coil turns navy and the middle face warms slightly, so
+  // the ivory band still separates from the page behind it.
+  const back = tone === "light" ? ["#2b3b4d", "#101c2a"] : ["#a5885b", "#7a5f36"];
+  const face = tone === "light" ? ["#fbf9f4", "#e2d3b2"] : ["#f8f5ee", "#ddcdab"];
   return (
-    <svg viewBox="0 0 100 85" className={className} aria-hidden="true">
+    <svg viewBox="2 5 104 112" className={className} aria-hidden="true">
       <defs>
-        <linearGradient id={`${uid}-top`} x1="24" y1="32.5" x2="84" y2="15" gradientUnits="userSpaceOnUse">
+        <linearGradient id={`${id}top`} x1="36" y1="40" x2="84" y2="12" gradientUnits="userSpaceOnUse">
           <stop offset="0" stopColor="#f6f3ec" />
+          <stop offset=".38" stopColor="#efe6d3" />
+          <stop offset=".7" stopColor="#d8bf93" />
           <stop offset="1" stopColor="#c4a77a" />
         </linearGradient>
-        <linearGradient id={`${uid}-cross`} x1="24" y1="68.5" x2="74" y2="17.5" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor={crossingFrom} />
-          <stop offset="1" stopColor={crossingTo} />
+        <linearGradient id={`${id}fold`} x1="100" y1="0" x2="86" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#6e5530" />
+          <stop offset="1" stopColor="#6e5530" stopOpacity="0" />
         </linearGradient>
-        <linearGradient id={`${uid}-bottom`} x1="22" y1="50" x2="88" y2="60" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#a98a54" />
-          <stop offset="1" stopColor="#c4a77a" />
+        <linearGradient id={`${id}back`} x1="14" y1="52" x2="46" y2="68" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor={back[0]} />
+          <stop offset="1" stopColor={back[1]} />
+        </linearGradient>
+        <linearGradient id={`${id}face`} x1="10" y1="96" x2="100" y2="52" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor={face[0]} />
+          <stop offset=".78" stopColor="#f1eadb" />
+          <stop offset="1" stopColor={face[1]} />
+        </linearGradient>
+        <linearGradient id={`${id}low`} x1="60" y1="86" x2="60" y2="113" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#b8996a" />
+          <stop offset=".45" stopColor="#c4a77a" />
+          <stop offset="1" stopColor="#a88a59" />
+        </linearGradient>
+        <linearGradient id={`${id}shade`} x1="42" y1="88" x2="45.5" y2="95" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#5e4826" stopOpacity=".9" />
+          <stop offset="1" stopColor="#5e4826" stopOpacity="0" />
         </linearGradient>
       </defs>
-      <path d="M22,50 C30,68 62,72 88,60" fill="none" stroke={`url(#${uid}-bottom)`} strokeWidth="13" strokeLinecap="round" />
-      <path d="M24,68.5 C30,50.5 46,29.5 74,17.5" fill="none" stroke={`url(#${uid}-cross)`} strokeWidth="12" strokeLinecap="round" />
-      <path d="M24,32.5 C30,18 50,15 84,15" fill="none" stroke={`url(#${uid}-top)`} strokeWidth="13" strokeLinecap="round" />
+      <path fill={u("back")} d={BACK} />
+      <path fill={u("low")} d={LOW} />
+      <path fill={u("shade")} d={LOW} />
+      <path fill={u("face")} d={FACE} />
+      <path fill="none" stroke={u("fold")} strokeWidth="3.6" d="M100,22 C100,26 96,28 90,28.5 C72,33 55,38 41,44" />
+      <path fill={u("top")} d={TOP} />
     </svg>
   );
 }
+
+const BACK = "M33,50 C39,52.5 45,55.8 50.5,58.5 C42,62.5 31,67.5 23,71 C19,68.5 15,66 12,62.8 C18,57.8 25.5,53.2 33,50 Z";
+const LOW = "M100,91.5 L100,100 C100,106 96,110.5 88,111.5 C78,113.5 64,112 52,107.5 C44,104.5 37,102 32,99.5 L22,94 L38,84 L44,85 C54,85 62,88 70,90.2 C78,92 84,93.4 88,93.3 C93,93.2 97,92 100,91.5 Z";
+const FACE = "M100,42 L100,58 C100,66 96,70.5 88,72 C66,78 42,87 26,95 C18,99 10,103 7,107 L7,90 C7,84 12,79 18,75.5 C32,68 55,58 77,52 C88,49 96,46 100,42 Z";
+const TOP = "M7,67 L7,47 C8,40 12,35 17,32 C30,24 55,14 77,10 C88,8 99,12 100,20 L100,22 C100,26 96,28 90,28.5 C72,33 55,38 41,44 C28,50 13,58 7,67 Z";
 
 export function Wordmark({ className = "", tone = "dark" }: { className?: string; tone?: "dark" | "light" }) {
   const textCls = tone === "light" ? "text-ink" : "text-ivory";
   const labsCls = tone === "light" ? "text-gold-deep" : "text-gold";
   return (
     <span className={`inline-flex items-center gap-2.5 text-[15px] ${className}`}>
-      <LogoMark tone={tone} className="h-5 w-5 shrink-0" />
+      <LogoMark tone={tone} className="h-6 w-6 shrink-0" />
       <span className={`font-sans font-medium tracking-[0.18em] ${textCls}`}>
         ETHORA <span className={labsCls}>LABS</span>
       </span>

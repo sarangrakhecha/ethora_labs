@@ -13,9 +13,16 @@ export const metadata: Metadata = {
   title: "Ethora Labs | Software Engineering, Quality & IT Consulting",
   description: "Engineering-led IT consulting: custom software development, quality engineering, test automation and CI/CD. Ethora Labs helps teams build software that works, scales and lasts.",
   // Versioned so browsers and Cloudflare's edge cache fetch the new mark instead of
-  // serving a stale cached copy of /favicon.svg under the same unchanged URL. Bump
-  // this query value again any time the favicon's content changes.
-  icons: { icon: "/favicon.svg?v=2" },
+  // serving a stale cached copy under the same unchanged URL. Bump the query value
+  // on every file here whenever the favicon artwork changes. Safari ignores SVG tab
+  // icons, hence the .ico and the Apple touch icon alongside it.
+  icons: {
+    icon: [
+      { url: "/favicon.svg?v=3", type: "image/svg+xml" },
+      { url: "/favicon.ico?v=3", sizes: "16x16 32x32 48x48" },
+    ],
+    apple: { url: "/apple-touch-icon.png?v=3", sizes: "180x180" },
+  },
   alternates: { canonical: "https://ethoralabs.co/" },
   openGraph: {
     title: "Ethora Labs | Software Engineering, Quality & IT Consulting",
