@@ -28,10 +28,10 @@ export default function TechnologiesPage() {
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
           <Reveal className="max-w-2xl">
             <p className="leading-relaxed text-muted-dark">
-              This list is deliberately narrow: it covers technologies we have genuine, hands-on experience with —
-              largely the stack this site itself is built and tested with — rather than every tool we could plausibly
-              use. Select one below to see what it is for, the engineering considerations it raises, and which of our
-              services it relates to.
+              This list is deliberately selective: it covers technologies we have genuine, hands-on experience with —
+              the stack this site itself is built and tested with, plus the cloud, data and mobile tooling we use in
+              client engagements — rather than every tool we could plausibly use. Select one below to see what it is
+              for, the engineering considerations it raises, and which of our services it relates to.
             </p>
           </Reveal>
 

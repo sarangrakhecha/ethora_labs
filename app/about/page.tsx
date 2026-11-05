@@ -4,6 +4,7 @@ import PageHero, { CtaBand } from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import { Icon } from "@/components/Icons";
 import { engagementSteps } from "@/lib/content";
+import { noWidow } from "@/lib/typography";
 import HeroMark from "@/components/about-visuals/HeroMark";
 import NameMark from "@/components/about-visuals/NameMark";
 
@@ -92,7 +93,7 @@ export default function AboutPage() {
               <div key={p.title} className={i > 0 ? "sm:border-l sm:border-gold/20 sm:pl-8" : ""}>
                 <Icon name={p.icon} className="h-7 w-7 text-gold" />
                 <h3 className="mt-4 font-serif text-2xl">{p.title}</h3>
-                <p className="mt-2 leading-relaxed text-muted-dark">{p.body}</p>
+                <p className="mt-2 leading-relaxed text-muted-dark">{noWidow(p.body)}</p>
               </div>
             ))}
           </Reveal>

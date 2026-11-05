@@ -165,7 +165,7 @@ describe("content integrity", () => {
       assert.ok(s.challenges.length >= 3, `${s.slug}: challenges`);
       assert.ok(s.whatWeDo.length >= 4, `${s.slug}: whatWeDo`);
       assert.ok(s.deliverables.length >= 4, `${s.slug}: deliverables`);
-      assert.equal(s.approach.length, 5, `${s.slug}: approach phases`);
+      assert.equal(s.approach.length, 6, `${s.slug}: approach phases`);
       assert.equal(s.engagements.length, 3, `${s.slug}: engagement options`);
       assert.ok(s.demoIntro.title && s.demoIntro.body, `${s.slug}: demo intro`);
       assert.ok(s.metaTitle.startsWith("Ethora Labs |"), `${s.slug}: meta title`);
@@ -228,7 +228,7 @@ describe("content integrity", () => {
 });
 
 describe("technologies", () => {
-  const VALID_VISUALS = new Set(["web", "testing", "ops"]);
+  const VALID_VISUALS = new Set(["web", "testing", "ops", "role"]);
   const serviceSlugs = new Set(services.map((s) => s.slug));
 
   test("every category's items resolve to a real technology", () => {

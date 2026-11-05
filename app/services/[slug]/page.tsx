@@ -162,12 +162,10 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
           <Reveal delay={80} className="mt-14 border-t border-ivory/10 pt-12">
             <h2 className="font-serif text-3xl sm:text-4xl">Our approach</h2>
             <span className="gold-rule mt-5" />
-            {/* 5 phases don't split evenly into 2 columns -- the last (always "Hand
-                over", a fitting closing note) spans full width instead of leaving a
-                narrow single-column list with a wide empty margin beside it. */}
+            {/* 6 phases split evenly into a 2-column, 3-row grid. */}
             <ol className="mt-6 grid gap-x-10 gap-y-6 sm:grid-cols-2">
               {s.approach.map((a, i) => (
-                <li key={a.phase} className={`grid grid-cols-[2rem_1fr] gap-4 ${i === s.approach.length - 1 ? "sm:col-span-2" : ""}`}>
+                <li key={a.phase} className="grid grid-cols-[2rem_1fr] gap-4">
                   <span className="font-serif text-xl text-gold tabular-nums" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
                   <span>
                     <span className="block font-medium">{a.phase}</span>

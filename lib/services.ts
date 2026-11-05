@@ -80,6 +80,7 @@ export const services: Service[] = [
       { phase: "Plan", body: "We agree the smallest first piece that produces something real, and name the risks we expect to hit. Plans that survive contact with reality are short." },
       { phase: "Implement", body: "Work arrives in reviewable increments. You see progress continuously, not at the end." },
       { phase: "Verify", body: "Tests are written alongside the code, and we are explicit about what is covered and what is not." },
+      { phase: "Review", body: "We walk the result through with your team and fold in anything that matters to them before calling it finished." },
       { phase: "Hand over", body: "Documentation, a walkthrough and whatever your team needs to own it. We aim to be easy to stop working with." },
     ],
     engagements: [
@@ -137,6 +138,7 @@ export const services: Service[] = [
       { phase: "Plan", body: "We propose a strategy weighted by risk, and agree where depth is worth paying for and where it is not." },
       { phase: "Implement", body: "Test design, execution and reporting, working alongside your developers rather than at arm's length from them." },
       { phase: "Verify", body: "We check the strategy against what actually escapes to production, and adjust where it was wrong." },
+      { phase: "Refine", body: "We feed what escapes production back into the strategy, so it keeps getting sharper instead of calcifying into a document nobody revisits." },
       { phase: "Hand over", body: "Documented practice, so quality does not leave when we do." },
     ],
     engagements: [
@@ -194,6 +196,7 @@ export const services: Service[] = [
       { phase: "Plan", body: "We agree what belongs in automation and what does not, and start where trust is being lost fastest." },
       { phase: "Implement", body: "Framework and pipeline work in reviewable increments, with your engineers involved rather than handed a finished black box." },
       { phase: "Verify", body: "We re-measure. Stability and feedback time are checked against where they started, using your numbers rather than claims of ours." },
+      { phase: "Stabilise", body: "We let the suite run across a real stretch of changes, watching for flakiness that only shows up at volume, before calling it done." },
       { phase: "Hand over", body: "Documentation and a walkthrough, so maintaining the suite is a normal part of the team's work." },
     ],
     engagements: [
@@ -250,6 +253,7 @@ export const services: Service[] = [
       { phase: "Plan", body: "We rank assumptions by how damaging they would be if false, and target the riskiest first." },
       { phase: "Implement", body: "A time-boxed prototype built to produce evidence, with an agreed end date." },
       { phase: "Verify", body: "The prototype meets reality — real data volumes, real users or real constraints — and results are recorded as they are." },
+      { phase: "Review", body: "We walk the evidence through with your team and stress-test the conclusion together before writing anything down as final." },
       { phase: "Hand over", body: "Findings and a recommendation, including an honest account of what remains unknown." },
     ],
     engagements: [

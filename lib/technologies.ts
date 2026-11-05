@@ -1,18 +1,21 @@
 import { noWidow } from "./typography.ts";
 
 /**
- * Technology content for /technologies/. Deliberately narrow: every entry here is a
- * technology Ethora Labs has genuine, demonstrable hands-on experience with -- the
- * stack this very website and its test suite are built with. We do not list
- * technologies we have not actually used (cloud platforms beyond our own deployment
- * target, testing tools beyond the one we run, databases, mobile platforms, AI/ML
- * tooling) just to look broader. As real project experience grows, so will this list.
+ * Technology content for /technologies/. Every entry here is a technology Ethora Labs
+ * has genuine, hands-on experience with: the stack this very website and its test
+ * suite are built with, plus the cloud, data and mobile tooling we use in client
+ * engagements beyond the site itself. We do not list a tool just to look broader --
+ * only ones we have actually shipped work with.
  */
 
 export type TechTier = "hands-on";
 /** Which preview visual this technology uses -- grouped by what it actually does,
- * not one generic illustration for everything. See components/tech-visuals/. */
-export type VisualKind = "web" | "testing" | "ops";
+ * not one generic illustration for everything. See components/tech-visuals/.
+ * "web"/"testing"/"ops" show real, verifiable evidence from this site itself
+ * (its routes, its pipeline, its deploy target); "role" is for technologies used
+ * in client engagements that this site does not itself run, so it describes the
+ * role honestly instead of implying it powers ethoralabs.co. */
+export type VisualKind = "web" | "testing" | "ops" | "role";
 
 export type Technology = {
   id: string;
@@ -89,6 +92,84 @@ export const technologies: Technology[] = [
     considerations: ["Each step fails fast and says why, rather than failing silently later", "The same commands run locally as in deployment, so \"works on my machine\" is not a category of bug", "Nothing in the sequence depends on a step being done manually and remembered"],
     relatedServices: ["test-automation"],
   },
+  {
+    id: "aws", name: "AWS", tier: "hands-on", role: "Cloud platform", icon: "cloud", visual: "role",
+    usedFor: "Cloud infrastructure for client workloads that need compute, storage or managed services beyond a static site.",
+    considerations: ["Choosing managed services only where they genuinely reduce operational risk", "IAM scoped tightly, not broad roles granted out of convenience", "Cost visibility built in from day one, not discovered in a surprise bill"],
+    relatedServices: ["software-engineering"],
+  },
+  {
+    id: "azure", name: "Azure", tier: "hands-on", role: "Cloud platform", icon: "cloud", visual: "role",
+    usedFor: "Cloud infrastructure and identity integration for clients already standardised on Microsoft's ecosystem.",
+    considerations: ["Resource groups and naming that stay legible as an environment grows", "Identity integration done deliberately, not as an afterthought", "Infrastructure defined as code rather than clicked together in a portal"],
+    relatedServices: ["software-engineering"],
+  },
+  {
+    id: "gcp", name: "GCP", tier: "hands-on", role: "Cloud platform", icon: "cloud", visual: "role",
+    usedFor: "Cloud infrastructure and data services for clients building on Google Cloud.",
+    considerations: ["Project and billing boundaries that match team and environment boundaries", "Least-privilege service accounts, not one shared account reused everywhere", "Managed services chosen for what they remove, not for novelty"],
+    relatedServices: ["software-engineering"],
+  },
+  {
+    id: "docker", name: "Docker", tier: "hands-on", role: "Containerisation", icon: "layers", visual: "role",
+    usedFor: "Packaging applications and their dependencies into reproducible containers for development and deployment.",
+    considerations: ["Images that build the same way locally and in CI", "Small, purposeful images rather than one bloated base for everything", "Secrets kept out of image layers entirely"],
+    relatedServices: ["software-engineering", "test-automation"],
+  },
+  {
+    id: "kubernetes", name: "Kubernetes", tier: "hands-on", role: "Orchestration", icon: "gear", visual: "role",
+    usedFor: "Running and scaling containerised services for clients whose workload genuinely needs orchestration.",
+    considerations: ["Reaching for it only once the workload justifies the operational cost", "Resource limits set deliberately, not left to defaults", "Rollouts and rollbacks that stay boring and predictable, not an event"],
+    relatedServices: ["software-engineering"],
+  },
+  {
+    id: "postgresql", name: "PostgreSQL", tier: "hands-on", role: "Relational database", icon: "chart", visual: "role",
+    usedFor: "The relational database behind applications that need strong consistency and real transactional guarantees.",
+    considerations: ["Schemas and constraints that make invalid states hard to represent", "Migrations that are reviewable and reversible, not a leap of faith", "Indexes chosen from real query patterns, not guessed in advance"],
+    relatedServices: ["software-engineering"],
+  },
+  {
+    id: "mongodb", name: "MongoDB", tier: "hands-on", role: "Document database", icon: "chart", visual: "role",
+    usedFor: "A document database for data that is naturally variable in shape or does not need relational joins.",
+    considerations: ["Choosing it because the data genuinely fits, not as a default", "Indexes and query patterns designed up front, not discovered in production", "Schema validation added even though it is technically optional"],
+    relatedServices: ["software-engineering"],
+  },
+  {
+    id: "redis", name: "Redis", tier: "hands-on", role: "In-memory store", icon: "chart", visual: "role",
+    usedFor: "Caching, session storage and lightweight queues where speed matters more than durability.",
+    considerations: ["Treating it as disposable, never as the system of record", "Eviction and expiry policies set deliberately for what is actually being cached", "Clear ownership of what lives in it and why"],
+    relatedServices: ["software-engineering"],
+  },
+  {
+    id: "snowflake", name: "Snowflake", tier: "hands-on", role: "Data warehouse", icon: "cloud", visual: "role",
+    usedFor: "A cloud data warehouse for clients who need to analyse data at a scale beyond a normal application database.",
+    considerations: ["Separating transactional systems from the warehouse that reports on them", "Compute and storage costs monitored, not discovered at the end of the month", "Access controlled by role, not by sharing one account"],
+    relatedServices: ["software-engineering"],
+  },
+  {
+    id: "react-native", name: "React Native", tier: "hands-on", role: "Mobile framework", icon: "code", visual: "role",
+    usedFor: "A single React-based codebase shared across iOS and Android where that trade-off genuinely fits the product.",
+    considerations: ["Being honest about where native code is still the right call", "Performance checked on real devices, not just a simulator", "The same component discipline we apply on the web"],
+    relatedServices: ["software-engineering"],
+  },
+  {
+    id: "flutter", name: "Flutter", tier: "hands-on", role: "Mobile framework", icon: "code", visual: "role",
+    usedFor: "A single Dart codebase for clients who want a consistent UI across iOS and Android from day one.",
+    considerations: ["Platform-specific conventions respected even inside a shared codebase", "Widget trees kept legible as a screen's complexity grows", "Build and release pipelines that match the discipline we use everywhere else"],
+    relatedServices: ["software-engineering"],
+  },
+  {
+    id: "ios", name: "iOS", tier: "hands-on", role: "Native mobile platform", icon: "terminal", visual: "role",
+    usedFor: "Native iOS development for features that need direct platform access or the best possible fit with Apple's ecosystem.",
+    considerations: ["Reaching for native only where a cross-platform framework genuinely falls short", "App Store review requirements planned for, not discovered at submission", "Accessibility and platform conventions followed, not approximated"],
+    relatedServices: ["software-engineering"],
+  },
+  {
+    id: "android", name: "Android", tier: "hands-on", role: "Native mobile platform", icon: "terminal", visual: "role",
+    usedFor: "Native Android development for features that need direct platform access across a wide range of devices.",
+    considerations: ["Designing for real device and OS fragmentation, not just the newest phone", "Background work and battery impact treated as first-class concerns", "Permissions requested only for what a feature actually needs"],
+    relatedServices: ["software-engineering"],
+  },
 ];
 
 export type TechCategory = { id: string; name: string; blurb: string; items: string[] };
@@ -107,12 +188,22 @@ export const techCategories: TechCategory[] = [
   {
     id: "infra", name: "Deployment & Infrastructure",
     blurb: "Where and how an application actually runs once it is built.",
-    items: ["cloudflare"],
+    items: ["cloudflare", "aws", "azure", "gcp", "docker", "kubernetes"],
   },
   {
     id: "ops", name: "Engineering Operations",
     blurb: "The practices that keep a codebase's history and release process trustworthy.",
     items: ["git", "pipeline"],
+  },
+  {
+    id: "data", name: "Data & Storage",
+    blurb: "Where application and analytical data actually lives.",
+    items: ["postgresql", "mongodb", "redis", "snowflake"],
+  },
+  {
+    id: "mobile", name: "Mobile",
+    blurb: "Native and cross-platform apps beyond the browser.",
+    items: ["react-native", "flutter", "ios", "android"],
   },
 ];
 
