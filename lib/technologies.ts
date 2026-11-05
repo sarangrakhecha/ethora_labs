@@ -75,6 +75,30 @@ export const technologies: Technology[] = [
     relatedServices: ["quality-engineering", "test-automation"],
   },
   {
+    id: "selenium", name: "Selenium", tier: "hands-on", role: "Testing tool", icon: "shield", visual: "role",
+    usedFor: "Cross-browser web automation for clients whose stack, grid or existing suite is already built around it.",
+    considerations: ["Reaching for it where a client's infrastructure already depends on it, not by default", "Explicit waits over sleeps, so a suite's flakiness reflects the app, not the test", "Grid and driver versions pinned, so a suite does not break on an unrelated update"],
+    relatedServices: ["quality-engineering", "test-automation"],
+  },
+  {
+    id: "appium", name: "Appium", tier: "hands-on", role: "Mobile testing tool", icon: "shield", visual: "role",
+    usedFor: "Cross-platform mobile automation for clients who need one suite exercising both iOS and Android.",
+    considerations: ["Real-device coverage, not simulator results treated as a substitute", "Element locators that survive a native UI refresh, not just the build that exists today", "Kept for genuinely cross-platform suites, with native tools used where they fit better"],
+    relatedServices: ["quality-engineering", "test-automation"],
+  },
+  {
+    id: "postman", name: "Postman", tier: "hands-on", role: "API testing tool", icon: "check", visual: "role",
+    usedFor: "API exploration and automated contract checks for the backend layer a UI sits on top of.",
+    considerations: ["Collections kept in version control, not left as one person's local workspace", "Environment and auth config that does not leak between staging and production", "Assertions on the response contract, not just a 200 status code"],
+    relatedServices: ["quality-engineering", "test-automation"],
+  },
+  {
+    id: "k6", name: "Grafana k6", tier: "hands-on", role: "Load testing tool", icon: "chart", visual: "role",
+    usedFor: "Load and performance testing to find where a system degrades before real traffic does.",
+    considerations: ["Scenarios modelled on real traffic shape, not an arbitrary ramp", "Thresholds that fail a build automatically, not results read after the fact", "Run early enough to inform design, not only right before a launch"],
+    relatedServices: ["quality-engineering"],
+  },
+  {
     id: "cloudflare", name: "Cloudflare", tier: "hands-on", role: "Deployment platform", icon: "cloud", visual: "ops",
     usedFor: "Static deployment and hosting for this site, via Cloudflare Workers.",
     considerations: ["A deployment pipeline simple enough to reason about end to end", "Static export where it genuinely fits, rather than paying for a server by default", "Deploys that are reproducible from a clean checkout"],
@@ -183,7 +207,7 @@ export const techCategories: TechCategory[] = [
   {
     id: "qe", name: "Quality Engineering & Testing",
     blurb: "How we check that software actually does what it is supposed to.",
-    items: ["playwright", "node-test"],
+    items: ["playwright", "node-test", "selenium", "appium", "postman", "k6"],
   },
   {
     id: "infra", name: "Deployment & Infrastructure",
