@@ -43,7 +43,7 @@ const FALLBACK_NOTE = "Our contact form isn't connected yet, so messages can't b
 // the bot its submission failed, which would only teach it to try again differently.
 const MIN_FILL_TIME_MS = 2500;
 
-const empty: Values = { name: "", email: "", company: "", service: "", message: "" };
+const empty: Values = { name: "", email: "", company: "", service: services[0]?.slug ?? "", message: "" };
 
 export default function ContactForm() {
   const [values, setValues] = useState<Values>(empty);
@@ -172,12 +172,16 @@ export default function ContactForm() {
           </div>
           <div>
             <label htmlFor="c-service" className="text-[15px] font-medium text-ink">Service of interest</label>
-            <select id="c-service" name="service" value={values.service} onChange={set("service")} className={`${field} border-ink/15`}>
-              <option value="">Not sure yet</option>
-              {services.map((s) => <option key={s.slug} value={s.slug}>{s.nav.label}</option>)}
-              <option value="products">A product (Culprit or RenewGuard)</option>
-              <option value="other">Something else</option>
-            </select>
+            <div className="relative">
+              <select id="c-service" name="service" value={values.service} onChange={set("service")}
+                className={`${field} appearance-none border-ink/15 pr-10`}>
+                {services.map((s) => <option key={s.slug} value={s.slug}>{s.nav.label}</option>)}
+                <option value="products">A product (Culprit or RenewGuard)</option>
+                <option value="other">Something else</option>
+                <option value="">Not sure yet</option>
+              </select>
+              <Icon name="chevron" className="pointer-events-none absolute right-4 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-light" />
+            </div>
           </div>
         </div>
 

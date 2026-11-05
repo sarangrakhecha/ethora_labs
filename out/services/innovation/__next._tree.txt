@@ -1,8 +1,8 @@
-:HL["/_next/static/chunks/3sk7-bjirlz17.css","style"]
+:HL["/_next/static/chunks/1mw0__9s6_z74.css","style"]
 :HL["/_next/static/media/660acf689794c992-s.p.2_mbdogr7ni8i.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/_next/static/media/d902bc2bfdd0a4cb-s.p.1g73gv09-xcb6.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/_next/static/media/e63b65bb308a9351-s.p.3j3877k49yy0l.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 3:[["children",{"s":"__PAGE__","h":160}]]
 2:[["children",{"s":{"n":"slug","t":"d","k":"innovation","s":[]},"h":96,"c":"$Q3"}]]
 1:[["children",{"s":"services","h":64,"c":"$Q2"}]]
-0:{"b":"kH6l92xtYfKVwVScf7Ze-","t":{"t":{"s":"","h":16,"c":"$Q1"}}}
+0:{"b":"r1WGJnxJuxily-1hdkgOC","t":{"t":{"s":"","h":16,"c":"$Q1"}}}
