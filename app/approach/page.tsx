@@ -4,11 +4,10 @@ import { stages } from "@/lib/content";
 import { noWidow } from "@/lib/typography";
 import PageHero, { CtaBand } from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
-import HeroMark from "@/components/approach-visuals/HeroMark";
 
 export const metadata: Metadata = {
   title: "Ethora Labs | Our Approach",
-  description: "A problem-first, engineering-led approach: Design, Build, Verify, Improve. How we work, step by step, and why the cycle repeats.",
+  description: "A problem-first, engineering-led approach to software: how Ethora Labs moves from an unclear problem to a working, reliable system.",
   alternates: { canonical: "https://ethoralabs.co/approach/" },
 };
 
@@ -17,10 +16,10 @@ export default function ApproachPage() {
     <>
       <PageHero
         breadcrumb={[{ label: "Home", href: "/" }]}
+        breadcrumbCurrent="Approach"
         eyebrow="Approach"
-        title="Design. Build. Verify. Improve."
-        intro="We take a problem-first, engineering-led approach — combining thoughtful design, solid implementation, rigorous quality practices, and continuous improvement to deliver software that works, scales, and creates real value."
-        aside={<HeroMark />}
+        title="Good engineering starts with the right decisions."
+        intro="We don't start with a technology choice or a deadline — we start with the problem itself. Every engagement moves through the same four stages below, each one feeding evidence into the next, so decisions stay grounded in what we've actually learned rather than what we assumed at the start."
       />
 
       <section className="on-light bg-ivory text-ink">
@@ -44,6 +43,7 @@ export default function ApproachPage() {
                       </div>
                       <div className="max-w-2xl">
                         <p className="leading-relaxed text-ink">{noWidow(s.long)}</p>
+                        <p className="mt-3 leading-relaxed text-muted-light">{noWidow(s.detail)}</p>
                         {/* Concrete and scannable, rather than one more paragraph of prose. */}
                         <ul className="mt-4 space-y-2.5">
                           {s.points.map((point) => (
@@ -61,9 +61,6 @@ export default function ApproachPage() {
             })}
           </ol>
           <p className="mt-10 border-t border-gold-deep/30 pt-6 text-muted-light">
-            Then the cycle repeats: what we learn in Improve shapes the next Design.
-          </p>
-          <p className="mt-6 text-muted-light">
             See how this plays out across a specific engagement on our{" "}
             <Link href="/#capabilities" className="text-gold-deep underline underline-offset-4">capability pages</Link>.
           </p>

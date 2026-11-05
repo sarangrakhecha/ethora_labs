@@ -9,18 +9,23 @@ const BASE = "https://ethoralabs.co";
  * composition (text left, aside right) at lg+ and stacks below the text on
  * smaller screens. No page currently using PageHero without it is affected.
  */
-export default function PageHero({ eyebrow, title, intro, breadcrumb, aside }: {
+export default function PageHero({ eyebrow, title, intro, breadcrumb, breadcrumbCurrent, aside }: {
   eyebrow?: string; title: string; intro: string;
   breadcrumb?: { label: string; href: string }[];
+  /** Label for the breadcrumb's current-page crumb, when the full H1 is too long to
+   * repeat there (e.g. a short page like "Approach" under a longer headline). Defaults
+   * to `title`, which is what every other page using PageHero still gets. */
+  breadcrumbCurrent?: string;
   aside?: ReactNode;
 }) {
+  const current = breadcrumbCurrent ?? title;
   // BreadcrumbList structured data, generated once here rather than per page.
   const jsonLd = breadcrumb && {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
       ...breadcrumb.map((b, i) => ({ "@type": "ListItem", position: i + 1, name: b.label, item: `${BASE}${b.href}` })),
-      { "@type": "ListItem", position: breadcrumb.length + 1, name: title },
+      { "@type": "ListItem", position: breadcrumb.length + 1, name: current },
     ],
   };
 
@@ -37,7 +42,7 @@ export default function PageHero({ eyebrow, title, intro, breadcrumb, aside }: {
                   <span aria-hidden="true" className="text-slate">/</span>
                 </li>
               ))}
-              <li aria-current="page" className="text-ivory">{title}</li>
+              <li aria-current="page" className="text-ivory">{current}</li>
             </ol>
           </nav>
         )}
