@@ -38,7 +38,8 @@ export default function TechnologyExplorer() {
       {/* Selector */}
       <div className="space-y-8">
         {techCategories.map((cat) => (
-          <div key={cat.id}>
+          // Anchor target for the "Jump to a category" links in the intro above.
+          <div key={cat.id} id={cat.id} className="scroll-mt-24">
             <h3 className="font-serif text-xl text-ivory">{cat.name}</h3>
             <p className="mt-1 text-sm text-muted-dark">{cat.blurb}</p>
             <ul className="mt-4 flex flex-wrap gap-2">
