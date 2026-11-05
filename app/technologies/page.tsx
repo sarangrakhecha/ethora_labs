@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import PageHero, { CtaBand } from "@/components/PageHero";
 import TechnologyExplorer from "@/components/TechnologyExplorer";
 import Reveal from "@/components/Reveal";
+import HeroMark from "@/components/technologies-visuals/HeroMark";
 
 const title = "Technologies We Use | Ethora Labs";
 const description = "The technologies Ethora Labs genuinely works with, how we select tools for a given problem, and how they connect to our engineering services.";
@@ -22,6 +23,7 @@ export default function TechnologiesPage() {
         eyebrow="Technologies"
         title="The right technology. For the right problem."
         intro="Good engineering starts with understanding the problem. We select technologies based on maintainability, reliability, performance, and long-term value — not popularity alone."
+        aside={<HeroMark />}
       />
 
       <section className="bg-navy">

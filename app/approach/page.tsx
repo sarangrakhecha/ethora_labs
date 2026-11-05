@@ -4,6 +4,7 @@ import { stages } from "@/lib/content";
 import { noWidow } from "@/lib/typography";
 import PageHero, { CtaBand } from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
+import HeroMark from "@/components/approach-visuals/HeroMark";
 
 export const metadata: Metadata = {
   title: "Ethora Labs | Our Approach",
@@ -19,6 +20,7 @@ export default function ApproachPage() {
         eyebrow="Approach"
         title="Design. Build. Verify. Improve."
         intro="We take a problem-first, engineering-led approach — combining thoughtful design, solid implementation, rigorous quality practices, and continuous improvement to deliver software that works, scales, and creates real value."
+        aside={<HeroMark />}
       />
 
       <section className="on-light bg-ivory text-ink">
