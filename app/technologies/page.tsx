@@ -4,12 +4,17 @@ import PageHero, { CtaBand } from "@/components/PageHero";
 import TechnologyExplorer from "@/components/TechnologyExplorer";
 import Reveal from "@/components/Reveal";
 import HeroMark from "@/components/technologies-visuals/HeroMark";
-import { techCategories } from "@/lib/technologies";
 import { Icon } from "@/components/Icons";
 
-// One icon per category, in the order techCategories already lists them in
-// lib/technologies.ts -- not a separate lookup keyed on category id.
-const categoryIcons = ["code", "check", "branch", "cloud", "chart", "terminal"];
+// Four of the six categories in lib/technologies.ts, as quick-access tiles -- the
+// other two (Quality & Testing, DevOps & Operations) stay one click away via "View
+// all technologies" rather than crowding this row, matching the approved reference.
+const showcase = [
+  { id: "web", icon: "code", title: "Application", description: "Web, backend, and APIs" },
+  { id: "infra", icon: "cloud", title: "Cloud & Infrastructure", description: "Hosting and deployment platforms" },
+  { id: "data", icon: "database", title: "Data & Storage", description: "Databases and data systems" },
+  { id: "mobile", icon: "phone", title: "Mobile", description: "Native and cross-platform" },
+] as const;
 
 const title = "Technologies We Use | Ethora Labs";
 const description = "The technologies Ethora Labs genuinely works with, how we select tools for a given problem, and how they connect to our engineering services.";
@@ -33,34 +38,40 @@ export default function TechnologiesPage() {
         aside={<HeroMark />}
       />
 
-      <section className="bg-navy">
+      <section className="border-t border-ivory/10 bg-navy">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
-          <div className="grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:items-start lg:gap-16">
-            <Reveal>
-              <p className="max-w-2xl leading-relaxed text-muted-dark">
+          <Reveal>
+            <div className="lg:flex lg:items-center lg:gap-10">
+              <h2 className="shrink-0 font-serif text-3xl leading-tight sm:text-4xl">Explore our technologies</h2>
+              <span className="mt-5 block h-px w-12 bg-gold lg:mt-0 lg:h-14 lg:w-px" aria-hidden="true" />
+              <p className="mt-5 max-w-2xl leading-relaxed text-muted-dark lg:mt-0">
                 This list is deliberately selective: it covers technologies we have genuine, hands-on experience with —
                 the stack this site itself is built and tested with, plus the cloud, data and mobile tooling we use in
-                client engagements — rather than every tool we could plausibly use. Select one below to see what it is
-                for, the engineering considerations it raises, and which of our services it relates to.
+                client engagements — rather than every tool we could plausibly use.
               </p>
-            </Reveal>
+            </div>
+            <div className="mt-4 flex justify-end">
+              <Link href="#explore-technologies" className="inline-flex items-center gap-2 border-b border-gold/60 pb-1 text-sm text-gold transition-colors hover:text-[#d4b98f]">
+                View all technologies <Icon name="arrow" className="h-4 w-4" />
+              </Link>
+            </div>
+          </Reveal>
 
-            <Reveal delay={60}>
-              <p className="text-xs font-medium uppercase tracking-[0.25em] text-gold">Jump to a category</p>
-              <ul className="mt-4 divide-y divide-ivory/10 rounded-lg border border-ivory/15">
-                {techCategories.map((cat, i) => (
-                  <li key={cat.id}>
-                    <Link href={`#${cat.id}`} className="flex items-center gap-3 px-4 py-3 text-[15px] text-ivory/90 transition-colors hover:bg-ivory/[0.06] hover:text-ivory">
-                      <Icon name={categoryIcons[i]} className="h-4 w-4 shrink-0 text-gold" />
-                      {cat.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-          </div>
+          <Reveal delay={60} className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {showcase.map((s) => (
+              <Link key={s.id} href={`#${s.id}`}
+                className="group flex min-h-[6.5rem] items-center gap-3.5 rounded-xl border border-ivory/20 bg-ivory/[0.025] p-4 transition-colors hover:border-gold hover:bg-gold/[0.08]">
+                <Icon name={s.icon} className="h-7 w-7 shrink-0 text-gold" />
+                <span className="min-w-0">
+                  <span className="block text-[14px] font-semibold text-ivory">{s.title}</span>
+                  <span className="mt-1 block text-xs leading-snug text-muted-dark">{s.description}</span>
+                </span>
+                <Icon name="arrow" className="ml-auto h-4 w-4 shrink-0 text-ivory/70 transition-transform group-hover:translate-x-0.5" />
+              </Link>
+            ))}
+          </Reveal>
 
-          <Reveal delay={120} className="mt-12">
+          <Reveal delay={120} id="explore-technologies" className="mt-16 scroll-mt-24">
             <TechnologyExplorer />
           </Reveal>
         </div>

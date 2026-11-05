@@ -28,6 +28,9 @@ export function Icon({ name, ...p }: { name: string } & SVGProps<SVGSVGElement>)
     case "cloud": return <svg {...props}><path d="M7 18h10a4 4 0 000-8 5.5 5.5 0 00-10.6-1.5A4.5 4.5 0 007 18z" /></svg>;
     case "branch": return <svg {...props}><circle cx="6" cy="6" r="2.2" /><circle cx="6" cy="18" r="2.2" /><circle cx="18" cy="10" r="2.2" /><path d="M6 8.2V18M6 8.2a6 6 0 006 6h4" /></svg>;
     case "mail": return <svg {...props}><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M4 7l8 6 8-6" /></svg>;
+    case "bolt": return <svg {...props}><path d="M13 2L4 14h6l-1 8 9-12h-6z" /></svg>;
+    case "database": return <svg {...props}><ellipse cx="12" cy="5.5" rx="7" ry="2.5" /><path d="M5 5.5v6c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-6M5 11.5v6c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-6" /></svg>;
+    case "phone": return <svg {...props}><rect x="7" y="2.5" width="10" height="19" rx="2" /><path d="M11 18h2" /></svg>;
     default: return null;
   }
 }
