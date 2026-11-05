@@ -76,16 +76,22 @@ export default function Header() {
               Services <Icon name="chevron" className={`transition-transform ${servicesOpen ? "rotate-180" : ""}`} />
             </button>
             {servicesOpen && (
-              <ul id="services-menu" className="absolute left-0 top-full mt-2 w-72 rounded-lg border border-ivory/15 bg-navy-deep p-2 shadow-xl">
-                {services.map((s) => (
-                  <li key={s.slug}>
-                    <Link href={`/services/${s.slug}`} onClick={close} aria-current={isCurrent(`/services/${s.slug}`) ? "page" : undefined}
-                      className="block rounded px-3 py-1.5 hover:bg-ivory/10">
-                      <span className="block text-[15px] font-medium text-ivory">{s.nav.label}</span>
-                      <span className="mt-0.5 block text-sm leading-snug text-muted-dark">{s.nav.description}</span>
-                    </Link>
-                  </li>
-                ))}
+              <ul id="services-menu" className="absolute left-0 top-full mt-2 w-96 max-w-[calc(100vw-2rem)] rounded-lg border border-ivory/15 bg-navy-deep p-1.5 shadow-xl">
+                {services.map((s) => {
+                  const current = isCurrent(`/services/${s.slug}`);
+                  return (
+                    <li key={s.slug}>
+                      <Link href={`/services/${s.slug}`} onClick={close} aria-current={current ? "page" : undefined}
+                        className="group flex items-center gap-3 rounded-md px-3 py-2.5 transition-colors hover:bg-ivory/[0.06] focus-visible:bg-ivory/[0.06]">
+                        <span className="min-w-0 flex-1">
+                          <span className={`block text-[14.5px] font-medium ${current ? "text-gold" : "text-ivory"}`}>{s.nav.label}</span>
+                          <span className="mt-0.5 block text-[13px] leading-snug text-muted-dark">{s.nav.description}</span>
+                        </span>
+                        <Icon name="arrow" className="h-3.5 w-3.5 shrink-0 text-gold opacity-0 transition-all -translate-x-1 group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100" />
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
             )}
           </div>
