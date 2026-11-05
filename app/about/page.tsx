@@ -198,7 +198,7 @@ export default function AboutPage() {
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
           <Reveal className="flex flex-col gap-4 rounded-xl border border-gold-deep/30 bg-white/50 p-7 sm:flex-row sm:items-start">
             <Icon name="shield" className="h-7 w-7 shrink-0 text-gold-deep" />
-            <div>
+            <div className="flex-1">
               <h2 className="font-serif text-2xl">Where we are today</h2>
               <p className="mt-3 leading-relaxed text-muted-light">
                 Ethora Labs is a new, small and senior company. We have no client logos to show you, no case studies and
