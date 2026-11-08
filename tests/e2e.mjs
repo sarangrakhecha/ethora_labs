@@ -228,6 +228,40 @@ const run = async () => {
   await page.locator("#c-email").blur();
   check("valid email accepted", (await page.locator("#e-email").count()) === 0);
 
+  /* ------------------------------------------------- Recurr waitlist CTA regression */
+  // [P0] Found live: a "Join the waitlist" CTA reverting to a mailto: link opens the
+  // visitor's OS mail-account picker instead of the in-app form -- happened on
+  // /products/ after only /products/recurr/ was fixed. Checked on both pages, and by
+  // button text rather than a selector tied to one page's markup, so either page
+  // regressing to a mailto link is caught here, not just by the static source scan in
+  // tests/unit.test.mjs.
+  console.log("\nRecurr waitlist CTA opens an inline form, not a mailto: link");
+  for (const [route, btnText] of [["/products/recurr/", "Join the Waitlist"], ["/products/", "Join the waitlist"]]) {
+    await page.goto(BASE + route);
+    const mailtoWaitlist = await page.locator('a[href*="mailto:"][href*="aitlist" i]').count();
+    check(`${route}: no mailto waitlist link [P0]`, mailtoWaitlist === 0, `found ${mailtoWaitlist}`);
+    await page.locator(`button:has-text("${btnText}")`).first().click();
+    await sleep(150);
+    check(`${route}: clicking reveals an email field [P0]`, await page.locator('input[type="email"]').first().isVisible());
+    check(`${route}: stays on the same page [P0]`, page.url() === BASE + route, page.url());
+  }
+
+  /* ------------------------------------------------------------- no duplicate ids */
+  // [P1] The waitlist form's email input had a hard-coded id, so two instances of it
+  // on one page (the recurr page's sneak-peek section and closing CTA) collided --
+  // invalid HTML, and a <label htmlFor> only resolves to the first match. Checked
+  // sitewide, not just on the page the bug was found on.
+  console.log("\nNo duplicate element ids");
+  for (const route of ROUTES) {
+    await page.goto(BASE + route);
+    const dupes = await page.evaluate(() => {
+      const seen = new Set(), dup = new Set();
+      for (const el of document.querySelectorAll("[id]")) { if (seen.has(el.id)) dup.add(el.id); seen.add(el.id); }
+      return [...dup];
+    });
+    check(`${route}: no duplicate ids [P1]`, dupes.length === 0, dupes.join(", "));
+  }
+
   /* ------------------------------------------------------------------ SEO + a11y */
   /* --------------------------------- product panels: artwork band + CTA stay in place */
   console.log("\nProduct panels");

@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState, type FormEvent } from "react";
+import { useId, useRef, useState, type FormEvent } from "react";
 import { Icon } from "./Icons";
 
 // Recurr's own Formspree endpoint -- separate from the main site's contact form
@@ -13,14 +13,22 @@ const MIN_FILL_TIME_MS = 1200;
 
 type Status = "closed" | "open" | "sending" | "sent" | "error";
 
-export default function RecurrWaitlistForm({ accent, fallbackEmail }: { accent: string; fallbackEmail: string }) {
+/**
+ * `variant` "button" is the solid CTA used on the navy Recurr page. "link" is a plain
+ * underlined trigger for the light ("on-light") section of the products index, where a
+ * solid button of the same color would be the odd one out next to a text link.
+ */
+export default function RecurrWaitlistForm({ accent, fallbackEmail, variant = "button" }: { accent: string; fallbackEmail: string; variant?: "button" | "link" }) {
   const [status, setStatus] = useState<Status>("closed");
   const [email, setEmail] = useState("");
   const [touched, setTouched] = useState(false);
   const [honeypot, setHoneypot] = useState("");
   const openedAt = useRef(Date.now());
   const submitting = useRef(false);
+  const emailId = useId();
+  const errorId = useId();
 
+  const isLink = variant === "link";
   const error = !email.trim() ? "Please enter your email." : !emailRe.test(email.trim()) ? "Please enter a valid email address." : null;
 
   const open = () => {
@@ -55,19 +63,23 @@ export default function RecurrWaitlistForm({ accent, fallbackEmail }: { accent: 
     }
   };
 
-  const buttonCls = "inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-5 py-2.5 text-[15px] font-medium text-ivory transition-colors hover:brightness-110 disabled:opacity-70";
+  const solidBtnCls = "inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-5 py-2.5 text-[15px] font-medium text-ivory transition-colors hover:brightness-110 disabled:opacity-70";
 
   if (status === "sent") {
     return (
-      <p aria-live="polite" className="inline-flex min-h-11 items-center gap-2 rounded-md border px-5 py-2.5 text-[15px] font-medium text-ivory" style={{ borderColor: accent }}>
+      <p aria-live="polite" className={`inline-flex min-h-11 items-center gap-2 text-[15px] font-medium ${isLink ? "text-ink" : "rounded-md border px-5 py-2.5 text-ivory"}`} style={isLink ? undefined : { borderColor: accent }}>
         <Icon name="check" className="h-4 w-4 shrink-0" style={{ color: accent }} /> You&rsquo;re on the list — we&rsquo;ll be in touch.
       </p>
     );
   }
 
   if (status === "closed") {
-    return (
-      <button type="button" onClick={open} className={buttonCls} style={{ background: accent }}>
+    return isLink ? (
+      <button type="button" onClick={open} className="text-[15px] font-medium underline underline-offset-4 hover:text-ink" style={{ color: accent }}>
+        Join the waitlist
+      </button>
+    ) : (
+      <button type="button" onClick={open} className={solidBtnCls} style={{ background: accent }}>
         Join the Waitlist <Icon name="arrow" />
       </button>
     );
@@ -79,21 +91,21 @@ export default function RecurrWaitlistForm({ accent, fallbackEmail }: { accent: 
         <label>Website<input type="text" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} /></label>
       </div>
       <div>
-        <label htmlFor="wl-email" className="sr-only">Email address</label>
+        <label htmlFor={emailId} className="sr-only">Email address</label>
         <input
-          id="wl-email" type="email" required autoFocus placeholder="you@company.com" value={email}
+          id={emailId} type="email" required autoFocus placeholder="you@company.com" value={email}
           onChange={(e) => setEmail(e.target.value)} onBlur={() => setTouched(true)}
-          aria-invalid={touched && !!error} aria-describedby={touched && error ? "wl-error" : undefined}
-          className="min-h-11 w-56 rounded-md border border-ivory/25 bg-navy px-3.5 text-[15px] text-ivory placeholder:text-muted-dark focus:border-ivory/50"
+          aria-invalid={touched && !!error} aria-describedby={touched && error ? errorId : undefined}
+          className={`min-h-11 w-56 rounded-md border px-3.5 text-[15px] ${isLink ? "border-ink/15 bg-white text-ink placeholder:text-muted-light focus:border-ink/40" : "border-ivory/25 bg-navy text-ivory placeholder:text-muted-dark focus:border-ivory/50"}`}
         />
       </div>
-      <button type="submit" disabled={status === "sending"} className={`shrink-0 ${buttonCls}`} style={{ background: accent }}>
+      <button type="submit" disabled={status === "sending"} className={`shrink-0 ${solidBtnCls}`} style={{ background: accent }}>
         {status === "sending" ? "Joining…" : <>Join <Icon name="arrow" /></>}
       </button>
-      <div aria-live="polite" className="basis-full">
-        {touched && error && <p id="wl-error" className="text-sm text-[#e08787]">{error}</p>}
+      <div aria-live="polite" className={`basis-full text-sm ${isLink ? "text-[#c23b3b]" : "text-[#e08787]"}`}>
+        {touched && error && <p id={errorId}>{error}</p>}
         {status === "error" && (
-          <p className="text-sm text-[#e08787]">
+          <p>
             Something went wrong. Please try again, or email&nbsp;
             <a href={`mailto:${fallbackEmail}`} className="underline underline-offset-4">{fallbackEmail}</a> directly.
           </p>

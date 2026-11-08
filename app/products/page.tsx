@@ -6,7 +6,13 @@ import ProductArt from "@/components/ProductArt";
 import ProductPhilosophy from "@/components/ProductPhilosophy";
 import PageHero, { CtaBand } from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
+import RecurrWaitlistForm from "@/components/RecurrWaitlistForm";
 import { Icon } from "@/components/Icons";
+
+// Matches --gold-deep in app/globals.css -- this page's Recurr block uses the site's own
+// gold-deep accent rather than Recurr's forest-green brand color (unlike the dedicated
+// Recurr page), so the waitlist trigger here should match it.
+const GOLD_DEEP = "#7a5f33";
 
 const title = "Our Products & Product Philosophy | Ethora Labs";
 const description = "Discover why Ethora Labs builds products and explore Culprit and Recurr—two tools designed to simplify real problems through thoughtful engineering.";
@@ -175,9 +181,7 @@ export default function ProductsIndex() {
               <Link href="/products/recurr/" className="inline-flex min-h-11 items-center gap-2 rounded-md bg-navy px-5 py-2.5 text-[15px] font-medium text-ivory transition-colors hover:bg-navy-deep">
                 Explore Recurr <Icon name="arrow" />
               </Link>
-              <a href={`mailto:${recurr.waitlistEmail}?subject=Recurr%20Waitlist`} className="text-[15px] font-medium text-gold-deep underline underline-offset-4 hover:text-ink">
-                Join the waitlist
-              </a>
+              <RecurrWaitlistForm accent={GOLD_DEEP} fallbackEmail={recurr.waitlistEmail!} variant="link" />
             </div>
           </Reveal>
         </div>

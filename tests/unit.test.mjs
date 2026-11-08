@@ -2,7 +2,7 @@
 // Runs on Node's built-in test runner: `npm run test:unit` (no extra dependencies).
 import { test, describe } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 
 // Imported straight from the real source — Node strips the TypeScript types.
 const { riskScore, SCENARIOS, PIPELINE_STAGES, reachedStages, PROTOTYPE_STEPS, ARCH_NODES, ARCH_EDGES, RISK_PRESETS } =
@@ -224,6 +224,47 @@ describe("content integrity", () => {
         assert.equal(p.features.length, 0, `${p.slug}: unavailable product with no screenshots should not list features it cannot demonstrate`);
       }
     }
+  });
+});
+
+describe("regression: waitlist CTA bugs", () => {
+  // [P0] A "Join the waitlist" CTA reverting to a raw mailto: link instead of the
+  // in-app Formspree form makes the button open the visitor's OS mail-account picker
+  // (seen live on /products/) rather than the inline email field -- found when only
+  // the dedicated /products/recurr/ page was updated to use RecurrWaitlistForm and
+  // the products index page's own copy of the CTA was missed. Scans every .tsx file
+  // under app/products (recursively, so a future product page is covered too) rather
+  // than naming today's two files, so a new page reintroducing a mailto waitlist link
+  // is still caught.
+  const productFiles = (() => {
+    const out = [];
+    const walk = (dir) => {
+      for (const entry of readdirSync(new URL(dir, import.meta.url), { withFileTypes: true })) {
+        const path = `${dir}/${entry.name}`;
+        if (entry.isDirectory()) walk(path);
+        else if (entry.name.endsWith(".tsx")) out.push(path);
+      }
+    };
+    walk("../app/products");
+    return out;
+  })();
+
+  test("[P0] no product page's waitlist CTA is a mailto: link", () => {
+    for (const file of productFiles) {
+      const src = readFileSync(new URL(file, import.meta.url), "utf8");
+      assert.doesNotMatch(src, /mailto:[^"]*waitlist/i, `${file}: waitlist CTA should use RecurrWaitlistForm, not a mailto: link`);
+    }
+  });
+
+  // [P1] Two copies of the same waitlist form on one page (the sneak-peek section and
+  // the closing CTA on /products/recurr/) both hard-coded id="wl-email" on their email
+  // input, so the rendered page carried a duplicate id -- invalid HTML, and a label's
+  // htmlFor only ever resolves to the first match, silently breaking the second
+  // instance's accessible name. Fixed with React's useId() in RecurrWaitlistForm; this
+  // guards against a future component reintroducing a hard-coded id.
+  test("[P1] RecurrWaitlistForm does not hard-code its input id", () => {
+    const src = readFileSync(new URL("../components/RecurrWaitlistForm.tsx", import.meta.url), "utf8");
+    assert.doesNotMatch(src, /id="wl-email"/, "email input id should come from useId(), not a string literal, so multiple instances on one page do not collide");
   });
 });
 
