@@ -13,13 +13,12 @@ export default function Hero() {
             <span className="mt-2 block italic text-gold">What if it could work better?</span>
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-ivory/90">
-            Ethora Labs is an engineering-led technology consultancy that designs, builds, tests, and improves software — with a focus on quality, reliability, and lasting value.
+            Ethora Labs is an engineering-led technology consultancy. We design and build web applications and APIs, automate testing, and run CI/CD pipelines — shipping systems your own team can read, change, and operate.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <ButtonLink href="/#capabilities">Explore Capabilities</ButtonLink>
             <ButtonLink href="/approach" variant="outline" arrow={false}>Our Approach</ButtonLink>
           </div>
-          <p className="mt-8 font-serif text-lg italic text-muted-dark">Built on Principles. Driven by Possibility.</p>
         </div>
         <EngineeringCanvas />
       </div>

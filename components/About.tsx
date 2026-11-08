@@ -13,7 +13,7 @@ export default function About() {
           </Reveal>
           <Reveal delay={100} className="max-w-3xl space-y-6 text-lg leading-relaxed">
             <p className="font-serif text-2xl leading-snug sm:text-3xl">
-              Ethora Labs is an engineering-led technology consultancy built on a simple belief: great software comes from clear thinking, strong engineering, and thoughtful execution.
+              Ethora Labs is an engineering-led technology consultancy. We build and maintain web applications and APIs, design test strategy and automation, and tune CI/CD pipelines — work we document and hand off cleanly, not just ship.
             </p>
             <p>
               <Link href="/about" className="inline-flex min-h-11 items-center gap-2 text-[15px] font-medium text-gold hover:text-ivory">

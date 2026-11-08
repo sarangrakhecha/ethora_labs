@@ -184,7 +184,7 @@ export const whyWeBuild = {
     "We value practical usefulness over feature count.",
     "We aim to build products that are dependable, understandable and respectful of users.",
   ],
-  connection: "The same engineering principles that shape our consulting work — integrity, rigour, curiosity and ownership — shape what we choose to build and how we build it.",
+  connection: "The same engineering practices that shape our consulting work — code review, testing, honest trade-offs — shape what we choose to build and how we build it.",
 };
 
 export type PhilosophyStage = { id: string; name: string; question: string; body: string };

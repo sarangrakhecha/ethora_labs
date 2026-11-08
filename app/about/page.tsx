@@ -18,7 +18,7 @@ const principles = [
 
 export const metadata: Metadata = {
   title: "Ethora Labs | About",
-  description: "Ethora Labs is an engineering-led technology consultancy built on ethics and ethos. Our philosophy, our values in practice, and who is behind the engineering.",
+  description: "Ethora Labs is an engineering-led technology consultancy working across software engineering, quality engineering, test automation and CI/CD, and engineering prototypes. How we work, and why.",
   alternates: { canonical: "https://ethoralabs.co/about/" },
 };
 
@@ -41,8 +41,8 @@ export default function AboutPage() {
     <>
       <PageHero
         eyebrow="About"
-        title="Built on principles. Driven by possibility."
-        intro="Ethora Labs is an engineering-led technology consultancy built on a simple belief: great software comes from clear thinking, strong engineering, and thoughtful execution."
+        title="We design, build, test, and ship software."
+        intro="Ethora Labs is an engineering-led technology consultancy, working across software engineering, quality engineering, test automation and CI/CD, and engineering prototypes — and leading with clear thinking and honest trade-offs rather than slogans."
         aside={<HeroMark />}
       />
 
@@ -55,14 +55,10 @@ export default function AboutPage() {
             <span className="gold-rule mt-5 bg-gold-deep" />
             <div className="mt-8 max-w-xl space-y-5 text-lg leading-relaxed text-muted-light">
               <p>
-                Ethora comes from two Greek-rooted ideas: <span className="text-ink">ethics</span> and{" "}
-                <span className="text-ink">ethos</span>. Ethics is how we choose to work. Ethos is the character and
-                conviction behind that choice.
-              </p>
-              <p>
-                Together they describe the company we are trying to build: one that is trusted for how it builds, not
-                only for what it builds. In a field where it is easy to overstate, we would rather be known for saying
-                what is actually true about software — including when that is inconvenient.
+                Ethora comes from two Greek-rooted ideas: <span className="text-ink">ethics</span> (how we choose to
+                work) and <span className="text-ink">ethos</span> (the character behind that choice). In a field where
+                it is easy to overstate, we would rather be known for saying what is actually true about the software
+                we build — including when that is inconvenient.
               </p>
             </div>
           </Reveal>
@@ -207,7 +203,7 @@ export default function AboutPage() {
               <h2 className="font-serif text-2xl">Where we are today</h2>
               <p className="mt-3 leading-relaxed text-muted-light">
                 Ethora Labs is a new, small and senior company. We have no client logos to show you, no case studies and
-                no success percentages, because inventing them would contradict the first value on this page. What we can
+                no success percentages, because inventing them would be dishonest. What we can
                 show is how we think — in our{" "}
                 <Link href="/#capabilities" className="text-gold-deep underline underline-offset-4">capability pages</Link>,
                 the working demonstrations inside them, and the products we are building.
