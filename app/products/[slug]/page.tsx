@@ -10,11 +10,11 @@ import { Icon } from "@/components/Icons";
 
 type Params = { slug: string };
 
-// RenewGuard has its own dedicated page (app/products/renewguard/page.tsx) now that it
+// Recurr has its own dedicated page (app/products/recurr/page.tsx) now that it
 // has real screenshots and a distinct product-vision story to tell; this shared template
 // still serves Culprit, and any future product whose page doesn't need that treatment.
 export function generateStaticParams(): Params[] {
-  return products.filter((p) => p.slug !== "renewguard").map((p) => ({ slug: p.slug }));
+  return products.filter((p) => p.slug !== "recurr").map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {

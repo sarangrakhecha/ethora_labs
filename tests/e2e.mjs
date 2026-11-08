@@ -17,7 +17,7 @@ const BASE = `http://localhost:${PORT}`;
 const ROUTES = [
   "/", "/services/software-engineering/", "/services/quality-engineering/",
   "/services/test-automation/", "/services/innovation/", "/approach/", "/technologies/",
-  "/products/", "/products/culprit/", "/products/renewguard/", "/products/terminalquest/",
+  "/products/", "/products/culprit/", "/products/recurr/", "/products/terminalquest/",
   "/about/", "/contact/",
 ];
 

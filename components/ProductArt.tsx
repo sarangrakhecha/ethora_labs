@@ -1,9 +1,9 @@
 /**
- * Compact brand motifs for the product cards and the RenewGuard showcase.
+ * Compact brand motifs for the product cards and the Recurr showcase.
  * These are abstract illustrations in Ethora's palette, never presented as product UI.
  * Culprit's real screenshots live in public/products/culprit/.
  */
-export default function ProductArt({ name, className = "" }: { name: "culprit" | "renewguard" | "terminal"; className?: string }) {
+export default function ProductArt({ name, className = "" }: { name: "culprit" | "recurr" | "terminal"; className?: string }) {
   const common = {
     className: `h-full w-full ${className}`,
     viewBox: "0 0 400 150",
@@ -77,7 +77,7 @@ export default function ProductArt({ name, className = "" }: { name: "culprit" |
     );
   }
 
-  // RenewGuard — the warning arrives before the date does.
+  // Recurr — the warning arrives before the date does.
   return (
     <svg {...common}>
       <defs>

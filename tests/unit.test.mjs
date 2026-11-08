@@ -8,7 +8,7 @@ import { readFileSync } from "node:fs";
 const { riskScore, SCENARIOS, PIPELINE_STAGES, reachedStages, PROTOTYPE_STEPS, ARCH_NODES, ARCH_EDGES, RISK_PRESETS } =
   await import("../lib/demos.ts");
 const { services } = await import("../lib/services.ts");
-const { products, renewGuardVision, renewGuardAudiences, renewGuardSavingsNote } = await import("../lib/products.ts");
+const { products, recurrVision, recurrAudiences, recurrSavingsNote } = await import("../lib/products.ts");
 const { site } = await import("../lib/content.ts");
 const { technologies, techCategories, getTechnology } = await import("../lib/technologies.ts");
 
@@ -135,15 +135,15 @@ describe("content integrity", () => {
   const stripComments = (src) => src.replace(/\/\*[\s\S]*?\*\//g, " ").replace(/^\s*\/\/.*$/gm, " ");
   const aboutCopy = stripComments(readFileSync(new URL("../app/about/page.tsx", import.meta.url), "utf8"));
   const servicePage = readFileSync(new URL("../app/services/[slug]/page.tsx", import.meta.url), "utf8");
-  const renewguardPage = stripComments(readFileSync(new URL("../app/products/renewguard/page.tsx", import.meta.url), "utf8"));
+  const recurrPage = stripComments(readFileSync(new URL("../app/products/recurr/page.tsx", import.meta.url), "utf8"));
 
-  // Every string the visitor can actually read, plus the About and RenewGuard page markup.
+  // Every string the visitor can actually read, plus the About and Recurr page markup.
   // Negated mentions ("we have no case studies") are honesty, not a claim, so they are
   // removed before the check rather than being allowed to fail it.
   const dropNegated = (text) =>
     text.replace(/\b(?:no|not|never|without|does not|doesn't)\b[^.]{0,80}?(?:case stud(?:y|ies)|testimonials?|client logos|success percentages|awards?|cancel subscriptions|negotiate contracts|guarantee savings)/gi, " ");
   const corpus = dropNegated(JSON.stringify(services) + JSON.stringify(products) + aboutCopy
-    + JSON.stringify(renewGuardVision) + JSON.stringify(renewGuardAudiences) + renewGuardSavingsNote + renewguardPage);
+    + JSON.stringify(recurrVision) + JSON.stringify(recurrAudiences) + recurrSavingsNote + recurrPage);
 
   test("no fabricated social proof anywhere in the visible copy", () => {
     const banned = [
@@ -188,27 +188,27 @@ describe("content integrity", () => {
     assert.match(servicePage, /Not a record of completed client work/);
   });
 
-  test("RenewGuard's waitlist email is distinct from Ethora's general contact address", () => {
-    const renewguard = products.find((p) => p.slug === "renewguard");
+  test("Recurr's waitlist email is distinct from Ethora's general contact address", () => {
+    const recurr = products.find((p) => p.slug === "recurr");
     const culprit = products.find((p) => p.slug === "culprit");
-    assert.ok(renewguard.waitlistEmail, "renewguard: waitlistEmail");
-    assert.notEqual(renewguard.waitlistEmail, site.email, "RenewGuard's waitlist address must not be Ethora's consulting contact");
+    assert.ok(recurr.waitlistEmail, "recurr: waitlistEmail");
+    assert.notEqual(recurr.waitlistEmail, site.email, "Recurr's waitlist address must not be Ethora's consulting contact");
     assert.equal(culprit.waitlistEmail, undefined, "an available product should not have a waitlist address");
   });
 
-  test("every RenewGuard screenshot has real dimensions and descriptive text", () => {
-    const renewguard = products.find((p) => p.slug === "renewguard");
-    assert.ok(renewguard.screenshots.length >= 3, "expected several real screenshots");
-    for (const s of renewguard.screenshots) {
+  test("every Recurr screenshot has real dimensions and descriptive text", () => {
+    const recurr = products.find((p) => p.slug === "recurr");
+    assert.ok(recurr.screenshots.length >= 3, "expected several real screenshots");
+    for (const s of recurr.screenshots) {
       assert.ok(s.w > 0 && s.h > 0, `${s.src}: dimensions`);
       assert.ok(s.alt.length > 15, `${s.src}: alt text`);
       assert.ok(s.caption.length > 0, `${s.src}: caption`);
     }
   });
 
-  test("RenewGuard's product vision is framed as a vision, not a live claim", () => {
-    assert.match(renewGuardVision.intro, /vision|not.*(?:live|claim)/i);
-    assert.ok(renewGuardVision.steps.length >= 5, "expected a multi-step flow");
+  test("Recurr's product vision is framed as a vision, not a live claim", () => {
+    assert.match(recurrVision.intro, /vision|not.*(?:live|claim)/i);
+    assert.ok(recurrVision.steps.length >= 5, "expected a multi-step flow");
   });
 
   test("a product marked available has somewhere to go", () => {

@@ -17,7 +17,7 @@ npm run build    # static export to ./out
 | `/` | Introduction: hero, Engineering Canvas, capability panels, problem-first, products, about summary, contact CTA |
 | `/services` | Capability index |
 | `/services/{software-engineering,quality-engineering,test-automation,innovation}` | Full service pages, each with its own interactive demonstration |
-| `/products`, `/products/{culprit,renewguard}` | Product division |
+| `/products`, `/products/{culprit,recurr}` | Product division |
 | `/about`, `/contact` | About and contact |
 
 Old `/capabilities/*` URLs redirect via `public/_redirects`.

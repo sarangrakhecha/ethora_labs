@@ -19,11 +19,11 @@ export type Product = {
   features: { title: string; body: string }[];
   /**
    * Real product screenshots -- Culprit's as published on the Chrome Web Store listing,
-   * RenewGuard's from its own internal build. While this is empty the page falls back to
+   * Recurr's from its own internal build. While this is empty the page falls back to
    * the abstract brand illustration, clearly labelled as one.
    */
   screenshots: { src: string; alt: string; caption: string; w: number; h: number }[];
-  art: "culprit" | "renewguard";
+  art: "culprit" | "recurr";
   /** Pre-launch products only: where to email to ask for early access. Never substitutes
    * for Ethora's own consulting contact address. */
   waitlistEmail?: string;
@@ -81,15 +81,15 @@ export const products: Product[] = [
     art: "culprit",
   },
   {
-    slug: "renewguard",
-    name: "RenewGuard",
+    slug: "recurr",
+    name: "Recurr",
     kind: "Renewal management",
     tagline: "Know before it renews.",
     summary:
-      "RenewGuard helps businesses and individuals stay ahead of recurring commitments — from subscriptions and memberships to vendor contracts and insurance.",
+      "Recurr helps businesses and individuals stay ahead of recurring commitments — from subscriptions and memberships to vendor contracts and insurance.",
     status: {
       label: "In development",
-      detail: "RenewGuard is being built and is not yet publicly available. The screens below are from our own internal build.",
+      detail: "Recurr is being built and is not yet publicly available. The screens below are from our own internal build.",
       available: false,
     },
     areas: [],
@@ -103,42 +103,42 @@ export const products: Product[] = [
     // uneven grid, and it's already covered in full in the "Forward it. We'll track it."
     // vision section below, so nothing is lost by not repeating it here too.
     screenshots: [
-      { src: "/products/renewguard/overview.webp", w: 2000, h: 1250,
-        alt: "RenewGuard overview dashboard greeting the user, showing renewing-soon total, potential savings, protected savings, and a list of renewals that need attention.",
+      { src: "/products/recurr/overview.webp", w: 2000, h: 1250,
+        alt: "Recurr overview dashboard greeting the user, showing renewing-soon total, potential savings, protected savings, and a list of renewals that need attention.",
         caption: "Overview: what needs a decision, surfaced first — not buried in a list." },
-      { src: "/products/renewguard/renewals.webp", w: 2000, h: 1250,
-        alt: "RenewGuard renewals list filtered to Needs attention, showing Adobe Creative Cloud and Shakti Metals with days-left countdowns and a Review and decide action.",
+      { src: "/products/recurr/renewals.webp", w: 2000, h: 1250,
+        alt: "Recurr renewals list filtered to Needs attention, showing Adobe Creative Cloud and Shakti Metals with days-left countdowns and a Review and decide action.",
         caption: "Renewals: ordered by the last day you can still change your mind." },
-      { src: "/products/renewguard/vendors.webp", w: 2000, h: 1250,
-        alt: "RenewGuard vendors table listing software, suppliers, leases and service contracts with status, renewal date and annual cost.",
+      { src: "/products/recurr/vendors.webp", w: 2000, h: 1250,
+        alt: "Recurr vendors table listing software, suppliers, leases and service contracts with status, renewal date and annual cost.",
         caption: "Vendors: every recurring commitment in one directory, not scattered across inboxes." },
-      { src: "/products/renewguard/savings.webp", w: 2000, h: 1250,
-        alt: "RenewGuard savings page showing Identified, Approved and Protected totals as a funnel, with a per-vendor breakdown underneath.",
+      { src: "/products/recurr/savings.webp", w: 2000, h: 1250,
+        alt: "Recurr savings page showing Identified, Approved and Protected totals as a funnel, with a per-vendor breakdown underneath.",
         caption: "Savings: a figure only counts once the real-world action is actually confirmed." },
     ],
-    // The settings/forwarding screenshot (public/products/renewguard/settings-forwarding.webp)
+    // The settings/forwarding screenshot (public/products/recurr/settings-forwarding.webp)
     // is a noticeably taller aspect ratio than the four above. ScreenshotStrip's cards share
     // one row height, so including it stretched the other cards and left visible blank space
     // under their captions. Left out of the carousel rather than distorted to fit; the
     // forwarding address is still covered in the "What it does" feature list below.
-    art: "renewguard",
-    waitlistEmail: "hello@renewguardhq.com",
+    art: "recurr",
+    waitlistEmail: "hello@recurr.fyi",
   },
 ];
 
 /**
- * RenewGuard's planned email-forwarding flow. This is the product vision, not a record
+ * Recurr's planned email-forwarding flow. This is the product vision, not a record
  * of what is live today -- see the "demo build" labelling on the settings screenshot
  * above. The philosophy line is the design intent behind every step.
  */
-export const renewGuardVision = {
+export const recurrVision = {
   eyebrow: "Product vision",
   headline: "Forward it. We'll track it.",
   philosophy: "Automation by default. Intervention by exception.",
-  intro: "How RenewGuard is designed to turn a forwarded email into a tracked renewal — not a claim that every step runs in production today.",
+  intro: "How Recurr is designed to turn a forwarded email into a tracked renewal — not a claim that every step runs in production today.",
   steps: [
-    "Forward a renewal, invoice, subscription or contract email to track@renewguardhq.com",
-    "RenewGuard identifies the approved sender and which workspace it belongs to",
+    "Forward a renewal, invoice, subscription or contract email to track@recurr.fyi",
+    "Recurr identifies the approved sender and which workspace it belongs to",
     "It extracts the relevant renewal information from the email",
     "High-confidence renewals are added automatically",
     "Ambiguous information is sent back for a targeted, quick review",
@@ -148,14 +148,14 @@ export const renewGuardVision = {
   ],
 };
 
-/** Who RenewGuard is for, kept brief -- this is a preview, not a product manual. */
-export const renewGuardAudiences = {
+/** Who Recurr is for, kept brief -- this is a preview, not a product manual. */
+export const recurrAudiences = {
   business: { label: "Business", items: ["SaaS subscriptions", "Vendors and suppliers", "Leases", "Insurance", "Service contracts", "Maintenance agreements"] },
   personal: { label: "Personal", items: ["Memberships", "Subscriptions", "Domains", "Warranties", "Insurance"] },
 };
 
-export const renewGuardSavingsNote =
-  "RenewGuard does not automatically cancel subscriptions, negotiate contracts, or guarantee savings. Choosing Cancel records a decision, not a completed cancellation. Potential savings are not realised savings — they become Protected only once the real-world outcome is confirmed.";
+export const recurrSavingsNote =
+  "Recurr does not automatically cancel subscriptions, negotiate contracts, or guarantee savings. Choosing Cancel records a decision, not a completed cancellation. Potential savings are not realised savings — they become Protected only once the real-world outcome is confirmed.";
 
 for (const p of products) {
   p.summary = noWidow(p.summary);
@@ -207,7 +207,7 @@ export const PHILOSOPHY_STAGES: PhilosophyStage[] = [
 
 export const productsConnect = {
   headline: "Different problems. The same principles.",
-  intro: "Culprit and RenewGuard solve very different problems, for very different people, and they do not share a platform, data or infrastructure. What connects them is how we approach building anything:",
+  intro: "Culprit and Recurr solve very different problems, for very different people, and they do not share a platform, data or infrastructure. What connects them is how we approach building anything:",
   points: [
     "Reduce unnecessary complexity.",
     "Make important information visible.",
@@ -218,7 +218,7 @@ export const productsConnect = {
 };
 
 export const productsClosing = noWidow(
-  "We build products because we believe engineering should make everyday work clearer, simpler and more dependable. Culprit and RenewGuard are two expressions of that belief — and our curiosity doesn't end there."
+  "We build products because we believe engineering should make everyday work clearer, simpler and more dependable. Culprit and Recurr are two expressions of that belief — and our curiosity doesn't end there."
 );
 
 for (const s of PHILOSOPHY_STAGES) s.body = noWidow(s.body);
@@ -283,5 +283,5 @@ for (const step of openSource.loop) step.body = noWidow(step.body);
 for (let i = 0; i < openSource.philosophy.length; i++) openSource.philosophy[i] = noWidow(openSource.philosophy[i]);
 for (const s of openSource.screenshots) s.caption = noWidow(s.caption);
 
-renewGuardVision.intro = noWidow(renewGuardVision.intro);
-for (let i = 0; i < renewGuardVision.steps.length; i++) renewGuardVision.steps[i] = noWidow(renewGuardVision.steps[i]);
+recurrVision.intro = noWidow(recurrVision.intro);
+for (let i = 0; i < recurrVision.steps.length; i++) recurrVision.steps[i] = noWidow(recurrVision.steps[i]);

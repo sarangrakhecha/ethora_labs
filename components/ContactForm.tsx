@@ -176,7 +176,7 @@ export default function ContactForm() {
               <select id="c-service" name="service" value={values.service} onChange={set("service")}
                 className={`${field} appearance-none border-ink/15 pr-10`}>
                 {services.map((s) => <option key={s.slug} value={s.slug}>{s.nav.label}</option>)}
-                <option value="products">A product (Culprit or RenewGuard)</option>
+                <option value="products">A product (Culprit or Recurr)</option>
                 <option value="other">Something else</option>
                 <option value="">Not sure yet</option>
               </select>

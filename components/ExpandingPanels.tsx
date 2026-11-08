@@ -9,7 +9,7 @@ export type Panel = {
   key: string;
   icon: string;
   /** Optional diagram shown as a band across the top of the panel, in place of the icon. */
-  art?: "culprit" | "renewguard" | "terminal";
+  art?: "culprit" | "recurr" | "terminal";
   title: string;
   /** One short line, always visible. */
   subtitle: string;
