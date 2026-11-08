@@ -110,14 +110,19 @@ export default function RecurrPage() {
             <h2 className="font-serif text-3xl sm:text-4xl">Why Recurr exists</h2>
             <span className="gold-rule mt-5" />
           </Reveal>
-          <Reveal delay={80} className="mt-8 max-w-3xl space-y-5 text-lg leading-relaxed text-muted-dark">
-            <p>
-              The problem was never really remembering a renewal date. Calendars already do that. The real problem is
-              that recurring financial and contractual commitments can renew before anyone has consciously decided
-              what to do about them.
-            </p>
-            <p>Recurr aims to turn renewal information into timely, actionable decisions — made before the deadline, not discovered after it.</p>
-          </Reveal>
+          <div className="mt-10 grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
+            <Reveal delay={80} className="space-y-5 text-lg leading-relaxed text-muted-dark">
+              <p>
+                The problem was never really remembering a renewal date. Calendars already do that. The real problem is
+                that recurring financial and contractual commitments can renew before anyone has consciously decided
+                what to do about them.
+              </p>
+              <p>Recurr aims to turn renewal information into timely, actionable decisions — made before the deadline, not discovered after it.</p>
+            </Reveal>
+            <Reveal delay={140}>
+              <div className="overflow-hidden rounded-xl border border-ivory/15"><div className="aspect-[400/150]"><ProductArt name="recurr" /></div></div>
+            </Reveal>
+          </div>
         </div>
       </section>
 

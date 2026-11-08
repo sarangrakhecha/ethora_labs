@@ -1,9 +1,16 @@
+import { useId } from "react";
+
 /**
  * Compact brand motifs for the product cards and the Recurr showcase.
  * These are abstract illustrations in Ethora's palette, never presented as product UI.
  * Culprit's real screenshots live in public/products/culprit/.
  */
 export default function ProductArt({ name, className = "" }: { name: "culprit" | "recurr" | "terminal"; className?: string }) {
+  // Scoped per instance -- a page can render this component more than once (e.g. the
+  // Recurr page uses it for both a fallback screenshot and a standalone illustration),
+  // and a hardcoded gradient id would collide across instances.
+  const gradId = useId();
+
   const common = {
     className: `h-full w-full ${className}`,
     viewBox: "0 0 400 150",
@@ -17,13 +24,13 @@ export default function ProductArt({ name, className = "" }: { name: "culprit" |
     return (
       <svg {...common}>
         <defs>
-          <radialGradient id="cg" cx="72%" cy="50%" r="55%">
+          <radialGradient id={gradId} cx="72%" cy="50%" r="55%">
             <stop offset="0%" stopColor="#C4A77A" stopOpacity=".16" />
             <stop offset="100%" stopColor="#C4A77A" stopOpacity="0" />
           </radialGradient>
         </defs>
         <rect width="400" height="150" fill="#0B1420" />
-        <rect width="400" height="150" fill="url(#cg)" />
+        <rect width="400" height="150" fill={`url(#${gradId})`} />
 
         {/* the click */}
         <circle cx="54" cy="75" r="5" fill="#C4A77A" />
@@ -81,7 +88,7 @@ export default function ProductArt({ name, className = "" }: { name: "culprit" |
   return (
     <svg {...common}>
       <defs>
-        <linearGradient id="rgl" x1="0" y1="0" x2="1" y2="0">
+        <linearGradient id={gradId} x1="0" y1="0" x2="1" y2="0">
           <stop offset="0%" stopColor="#C4A77A" stopOpacity="0" />
           <stop offset="100%" stopColor="#C4A77A" stopOpacity=".5" />
         </linearGradient>
@@ -101,7 +108,7 @@ export default function ProductArt({ name, className = "" }: { name: "culprit" |
       <circle cx="115" cy="95" r="3.5" fill="#F6F3EC" opacity=".6" />
 
       {/* the notice period, reaching ahead */}
-      <rect x="115" y="60" width="160" height="35" rx="4" fill="url(#rgl)" />
+      <rect x="115" y="60" width="160" height="35" rx="4" fill={`url(#${gradId})`} />
       <path d="M115 60h160" stroke="#C4A77A" strokeWidth="1" opacity=".35" strokeDasharray="3 4" />
 
       {/* the renewal, seen coming */}
