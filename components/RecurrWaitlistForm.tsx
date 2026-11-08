@@ -1,5 +1,5 @@
 "use client";
-import { useId, useRef, useState, type FormEvent } from "react";
+import { useId, useRef, useState, type FocusEvent, type FormEvent } from "react";
 import { Icon } from "./Icons";
 
 // Recurr's own Formspree endpoint -- separate from the main site's contact form
@@ -34,6 +34,18 @@ export default function RecurrWaitlistForm({ accent, fallbackEmail, variant = "b
   const open = () => {
     openedAt.current = Date.now();
     setStatus("open");
+  };
+
+  // Clicking away without submitting collapses the form back to its original button --
+  // it shouldn't linger open showing a validation error for a field nobody is filling in.
+  // relatedTarget is where focus is going; still inside the form (e.g. tabbing from the
+  // email field to the submit button) must not trigger this.
+  const onBlurCapture = (e: FocusEvent<HTMLFormElement>) => {
+    if (status !== "open") return;
+    if (e.currentTarget.contains(e.relatedTarget as Node | null)) return;
+    setStatus("closed");
+    setEmail("");
+    setTouched(false);
   };
 
   const onSubmit = async (e: FormEvent) => {
@@ -86,7 +98,7 @@ export default function RecurrWaitlistForm({ accent, fallbackEmail, variant = "b
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-wrap items-start gap-2">
+    <form onSubmit={onSubmit} onBlurCapture={onBlurCapture} noValidate className="flex flex-wrap items-start gap-3">
       <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
         <label>Website<input type="text" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} /></label>
       </div>
@@ -102,7 +114,7 @@ export default function RecurrWaitlistForm({ accent, fallbackEmail, variant = "b
       <button type="submit" disabled={status === "sending"} className={`shrink-0 ${solidBtnCls}`} style={{ background: accent }}>
         {status === "sending" ? "Joining…" : <>Join <Icon name="arrow" /></>}
       </button>
-      <div aria-live="polite" className={`basis-full text-sm ${isLink ? "text-[#c23b3b]" : "text-[#e08787]"}`}>
+      <div aria-live="polite" className={`mt-2 basis-full text-sm ${isLink ? "text-[#c23b3b]" : "text-[#e08787]"}`}>
         {touched && error && <p id={errorId}>{error}</p>}
         {status === "error" && (
           <p>

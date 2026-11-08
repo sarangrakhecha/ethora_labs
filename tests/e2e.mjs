@@ -246,6 +246,19 @@ const run = async () => {
     check(`${route}: stays on the same page [P0]`, page.url() === BASE + route, page.url());
   }
 
+  // [P2] Opening the waitlist field and then clicking away without submitting left it
+  // open, showing a "Please enter your email" error for a field nobody was filling in.
+  // Clicking elsewhere should collapse it back to the plain button.
+  console.log("\nWaitlist field collapses back when clicked away from");
+  for (const [route, btnText] of [["/products/recurr/", "Join the Waitlist"], ["/products/", "Join the waitlist"]]) {
+    await page.goto(BASE + route);
+    await page.locator(`button:has-text("${btnText}")`).first().click();
+    await sleep(150);
+    await page.locator("h1").first().click();
+    await sleep(150);
+    check(`${route}: reverts to the button [P2]`, await page.locator(`button:has-text("${btnText}")`).first().isVisible());
+  }
+
   /* ------------------------------------------------------------- no duplicate ids */
   // [P1] The waitlist form's email input had a hard-coded id, so two instances of it
   // on one page (the recurr page's sneak-peek section and closing CTA) collided --
