@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { products, recurrVision, recurrAudiences, recurrSavingsNote } from "@/lib/products";
 import ScreenshotStrip from "@/components/ScreenshotStrip";
 import ProductArt from "@/components/ProductArt";
 import PageHero, { CtaBand } from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import RecurrWaitlistForm from "@/components/RecurrWaitlistForm";
+import { ButtonLink } from "@/components/Button";
 import { Icon } from "@/components/Icons";
 
 const recurr = products.find((p) => p.slug === "recurr")!;
@@ -28,54 +28,51 @@ export default function RecurrPage() {
   return (
     <>
       <PageHero
+        compact
         breadcrumb={[{ label: "Home", href: "/" }, { label: "Products", href: "/products" }]}
         eyebrow={recurr.kind}
         title={recurr.name}
-        intro={recurr.summary}
-        aside={
-          <div>
-            {recurr.screenshots[3] ? (
-              <div className="overflow-hidden rounded-xl border border-ivory/15">
-                <Image src={recurr.screenshots[3].src} alt={recurr.screenshots[3].alt} width={recurr.screenshots[3].w} height={recurr.screenshots[3].h} className="h-auto w-full" />
-              </div>
-            ) : (
-              <div className="overflow-hidden rounded-xl border border-ivory/15"><div className="aspect-[400/150]"><ProductArt name="recurr" /></div></div>
-            )}
-            <div className="mt-5 border-t border-ivory/10 pt-5">
-              <p className="flex items-center gap-2 font-medium">
-                <span className="h-2 w-2 rounded-full" style={{ background: "#d9a441" }} aria-hidden="true" />
-                {recurr.status.label}
-              </p>
-              <p className="mt-2 text-muted-dark">{recurr.status.detail}</p>
-            </div>
-          </div>
+        intro={
+          <>
+            <span className="block font-serif text-xl italic text-ivory sm:text-2xl">Know what&rsquo;s renewing. Decide before it does.</span>
+            <span className="mt-3 block text-base leading-relaxed text-ivory/80 sm:text-lg">{recurr.summary}</span>
+          </>
+        }
+        below={
+          <p className="text-sm leading-relaxed text-muted-dark">
+            <span className="mr-2 inline-block h-1.5 w-1.5 rounded-full" style={{ background: "#d9a441" }} aria-hidden="true" />
+            <span className="font-medium text-ivory">{recurr.status.label}</span>
+            {" "}&middot; {recurr.status.detail}
+          </p>
+        }
+        actions={
+          <>
+            <RecurrWaitlistForm accent={forest} fallbackEmail={recurr.waitlistEmail!} />
+            <ButtonLink href="#gallery" variant="outline" arrow={false}>Explore the Product</ButtonLink>
+          </>
         }
       />
 
-      {/* Product sneak peek */}
-      <section className="bg-navy-deep">
-        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-          <Reveal className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+      {/* Screenshot gallery -- the real product, right after the hero, with nothing
+          repeating what the hero already said. */}
+      <section id="gallery" className="scroll-mt-20 bg-navy-deep">
+        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+          <Reveal className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-xs font-medium uppercase tracking-[0.3em]" style={{ color: "#d9a441" }}>Product sneak peek</p>
-              <h2 className="mt-3 font-serif text-3xl sm:text-4xl">A first look behind the curtain</h2>
-              <p className="mt-4 max-w-2xl leading-relaxed text-muted-dark">
-                These are real screens from our own build — nothing public yet, but here&rsquo;s exactly what&rsquo;s
-                waiting on the other side of the waitlist.
+              <h2 className="font-serif text-2xl sm:text-3xl">Inside Recurr</h2>
+              <p className="mt-2 max-w-xl leading-relaxed text-muted-dark">
+                A closer look at how Recurr tracks commitments, highlights decisions, and measures savings.
               </p>
             </div>
-            <div className="flex shrink-0 flex-wrap items-center gap-3">
-              {recurr.websiteUrl && (
-                <a href={recurr.websiteUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border px-5 py-2.5 text-[15px] font-medium text-ivory transition-colors hover:bg-ivory/5" style={{ borderColor: forest }}>
-                  Visit recurr.fyi <Icon name="arrow" />
-                </a>
-              )}
-              <RecurrWaitlistForm accent={forest} fallbackEmail={recurr.waitlistEmail!} />
-            </div>
+            {recurr.websiteUrl && (
+              <a href={recurr.websiteUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-md border px-5 py-2.5 text-[15px] font-medium text-ivory transition-colors hover:bg-ivory/5" style={{ borderColor: forest }}>
+                Visit recurr.fyi <Icon name="arrow" />
+              </a>
+            )}
           </Reveal>
-          <Reveal delay={80} className="mt-10">
+          <Reveal delay={80} className="mt-6">
             {recurr.screenshots.length > 0 ? (
-              <ScreenshotStrip shots={recurr.screenshots} label={recurr.name} />
+              <ScreenshotStrip shots={recurr.screenshots} label={recurr.name} cardWidthClass="w-[88vw] sm:w-[32rem] lg:w-[34rem]" />
             ) : (
               <div className="overflow-hidden rounded-xl border border-ivory/15"><div className="aspect-[400/150]"><ProductArt name="recurr" /></div></div>
             )}
@@ -85,7 +82,7 @@ export default function RecurrPage() {
 
       {/* What it does */}
       <section className="on-light bg-ivory text-ink">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 md:py-16 lg:px-8">
           <Reveal>
             <h2 className="font-serif text-3xl sm:text-4xl">What it does</h2>
             <span className="gold-rule mt-5 bg-gold-deep" />
@@ -107,7 +104,7 @@ export default function RecurrPage() {
 
       {/* Why Recurr exists */}
       <section className="bg-navy">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 md:py-16 lg:px-8">
           <Reveal>
             <h2 className="font-serif text-3xl sm:text-4xl">Why Recurr exists</h2>
             <span className="gold-rule mt-5" />
@@ -130,7 +127,7 @@ export default function RecurrPage() {
 
       {/* Product vision: forward it, we'll track it */}
       <section className="on-light bg-ivory text-ink">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 md:py-16 lg:px-8">
           <Reveal className="max-w-2xl">
             <p className="text-xs font-medium uppercase tracking-[0.3em]" style={{ color: forest }}>{recurrVision.eyebrow}</p>
             <h2 className="mt-3 font-serif text-3xl sm:text-4xl">{recurrVision.headline}</h2>
@@ -158,7 +155,7 @@ export default function RecurrPage() {
 
       {/* Business and personal */}
       <section className="bg-navy">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 md:py-16 lg:px-8">
           <Reveal>
             <h2 className="font-serif text-3xl sm:text-4xl">Business and personal</h2>
             <span className="gold-rule mt-5" />
@@ -192,7 +189,7 @@ export default function RecurrPage() {
       {/* Built by Ethora + our other product, side by side -- two short blocks that
           each left the other half of the row empty when stacked as separate sections. */}
       <section className="on-light bg-ivory text-ink">
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 md:py-20 lg:grid-cols-2 lg:gap-16 lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-12 px-4 py-14 sm:px-6 md:py-16 lg:grid-cols-2 lg:gap-16 lg:px-8">
           <Reveal>
             <h2 className="font-serif text-3xl sm:text-4xl">Built by Ethora</h2>
             <span className="gold-rule mt-5 bg-gold-deep" />

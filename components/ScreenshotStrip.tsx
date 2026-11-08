@@ -10,7 +10,7 @@ type Shot = { src: string; alt: string; caption: string; w: number; h: number };
  * and a soft edge fade hints there is more to scroll. Still fully usable with touch,
  * trackpad, or keyboard (focus the strip and use arrow keys).
  */
-export default function ScreenshotStrip({ shots, label = "Screenshots" }: { shots: Shot[]; label?: string }) {
+export default function ScreenshotStrip({ shots, label = "Screenshots", cardWidthClass = "w-[82vw] sm:w-[26rem]" }: { shots: Shot[]; label?: string; cardWidthClass?: string }) {
   const trackRef = useRef<HTMLUListElement>(null);
   const cardRefs = useRef<(HTMLLIElement | null)[]>([]);
   const [active, setActive] = useState(0);
@@ -105,7 +105,7 @@ export default function ScreenshotStrip({ shots, label = "Screenshots" }: { shot
           <li
             key={s.src}
             ref={(el) => { cardRefs.current[i] = el; }}
-            className="w-[82vw] shrink-0 snap-start overflow-hidden rounded-xl border border-ivory/15 bg-navy sm:w-[26rem]"
+            className={`shrink-0 snap-start overflow-hidden rounded-xl border border-ivory/15 bg-navy ${cardWidthClass}`}
           >
             <Image src={s.src} alt={s.alt} width={s.w} height={s.h} className="h-auto w-full" />
             <p className="border-t border-ivory/10 px-4 py-3 text-sm leading-snug text-muted-dark">{s.caption}</p>

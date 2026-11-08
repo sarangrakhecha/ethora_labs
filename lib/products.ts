@@ -92,7 +92,7 @@ export const products: Product[] = [
       "Recurr helps businesses and individuals stay ahead of recurring commitments — from subscriptions and memberships to vendor contracts and insurance.",
     status: {
       label: "In development",
-      detail: "Recurr is being built and is not yet publicly available. The screens below are from our own internal build.",
+      detail: "Recurr is being built and is not yet publicly available.",
       available: false,
     },
     areas: [],
