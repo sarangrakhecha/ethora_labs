@@ -36,19 +36,16 @@ export default function RecurrPage() {
             <div className="aspect-[400/150]"><ProductArt name="recurr" /></div>
           </div>
         }
+        below={
+          <>
+            <p className="flex items-center gap-2 font-medium">
+              <span className="h-2 w-2 rounded-full" style={{ background: "#d9a441" }} aria-hidden="true" />
+              {recurr.status.label}
+            </p>
+            <p className="mt-2 max-w-xl text-muted-dark">{recurr.status.detail}</p>
+          </>
+        }
       />
-
-      {/* Status -- the waitlist CTA lives once, with the sneak peek below, rather than
-          repeated here too. */}
-      <section className="border-b border-ivory/10 bg-navy">
-        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-          <p className="flex items-center gap-2 font-medium">
-            <span className="h-2 w-2 rounded-full" style={{ background: "#d9a441" }} aria-hidden="true" />
-            {recurr.status.label}
-          </p>
-          <p className="mt-2 max-w-xl text-muted-dark">{recurr.status.detail}</p>
-        </div>
-      </section>
 
       {/* Product sneak peek */}
       <section className="bg-navy-deep">
