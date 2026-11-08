@@ -6,7 +6,6 @@ import { Icon } from "@/components/Icons";
 import { engagementSteps } from "@/lib/content";
 import { noWidow } from "@/lib/typography";
 import HeroMark from "@/components/about-visuals/HeroMark";
-import NameMark from "@/components/about-visuals/NameMark";
 
 // Three concepts the philosophy paragraph below already names (judgement, engineering
 // rigour, honesty) -- made visible as a band rather than left as unbroken prose.
@@ -46,31 +45,11 @@ export default function AboutPage() {
         aside={<HeroMark />}
       />
 
-      {/* The name -- prose beside a large typographic treatment of the wordmark itself,
-          using the full width instead of a short heading over empty space. */}
-      <section className="on-light bg-ivory text-ink">
-        <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 md:py-20 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-16 lg:px-8">
-          <Reveal>
-            <h2 className="font-serif text-3xl sm:text-4xl">The name</h2>
-            <span className="gold-rule mt-5 bg-gold-deep" />
-            <div className="mt-8 max-w-xl space-y-5 text-lg leading-relaxed text-muted-light">
-              <p>
-                Ethora comes from two Greek-rooted ideas: <span className="text-ink">ethics</span> (how we choose to
-                work) and <span className="text-ink">ethos</span> (the character behind that choice). In a field where
-                it is easy to overstate, we would rather be known for saying what is actually true about the software
-                we build — including when that is inconvenient.
-              </p>
-            </div>
-          </Reveal>
-          <Reveal delay={100}>
-            <NameMark />
-          </Reveal>
-        </div>
-      </section>
-
       {/* Philosophy -- one clean left/right split instead of three stacked bands:
           prose on the left, the three named concepts plus the ambition on the right,
-          separated by a single vertical rule. */}
+          separated by a single vertical rule. The name's origin (ethics/ethos) opens
+          the prose rather than getting its own section, so the page carries two value
+          blocks (this one and the ETHORA culture section below), not three. */}
       <section className="bg-navy">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
           <Reveal className="grid gap-12 lg:grid-cols-2 lg:gap-16">
@@ -78,13 +57,15 @@ export default function AboutPage() {
               <h2 className="font-serif text-3xl sm:text-4xl">Our philosophy</h2>
               <span className="gold-rule mt-5" />
               <p className="mt-6 text-lg leading-relaxed text-muted-dark">
-                Most software problems are not really technology problems. They are problems of judgement: what to
-                build, what to verify, what to leave alone, and when to say that an approach is not working.
+                Ethora comes from two Greek-rooted ideas: ethics (how we choose to work) and ethos (the character
+                behind that choice) — in practice, that means treating most software problems as problems of
+                judgement: what to build, what to verify, what to leave alone, and when to say an approach is not
+                working.
               </p>
               <p className="mt-5 leading-relaxed text-muted-dark">
                 So we lead with engineering judgement rather than with tools. We would rather spend a day
                 understanding why a system behaves the way it does than a week working around it. We would rather
-                tell you that a rewrite is not justified than sell you one.
+                tell you that a rewrite is not justified than sell you one — including when that is inconvenient.
               </p>
             </div>
 
