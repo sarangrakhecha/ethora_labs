@@ -31,19 +31,14 @@ export default function RecurrPage() {
         eyebrow={recurr.kind}
         title={recurr.name}
         intro={recurr.summary}
-        aside={
-          <div>
-            <div className="overflow-hidden rounded-xl border border-ivory/15">
-              <div className="aspect-[400/150]"><ProductArt name="recurr" /></div>
-            </div>
-            <div className="mt-5 border-t border-ivory/10 pt-5">
-              <p className="flex items-center gap-2 font-medium">
-                <span className="h-2 w-2 rounded-full" style={{ background: "#d9a441" }} aria-hidden="true" />
-                {recurr.status.label}
-              </p>
-              <p className="mt-2 text-muted-dark">{recurr.status.detail}</p>
-            </div>
-          </div>
+        below={
+          <>
+            <p className="flex items-center gap-2 font-medium">
+              <span className="h-2 w-2 rounded-full" style={{ background: "#d9a441" }} aria-hidden="true" />
+              {recurr.status.label}
+            </p>
+            <p className="mt-2 text-muted-dark">{recurr.status.detail}</p>
+          </>
         }
       />
 
