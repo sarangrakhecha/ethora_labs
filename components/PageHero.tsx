@@ -9,7 +9,7 @@ const BASE = "https://ethoralabs.co";
  * composition (text left, aside right) at lg+ and stacks below the text on
  * smaller screens. No page currently using PageHero without it is affected.
  */
-export default function PageHero({ eyebrow, title, intro, breadcrumb, breadcrumbCurrent, aside, below }: {
+export default function PageHero({ eyebrow, title, intro, breadcrumb, breadcrumbCurrent, aside }: {
   eyebrow?: string; title: string; intro: string;
   breadcrumb?: { label: string; href: string }[];
   /** Label for the breadcrumb's current-page crumb, when the full H1 is too long to
@@ -17,10 +17,6 @@ export default function PageHero({ eyebrow, title, intro, breadcrumb, breadcrumb
    * to `title`, which is what every other page using PageHero still gets. */
   breadcrumbCurrent?: string;
   aside?: ReactNode;
-  /** Extra content (e.g. a status line) rendered inside the hero itself, below the
-   * title/intro/aside grid and set off by a thin rule -- for content that belongs
-   * with the hero rather than in its own separate section underneath it. */
-  below?: ReactNode;
 }) {
   const current = breadcrumbCurrent ?? title;
   // BreadcrumbList structured data, generated once here rather than per page.
@@ -59,7 +55,6 @@ export default function PageHero({ eyebrow, title, intro, breadcrumb, breadcrumb
           </div>
           {aside && <div className="mt-2 lg:mt-0">{aside}</div>}
         </div>
-        {below && <div className="mt-10 border-t border-ivory/10 pt-8">{below}</div>}
       </div>
     </section>
   );
