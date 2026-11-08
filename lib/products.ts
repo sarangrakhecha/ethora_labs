@@ -27,6 +27,9 @@ export type Product = {
   /** Pre-launch products only: where to email to ask for early access. Never substitutes
    * for Ethora's own consulting contact address. */
   waitlistEmail?: string;
+  /** A live landing/waitlist page for a pre-launch product -- distinct from the product
+   * itself being available. Linked alongside the waitlist CTA, not in place of it. */
+  websiteUrl?: string;
 };
 
 export const products: Product[] = [
@@ -123,6 +126,7 @@ export const products: Product[] = [
     // forwarding address is still covered in the "What it does" feature list below.
     art: "recurr",
     waitlistEmail: "hello@recurr.fyi",
+    websiteUrl: "https://recurr.fyi",
   },
 ];
 

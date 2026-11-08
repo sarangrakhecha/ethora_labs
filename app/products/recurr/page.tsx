@@ -63,9 +63,16 @@ export default function RecurrPage() {
                 waiting on the other side of the waitlist.
               </p>
             </div>
-            <a href={waitlistHref} className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-md px-5 py-2.5 text-[15px] font-medium text-ivory transition-colors hover:brightness-110" style={{ background: forest }}>
-              Join the Waitlist <Icon name="arrow" />
-            </a>
+            <div className="flex shrink-0 flex-wrap items-center gap-3">
+              {recurr.websiteUrl && (
+                <a href={recurr.websiteUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border px-5 py-2.5 text-[15px] font-medium text-ivory transition-colors hover:bg-ivory/5" style={{ borderColor: forest }}>
+                  Visit recurr.fyi <Icon name="arrow" />
+                </a>
+              )}
+              <a href={waitlistHref} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-5 py-2.5 text-[15px] font-medium text-ivory transition-colors hover:brightness-110" style={{ background: forest }}>
+                Join the Waitlist <Icon name="arrow" />
+              </a>
+            </div>
           </Reveal>
           <Reveal delay={80} className="mt-10">
             {recurr.screenshots.length > 0 ? (
