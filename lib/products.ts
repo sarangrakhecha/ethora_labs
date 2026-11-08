@@ -100,23 +100,23 @@ export const products: Product[] = [
       { title: "A clear daily overview", body: "What needs a decision, what's renewing soon, and savings identified versus actually protected — in one view." },
       { title: "Renewals, ordered by urgency", body: "Sorted by the last date you can still act, with a visible countdown to that deadline rather than just the renewal date itself." },
       { title: "Every vendor in one place", body: "Software, suppliers, leases and service contracts together, each with its category, owner and annual cost." },
-      { title: "Savings you can trust", body: "A three-stage funnel — Identified, Approved, Protected — so a potential saving is never shown as money already saved." },
+      { title: "Savings you can trust", body: "Verified savings, avoided spend, and cost opportunity are tracked separately, so a potential saving is never shown as money already saved." },
     ],
     // A 5th feature (the forwarding address) was dropped from this list -- it left an
     // uneven grid, and it's already covered in full in the "Forward it. We'll track it."
     // vision section below, so nothing is lost by not repeating it here too.
     screenshots: [
       { src: "/products/recurr/overview.webp", w: 2000, h: 1250,
-        alt: "Recurr overview dashboard greeting the user, showing renewing-soon total, potential savings, protected savings, and a list of renewals that need attention.",
+        alt: "Recurr overview dashboard greeting the user, showing renewal exposure, cost opportunities, verified savings and annual spend, plus a list of renewals that need attention.",
         caption: "Overview: what needs a decision, surfaced first — not buried in a list." },
       { src: "/products/recurr/renewals.webp", w: 2000, h: 1250,
-        alt: "Recurr renewals list filtered to Needs attention, showing Adobe Creative Cloud and Shakti Metals with days-left countdowns and a Review and decide action.",
+        alt: "Recurr renewals list filtered to Needs attention, showing Adobe Creative Cloud, Shakti Metals and HubSpot with action deadlines and days-left countdowns.",
         caption: "Renewals: ordered by the last day you can still change your mind." },
       { src: "/products/recurr/vendors.webp", w: 2000, h: 1250,
-        alt: "Recurr vendors table listing software, suppliers, leases and service contracts with status, renewal date and annual cost.",
+        alt: "Recurr vendors table listing software, suppliers, leases and service contracts with owner, status, renewal date and annual cost.",
         caption: "Vendors: every recurring commitment in one directory, not scattered across inboxes." },
       { src: "/products/recurr/savings.webp", w: 2000, h: 1250,
-        alt: "Recurr savings page showing Identified, Approved and Protected totals as a funnel, with a per-vendor breakdown underneath.",
+        alt: "Recurr savings page showing Verified savings, Avoided spend and Cost opportunity totals, with a breakdown of each underneath.",
         caption: "Savings: a figure only counts once the real-world action is actually confirmed." },
     ],
     // The settings/forwarding screenshot (public/products/recurr/settings-forwarding.webp)
@@ -159,7 +159,7 @@ export const recurrAudiences = {
 };
 
 export const recurrSavingsNote =
-  "Recurr does not automatically cancel subscriptions, negotiate contracts, or guarantee savings. Choosing Cancel records a decision, not a completed cancellation. Potential savings are not realised savings — they become Protected only once the real-world outcome is confirmed.";
+  "Recurr does not automatically cancel subscriptions, negotiate contracts, or guarantee savings. Choosing Cancel records a decision, not a completed cancellation. Potential savings are not realised savings — they only count as Verified savings once the real-world outcome is confirmed.";
 
 for (const p of products) {
   p.summary = noWidow(p.summary);
