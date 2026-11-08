@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { products, recurrVision, recurrAudiences, recurrSavingsNote } from "@/lib/products";
 import ScreenshotStrip from "@/components/ScreenshotStrip";
 import ProductArt from "@/components/ProductArt";
@@ -31,14 +32,23 @@ export default function RecurrPage() {
         eyebrow={recurr.kind}
         title={recurr.name}
         intro={recurr.summary}
-        below={
-          <>
-            <p className="flex items-center gap-2 font-medium">
-              <span className="h-2 w-2 rounded-full" style={{ background: "#d9a441" }} aria-hidden="true" />
-              {recurr.status.label}
-            </p>
-            <p className="mt-2 text-muted-dark">{recurr.status.detail}</p>
-          </>
+        aside={
+          <div>
+            {recurr.screenshots[3] ? (
+              <div className="overflow-hidden rounded-xl border border-ivory/15">
+                <Image src={recurr.screenshots[3].src} alt={recurr.screenshots[3].alt} width={recurr.screenshots[3].w} height={recurr.screenshots[3].h} className="h-auto w-full" />
+              </div>
+            ) : (
+              <div className="overflow-hidden rounded-xl border border-ivory/15"><div className="aspect-[400/150]"><ProductArt name="recurr" /></div></div>
+            )}
+            <div className="mt-5 border-t border-ivory/10 pt-5">
+              <p className="flex items-center gap-2 font-medium">
+                <span className="h-2 w-2 rounded-full" style={{ background: "#d9a441" }} aria-hidden="true" />
+                {recurr.status.label}
+              </p>
+              <p className="mt-2 text-muted-dark">{recurr.status.detail}</p>
+            </div>
+          </div>
         }
       />
 
