@@ -5,12 +5,11 @@ import ScreenshotStrip from "@/components/ScreenshotStrip";
 import ProductArt from "@/components/ProductArt";
 import PageHero, { CtaBand } from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
+import RecurrWaitlistForm from "@/components/RecurrWaitlistForm";
 import { Icon } from "@/components/Icons";
 
 const recurr = products.find((p) => p.slug === "recurr")!;
 const culprit = products.find((p) => p.slug === "culprit")!;
-const WAITLIST_SUBJECT = "Recurr%20Waitlist";
-const waitlistHref = `mailto:${recurr.waitlistEmail}?subject=${WAITLIST_SUBJECT}`;
 
 // A restrained forest-green accent for Recurr's own product identity, used only on
 // this page -- the rest of the site keeps navy/ivory/gold untouched.
@@ -69,9 +68,7 @@ export default function RecurrPage() {
                   Visit recurr.fyi <Icon name="arrow" />
                 </a>
               )}
-              <a href={waitlistHref} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-5 py-2.5 text-[15px] font-medium text-ivory transition-colors hover:brightness-110" style={{ background: forest }}>
-                Join the Waitlist <Icon name="arrow" />
-              </a>
+              <RecurrWaitlistForm accent={forest} fallbackEmail={recurr.waitlistEmail!} />
             </div>
           </Reveal>
           <Reveal delay={80} className="mt-10">
@@ -235,11 +232,11 @@ export default function RecurrPage() {
         <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-14 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
           <div>
             <h2 className="font-serif text-3xl sm:text-4xl">Interested in early access?</h2>
-            <p className="mt-3 max-w-xl text-muted-dark">Email us to join the Recurr waitlist — there&rsquo;s no form yet, just a person who will read it.</p>
+            <p className="mt-3 max-w-xl text-muted-dark">Leave your email and we&rsquo;ll be in touch — a real person reads every signup.</p>
           </div>
-          <a href={waitlistHref} className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-md px-6 py-3 text-[15px] font-medium text-ivory transition-colors hover:brightness-110" style={{ background: forest }}>
-            Join the Waitlist <Icon name="arrow" />
-          </a>
+          <div className="shrink-0">
+            <RecurrWaitlistForm accent={forest} fallbackEmail={recurr.waitlistEmail!} />
+          </div>
         </div>
       </section>
 
