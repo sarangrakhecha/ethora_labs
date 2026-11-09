@@ -1,4 +1,4 @@
 :HL["/_next/static/chunks/0u9uhj9hxaycd.css","style"]
 2:[["children",{"s":"__PAGE__","h":160}]]
 1:[["children",{"s":"/_not-found","h":64,"c":"$Q2"}]]
-0:{"b":"BD2n5ssiITSI2hVqdBcNV","t":{"t":{"s":"","h":16,"c":"$Q1"}}}
+0:{"b":"-ejJ-MnHpLeX3kOdvi_BJ","t":{"t":{"s":"","h":16,"c":"$Q1"}}}

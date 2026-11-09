@@ -22,8 +22,8 @@ export const metadata: Metadata = {
 };
 
 // ETHORA — our own name, spelled out as six behaviours rather than slogans.
-// The name itself comes from ethics + ethos (see the section above); this is that
-// idea made concrete and checkable, not a separate framework bolted on top of it.
+// The name itself comes from ethics + ethos + engineering (see the section above);
+// this is that idea made concrete and checkable, not a separate framework bolted on top of it.
 const culture = [
   { letter: "E", name: "Excellence", behaviour: "We build verification into development rather than bolting it on before a release." },
   { letter: "T", name: "Trust", behaviour: "We report engineering risks honestly, including when the news is unwelcome or reflects badly on our own estimate." },
@@ -47,7 +47,7 @@ export default function AboutPage() {
 
       {/* Philosophy -- one clean left/right split instead of three stacked bands:
           prose on the left, the three named concepts plus the ambition on the right,
-          separated by a single vertical rule. The name's origin (ethics/ethos) opens
+          separated by a single vertical rule. The name's origin (ethics/ethos/engineering) opens
           the prose rather than getting its own section, so the page carries two value
           blocks (this one and the ETHORA culture section below), not three. */}
       <section className="bg-navy">
@@ -57,10 +57,10 @@ export default function AboutPage() {
               <h2 className="font-serif text-3xl sm:text-4xl">Our philosophy</h2>
               <span className="gold-rule mt-5" />
               <p className="mt-6 text-lg leading-relaxed text-muted-dark">
-                Ethora comes from two Greek-rooted ideas: ethics (how we choose to work) and ethos (the character
-                behind that choice) — in practice, that means treating most software problems as problems of
-                judgement: what to build, what to verify, what to leave alone, and when to say an approach is not
-                working.
+                Ethora draws on three roots: ethics (how we choose to work), ethos (the character behind that
+                choice), and engineering (how that character gets built and shipped) — in practice, that means
+                treating most software problems as problems of judgement: what to build, what to verify, what to
+                leave alone, and when to say an approach is not working.
               </p>
               <p className="mt-5 leading-relaxed text-muted-dark">
                 So we lead with engineering judgement rather than with tools. We would rather spend a day
