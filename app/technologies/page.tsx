@@ -41,20 +41,20 @@ export default function TechnologiesPage() {
         aside={<HeroMark />}
       />
 
-      <section className="border-t border-ivory/10 bg-navy">
+      <section className="on-light bg-ivory text-ink">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
           <Reveal>
             <div className="lg:flex lg:items-center lg:gap-10">
               <h2 className="shrink-0 font-serif text-3xl leading-tight sm:text-4xl">Explore our technologies</h2>
-              <span className="mt-5 block h-px w-12 bg-gold lg:mt-0 lg:h-14 lg:w-px" aria-hidden="true" />
+              <span className="mt-5 block h-px w-12 bg-gold-deep lg:mt-0 lg:h-14 lg:w-px" aria-hidden="true" />
               <div className="mt-5 max-w-2xl lg:mt-0">
-                <p className="leading-relaxed text-muted-dark">
+                <p className="leading-relaxed text-muted-light">
                   {noWidow(
                     "This list is deliberately selective: it covers technologies we have genuine, hands-on experience with — the stack this site itself is built and tested with, plus the cloud, data and mobile tooling we use in client engagements — rather than every tool we could plausibly use."
                   )}
                 </p>
                 <div className="mt-4 flex justify-end">
-                  <Link href="#explore-technologies" className="inline-flex items-center gap-2 border-b border-gold/60 pb-1 text-sm text-gold transition-colors hover:text-[#d4b98f]">
+                  <Link href="#explore-technologies" className="inline-flex items-center gap-2 border-b border-gold-deep/60 pb-1 text-sm text-gold-deep transition-colors hover:text-navy">
                     View all technologies <Icon name="arrow" className="h-4 w-4" />
                   </Link>
                 </div>
@@ -65,18 +65,22 @@ export default function TechnologiesPage() {
           <Reveal delay={60} className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {showcase.map((s) => (
               <Link key={s.id} href={`#${s.id}`}
-                className="group flex min-h-[6.5rem] items-center gap-3.5 rounded-xl border border-ivory/20 bg-ivory/[0.025] p-4 transition-colors hover:border-gold hover:bg-gold/[0.08]">
-                <Icon name={s.icon} className="h-7 w-7 shrink-0 text-gold" />
+                className="group flex min-h-[6.5rem] items-center gap-3.5 rounded-xl border border-gold-deep/25 bg-white/50 p-4 transition-colors hover:border-gold-deep hover:bg-gold-deep/[0.08]">
+                <Icon name={s.icon} className="h-7 w-7 shrink-0 text-gold-deep" />
                 <span className="min-w-0">
-                  <span className="block text-[14px] font-semibold text-ivory">{s.title}</span>
-                  <span className="mt-1 block text-xs leading-snug text-muted-dark">{s.description}</span>
+                  <span className="block text-[14px] font-semibold text-ink">{s.title}</span>
+                  <span className="mt-1 block text-xs leading-snug text-muted-light">{s.description}</span>
                 </span>
-                <Icon name="arrow" className="ml-auto h-4 w-4 shrink-0 text-ivory/70 transition-transform group-hover:translate-x-0.5" />
+                <Icon name="arrow" className="ml-auto h-4 w-4 shrink-0 text-muted-light transition-transform group-hover:translate-x-0.5" />
               </Link>
             ))}
           </Reveal>
+        </div>
+      </section>
 
-          <Reveal delay={120} id="explore-technologies" className="mt-16 scroll-mt-24">
+      <section className="border-t border-ivory/10 bg-navy">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
+          <Reveal id="explore-technologies" className="scroll-mt-24">
             <TechnologyExplorer />
           </Reveal>
         </div>
