@@ -1,7 +1,9 @@
 /**
  * Hero's right-side composition: restrained technical linework in Ethora's own palette,
- * labelled with the two real roots this page explains (Ethics, Ethos) -- not a third,
- * invented "Engineering" branch some earlier drafts of this diagram included.
+ * labelled with the three roots the page explains (Ethics, Ethos, Engineering).
+ * The zigzag's start/end x-offsets are symmetric around the corner-bracket frame's
+ * own center (x=310) so the fill polygon never pokes past one bottom corner and not
+ * the other -- that mismatch is what broke the frame before this was three peaks.
  */
 export default function HeroMark() {
   return (
@@ -20,20 +22,23 @@ export default function HeroMark() {
           <circle cx="321" cy="201" r="104" opacity=".16" strokeDasharray="4 7" />
           <circle cx="321" cy="201" r="54" opacity=".36" strokeWidth="1.3" />
           <path d="M75 201H565M321 18V378" opacity=".14" />
-          <path d="M118 314 243 187 324 249 442 123 529 190" strokeWidth="1.4" opacity=".65" />
-          <path d="M118 314 243 187 324 249 442 123 529 190 L529 360 L118 360 Z" fill="url(#aboutHeroGlow)" stroke="none" />
+          <path d="M130 314 210 190 270 250 310 140 350 250 410 190 490 230" strokeWidth="1.4" opacity=".65" />
+          <path d="M130 314 210 190 270 250 310 140 350 250 410 190 490 230 L490 360 L130 360 Z" fill="url(#aboutHeroGlow)" stroke="none" />
           <path d="M100 88V45H143M477 45H520V88M100 302V345H143M477 345H520V302" opacity=".22" />
-          <circle cx="243" cy="187" r="5" fill="#C4A77A" stroke="none" />
-          <circle cx="442" cy="123" r="5" fill="#C4A77A" stroke="none" />
+          <circle cx="210" cy="190" r="5" fill="#C4A77A" stroke="none" />
+          <circle cx="310" cy="140" r="5" fill="#C4A77A" stroke="none" />
+          <circle cx="410" cy="190" r="5" fill="#C4A77A" stroke="none" />
           <circle cx="321" cy="201" r="7" fill="#0B1420" strokeWidth="1.4" />
         </g>
         <g fill="#D9C8A8" fontSize="12" letterSpacing="2.2" style={{ fontFamily: "system-ui, sans-serif" }}>
-          <text x="52" y="177">ETHICS</text>
-          <text x="465" y="107">ETHOS</text>
+          <text x="40" y="177">ETHICS</text>
+          <text x="310" y="72" textAnchor="middle">ENGINEERING</text>
+          <text x="422" y="165">ETHOS</text>
         </g>
         <g stroke="#C4A77A" strokeWidth=".8" opacity=".55">
-          <path d="M115 181H202L243 187" />
-          <path d="M473 112 445 123" />
+          <path d="M103 181H170L210 190" />
+          <path d="M310 88V140" />
+          <path d="M435 173 415 188" />
         </g>
       </svg>
     </div>
