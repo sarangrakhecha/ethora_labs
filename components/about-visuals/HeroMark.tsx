@@ -18,17 +18,17 @@ export default function HeroMark() {
           </linearGradient>
         </defs>
         <g stroke="#C4A77A" fill="none">
-          <circle cx="321" cy="201" r="145" opacity=".3" strokeWidth="1" />
-          <circle cx="321" cy="201" r="104" opacity=".16" strokeDasharray="4 7" />
-          <circle cx="321" cy="201" r="54" opacity=".36" strokeWidth="1.3" />
-          <path d="M75 201H565M321 18V378" opacity=".14" />
+          <circle cx="310" cy="201" r="145" opacity=".3" strokeWidth="1" />
+          <circle cx="310" cy="201" r="104" opacity=".16" strokeDasharray="4 7" />
+          <circle cx="310" cy="201" r="54" opacity=".36" strokeWidth="1.3" />
+          <path d="M55 201H565M310 18V378" opacity=".14" />
           <path d="M100 302 210 190 270 250 310 140 350 250 410 190 520 302" strokeWidth="1.4" opacity=".65" />
           <path d="M100 302 210 190 270 250 310 140 350 250 410 190 520 302 V345 H100 Z" fill="url(#aboutHeroGlow)" stroke="none" />
           <path d="M100 88V45H143M477 45H520V88M100 302V345H143M477 345H520V302" opacity=".22" />
           <circle cx="210" cy="190" r="5" fill="#C4A77A" stroke="none" />
           <circle cx="310" cy="140" r="5" fill="#C4A77A" stroke="none" />
           <circle cx="410" cy="190" r="5" fill="#C4A77A" stroke="none" />
-          <circle cx="321" cy="201" r="7" fill="#0B1420" strokeWidth="1.4" />
+          <circle cx="310" cy="201" r="7" fill="#0B1420" strokeWidth="1.4" />
         </g>
         <g fill="#D9C8A8" fontSize="12" letterSpacing="2.2" style={{ fontFamily: "system-ui, sans-serif" }}>
           <text x="40" y="177">ETHICS</text>
