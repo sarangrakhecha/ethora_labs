@@ -20,7 +20,6 @@ export default function HeroMark() {
         <g stroke="#C4A77A" fill="none">
           <circle cx="310" cy="201" r="145" opacity=".3" strokeWidth="1" />
           <circle cx="310" cy="201" r="104" opacity=".16" strokeDasharray="4 7" />
-          <circle cx="310" cy="201" r="54" opacity=".36" strokeWidth="1.3" />
           <path d="M55 201H565M310 18V378" opacity=".14" />
           <path d="M100 302 210 190 270 250 310 140 350 250 410 190 520 302" strokeWidth="1.4" opacity=".65" />
           <path d="M100 302 210 190 270 250 310 140 350 250 410 190 520 302 V345 H100 Z" fill="url(#aboutHeroGlow)" stroke="none" />
