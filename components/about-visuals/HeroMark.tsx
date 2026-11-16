@@ -1,10 +1,9 @@
 /**
  * Hero's right-side composition: restrained technical linework in Ethora's own palette,
  * labelled with the three roots the page explains (Ethics, Ethos, Engineering).
- * The zigzag's start and end points share both x-offset and y, mirrored around the
- * corner-bracket frame's own center (310, 314 baseline) -- any mismatch there either
- * pokes the fill past one bottom corner, or gives its two base edges different
- * heights, so it only reads as symmetric with both matched.
+ * The mountain's outer edges and base sit exactly on the corner brackets' lines
+ * (x=100/520, base y=345, line ends at the brackets' inner tips, y=302), so the
+ * shape and the frame read as one object rather than two nearly-overlapping ones.
  */
 export default function HeroMark() {
   return (
@@ -23,8 +22,8 @@ export default function HeroMark() {
           <circle cx="321" cy="201" r="104" opacity=".16" strokeDasharray="4 7" />
           <circle cx="321" cy="201" r="54" opacity=".36" strokeWidth="1.3" />
           <path d="M75 201H565M321 18V378" opacity=".14" />
-          <path d="M130 314 210 190 270 250 310 140 350 250 410 190 490 314" strokeWidth="1.4" opacity=".65" />
-          <path d="M130 314 210 190 270 250 310 140 350 250 410 190 490 314 L490 360 L130 360 Z" fill="url(#aboutHeroGlow)" stroke="none" />
+          <path d="M100 302 210 190 270 250 310 140 350 250 410 190 520 302" strokeWidth="1.4" opacity=".65" />
+          <path d="M100 302 210 190 270 250 310 140 350 250 410 190 520 302 V345 H100 Z" fill="url(#aboutHeroGlow)" stroke="none" />
           <path d="M100 88V45H143M477 45H520V88M100 302V345H143M477 345H520V302" opacity=".22" />
           <circle cx="210" cy="190" r="5" fill="#C4A77A" stroke="none" />
           <circle cx="310" cy="140" r="5" fill="#C4A77A" stroke="none" />
@@ -36,7 +35,7 @@ export default function HeroMark() {
           <text x="310" y="72" textAnchor="middle">ENGINEERING</text>
           <text x="422" y="165">ETHOS</text>
         </g>
-        <g stroke="#C4A77A" strokeWidth=".8" opacity=".55">
+        <g stroke="#C4A77A" fill="none" strokeWidth=".8" opacity=".55">
           <path d="M103 181H170L210 190" />
           <path d="M310 88V140" />
           <path d="M435 173 415 188" />
