@@ -1,9 +1,10 @@
 /**
  * Hero's right-side composition: restrained technical linework in Ethora's own palette,
  * labelled with the three roots the page explains (Ethics, Ethos, Engineering).
- * The zigzag's start/end x-offsets are symmetric around the corner-bracket frame's
- * own center (x=310) so the fill polygon never pokes past one bottom corner and not
- * the other -- that mismatch is what broke the frame before this was three peaks.
+ * The zigzag's start and end points share both x-offset and y, mirrored around the
+ * corner-bracket frame's own center (310, 314 baseline) -- any mismatch there either
+ * pokes the fill past one bottom corner, or gives its two base edges different
+ * heights, so it only reads as symmetric with both matched.
  */
 export default function HeroMark() {
   return (
@@ -22,8 +23,8 @@ export default function HeroMark() {
           <circle cx="321" cy="201" r="104" opacity=".16" strokeDasharray="4 7" />
           <circle cx="321" cy="201" r="54" opacity=".36" strokeWidth="1.3" />
           <path d="M75 201H565M321 18V378" opacity=".14" />
-          <path d="M130 314 210 190 270 250 310 140 350 250 410 190 490 230" strokeWidth="1.4" opacity=".65" />
-          <path d="M130 314 210 190 270 250 310 140 350 250 410 190 490 230 L490 360 L130 360 Z" fill="url(#aboutHeroGlow)" stroke="none" />
+          <path d="M130 314 210 190 270 250 310 140 350 250 410 190 490 314" strokeWidth="1.4" opacity=".65" />
+          <path d="M130 314 210 190 270 250 310 140 350 250 410 190 490 314 L490 360 L130 360 Z" fill="url(#aboutHeroGlow)" stroke="none" />
           <path d="M100 88V45H143M477 45H520V88M100 302V345H143M477 345H520V302" opacity=".22" />
           <circle cx="210" cy="190" r="5" fill="#C4A77A" stroke="none" />
           <circle cx="310" cy="140" r="5" fill="#C4A77A" stroke="none" />
