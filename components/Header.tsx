@@ -78,7 +78,7 @@ export default function Header() {
               Services <Icon name="chevron" className={`transition-transform ${servicesOpen ? "rotate-180" : ""}`} />
             </button>
             {servicesOpen && (
-              <ul id="services-menu" className="absolute left-0 top-full mt-2 w-96 max-w-[calc(100vw-2rem)] rounded-lg border border-ivory/15 bg-navy-deep p-1.5 shadow-xl">
+              <ul id="services-menu" className="absolute left-0 top-full mt-2 w-max min-w-[16rem] max-w-[min(22rem,calc(100vw-2rem))] rounded-lg border border-ivory/15 bg-navy-deep p-1.5 shadow-xl">
                 {services.map((s) => {
                   const current = isCurrent(`/services/${s.slug}`);
                   return (
@@ -104,7 +104,7 @@ export default function Header() {
               Products <Icon name="chevron" className={`transition-transform ${prodOpen ? "rotate-180" : ""}`} />
             </button>
             {prodOpen && (
-              <ul id="prod-menu" className="absolute left-0 top-full mt-2 w-[20rem] rounded-lg border border-ivory/15 bg-navy-deep p-2 shadow-xl">
+              <ul id="prod-menu" className="absolute left-0 top-full mt-2 w-max min-w-[14rem] max-w-[min(20rem,calc(100vw-2rem))] rounded-lg border border-ivory/15 bg-navy-deep p-2 shadow-xl">
                 {productLinks.map((p) => (
                   <li key={p.slug}>
                     <Link href={`/products/${p.slug}`} onClick={close} aria-current={isCurrent(`/products/${p.slug}`) ? "page" : undefined}
