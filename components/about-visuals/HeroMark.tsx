@@ -27,7 +27,6 @@ export default function HeroMark() {
           <circle cx="210" cy="190" r="5" fill="#C4A77A" stroke="none" />
           <circle cx="310" cy="140" r="5" fill="#C4A77A" stroke="none" />
           <circle cx="410" cy="190" r="5" fill="#C4A77A" stroke="none" />
-          <circle cx="310" cy="201" r="7" fill="#0B1420" strokeWidth="1.4" />
         </g>
         <g fill="#D9C8A8" fontSize="12" letterSpacing="2.2" style={{ fontFamily: "system-ui, sans-serif" }}>
           <text x="40" y="177">ETHICS</text>
